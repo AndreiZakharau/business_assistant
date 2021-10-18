@@ -18,12 +18,12 @@ public class PersonDAO implements DAO<Person> {
         return instancePers;
     }
 
-    private PersonDAO(){}
+    public PersonDAO(){}
 
 
     private static final String SQL_PERSON_BY_DELETE = "DELETE FROM Persons WHERE  id = ? OR name = ? OR lastName = ? OR telephoneNumber = ? ";
     private static final String UPDATE_PERSON = "UPDATE Persons set id = ? AND set name = ? AND set lastName  = ? AND set telephoneNumber = ? AND set role = ?";
-    private static final String SQL_INSERT_PERSONS = "INSERT INTO Persons(name,lastName,telephoneNumber) VALUES (?,?,?)";
+    private static final String SQL_INSERT_PERSONS = "INSERT INTO Persons(name,lastName,telephoneNumber,role_role) VALUES (?,?,?,?)";
     private static final String SQL_PERSONS_FIN_BY_ID = "SELECT * FROM Persons WHERE id = ?";
     private static final String SQL_PERSONS_ALL_LIST = "SELECT * FROM Persons";
 
@@ -57,7 +57,7 @@ public class PersonDAO implements DAO<Person> {
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
-                Role role = Role.valueOf(resultSet.getString("role"));
+                Role role = Role.valueOf(resultSet.getString("role_role"));
                 person = new Person(id, name, lastName, telephone, role);
             }
 
@@ -78,7 +78,7 @@ public class PersonDAO implements DAO<Person> {
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
-                Role role = Role.valueOf(resultSet.getString("role"));
+                Role role = Role.valueOf(resultSet.getString("role_role"));
 
                 people.add(new Person(id, name, lastName, telephone, role));
             }
@@ -120,6 +120,7 @@ public class PersonDAO implements DAO<Person> {
             preparedStatement.setString(3, person.getTelephoneNumber());
             preparedStatement.setString(4, person.getRole().name());
             preparedStatement.executeUpdate();
+//            System.out.println("Person создан");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

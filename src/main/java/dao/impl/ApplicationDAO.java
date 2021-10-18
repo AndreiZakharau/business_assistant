@@ -21,7 +21,7 @@ public class ApplicationDAO implements DAO<Application> {
     private ApplicationDAO(){}
 
     private static final String SQL_INSERT_APPLICATION ="INSERT INTO Application(product_id,necessary,final_price,shop_id) Value(?,?,?,?)";
-    private static final String SQL_DELETE_APPLICATION ="DELETE FROM APPLICATION WHERE id = ? OR product_id =?" +
+    private static final String SQL_DELETE_APPLICATION ="DELETE FROM Application WHERE id = ? OR product_id =?" +
             " OR necessary = ? OR final_price = ? OR shop_id = ?";
     private static final String SQL_APPLICATION_FIN_BY_ID = "SELECT * FROM Application WHERE id = ?";
     private static final String SQL_APPLICATION_ALL ="SELECT * FROM Application";
