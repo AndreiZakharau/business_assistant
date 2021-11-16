@@ -9,6 +9,13 @@ public class Categories {
         this.category = category;
     }
 
+    public Categories() {
+
+    }
+
+    public Categories(int id) {
+    }
+
     public int getId() {
         return id;
     }

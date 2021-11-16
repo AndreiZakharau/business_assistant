@@ -19,12 +19,10 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
 
     private ExpiredProductDAO(){}
     private static final String SQL_INSERT_OVERDUE ="INSERT INTO Expiredproduct(name_overdue,balance,price) Value(?,?,?)";
-    private static final String SQL_DELETE_OVERDUE ="DELETE FROM Expiredproduct WHERE id = ? OR name_overdue =?" +
-            " OR balance = ? OR price = ?";
+    private static final String SQL_DELETE_OVERDUE ="DELETE FROM Expiredproduct WHERE id = ? OR name_overdue =? OR balance = ? OR price = ?";
     private static final String SQL_OVERDUE_FIN_BY_ID = "SELECT * FROM Expiredproduct WHERE id = ?";
     private static final String SQL_OVERDUE_ALL ="SELECT * FROM Expiredproduct";
-    private static final String SQL_UPDATE_OVERDUE = "UPDATE Expiredproduct SET id =? AND SET name_overdue =?" +
-            "AND SET balance = ? AND SET price = ? ";
+    private static final String SQL_UPDATE_OVERDUE = "UPDATE Expiredproduct SET id =?, name_overdue =?, balance = ?, price = ? WHERE id = ?";
 
 
     @Override

@@ -13,6 +13,12 @@ public class Suppliers {
         this.email = email;
     }
 
+    public Suppliers() {
+    }
+
+    public Suppliers(int id) {
+    }
+
     public int getId() {
         return id;
     }

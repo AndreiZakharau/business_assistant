@@ -11,14 +11,14 @@
         <div class="card-body">
             <h1>My Shop</h1>
 
-            <form action="AddShopServlet" method="post">
+            <form action="/accountant/addShop" method="post">
 
                 <div class="form-group row card-body" >
                     <label for="nameShop" class="col-xl-2 col-sm-12 col-form-label">
                         Name</label>
                     <div class="col-xl-7 col-sm-12">
                         <input type="text" class="form-control" name="nameShop" id="nameShop"
-                               placeholder="Enter name">
+                               placeholder="Enter name" required>
                     </div>
                 </div>
 
@@ -27,7 +27,7 @@
                         Address</label>
                     <div class="col-7">
                         <input type="text" class="form-control" name="address" id="address"
-                               placeholder="Enter address">
+                               placeholder="Enter address" required>
                     </div>
                 </div>
 
@@ -35,6 +35,9 @@
             </form>
         </div>
     </div>
+    <ul>
+        <a  type="submit" class="btn btn-primary" href="/accountant/add_all.jsp">EXIT</a>
+    </ul>
 </div>
 </body>
 </html>

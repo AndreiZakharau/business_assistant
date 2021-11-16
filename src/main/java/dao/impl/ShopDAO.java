@@ -11,14 +11,21 @@ import java.util.List;
 public class ShopDAO implements DAO<Shops> {
 
 
-    public static ShopDAO getInstance;
+    public static ShopDAO instance = new ShopDAO();
+
+    public static ShopDAO getInstance() {
+        return instance;
+    }
+
+    ShopDAO(){}
+
 
 
     private static final String SQL_INSERT_SHOP = "INSERT INTO Shops(nameShop,address) VALUES (?,?)";
     private static final String SQL_SHOP_BY_DELETE ="DELETE FROM Shops WHERE id = ? OR nameShop = ? OR address = ?";
     private static final String SQL_SHOP_FIN_BY_ID ="SELECT * FROM Shops WHERE id = ?";
     private static final String SQL_SHOP_ALL_LIST ="SELECT * FROM Shops ";
-    private static final String UPDATE_SHOP =" UPDATE Shops SET id = ? AND SET nameShop = ? AND SET address = ?";
+    private static final String UPDATE_SHOP =" UPDATE Shops SET id = ?, nameShop = ?, address = ? where id = ?";
 
     @Override
     public Shops add(Shops shops) {
@@ -107,6 +114,7 @@ public class ShopDAO implements DAO<Shops> {
             statement.setInt(1, shops.getId());
             statement.setString(2, shops.getNameShop());
             statement.setString(3, shops.getAddress());
+            statement.setInt(4,shops.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
