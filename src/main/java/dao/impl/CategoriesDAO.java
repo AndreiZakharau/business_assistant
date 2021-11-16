@@ -11,19 +11,19 @@ import java.util.List;
 
 public class CategoriesDAO implements DAO <Categories> {
 
-    private static CategoriesDAO instanceCat = new CategoriesDAO();
+    private static CategoriesDAO instance = new CategoriesDAO();
 
     public static CategoriesDAO getInstance() {
-        return instanceCat;
+        return instance;
     }
 
-    private CategoriesDAO(){}
+    public CategoriesDAO(){}
 
-    private static final String SQL_INSERT_CATEGORIES = "INSERT INTO Categories(Categories) VALUES (?)";
-    private static final String SQL_CATEGORIES_BY_DELETE ="DELETE FROM Categories WHERE id = ? OR categories = ? ";
-    private static final String SQL_CATEGORIES_FIN_BY_ID ="SELECT * FROM Categories WHERE id = ?";
-    private static final String SQL_CATEGORIES_ALL_LIST ="SELECT * FROM Categories ";
-    private static final String UPDATE_CATEGORIES ="UPDATE Categories SET id = ? AND SET categories = ?";
+    private static final String SQL_INSERT_CATEGORIES = "INSERT INTO categories(name) VALUES (?)";
+    private static final String SQL_CATEGORIES_BY_DELETE ="DELETE FROM categories WHERE id = ? OR name = ? ";
+    private static final String SQL_CATEGORIES_FIN_BY_ID ="SELECT * FROM categories WHERE id = ?";
+    private static final String SQL_CATEGORIES_ALL_LIST ="SELECT * FROM categories ";
+    private static final String UPDATE_CATEGORIES ="UPDATE categories SET id = ?, name = ? WHERE id = ?";
 
     @Override
     public Categories add(Categories categories) {
@@ -32,6 +32,8 @@ public class CategoriesDAO implements DAO <Categories> {
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_CATEGORIES)) {
 
             preparedStatement.setString(1, categories.getCategory());
+            preparedStatement.executeUpdate();
+
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
@@ -45,9 +47,7 @@ public class CategoriesDAO implements DAO <Categories> {
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_CATEGORIES_BY_DELETE);
                 preparedStatement.setInt(1, categories.getId());
                 preparedStatement.setString(2, categories.getCategory());
-
-
-                preparedStatement.executeUpdate();
+                rows = preparedStatement.executeUpdate();
 
             } catch (SQLException | ClassNotFoundException throwables) {
                 throwables.printStackTrace();
@@ -64,7 +64,7 @@ public class CategoriesDAO implements DAO <Categories> {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
-                String nameC= resultSet.getString("categories");
+                String nameC= resultSet.getString("name");
                 categories = new Categories(id,nameC);
             }
 
@@ -82,7 +82,7 @@ public class CategoriesDAO implements DAO <Categories> {
             ResultSet resultSet = statement.executeQuery(SQL_CATEGORIES_ALL_LIST);
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String nameC = resultSet.getString("categories");
+                String nameC = resultSet.getString("name");
                 categories.add(new Categories(id, nameC));
             }
 
@@ -99,6 +99,7 @@ public class CategoriesDAO implements DAO <Categories> {
              PreparedStatement statement = conn.prepareStatement(UPDATE_CATEGORIES, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, categories.getId());
             statement.setString(2, categories.getCategory());
+            statement.setInt(3,categories.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

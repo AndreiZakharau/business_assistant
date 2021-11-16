@@ -1,28 +1,26 @@
 package entity;
 
-public class Application {
+public class Application {  //TODO finalPrice?
 
     private int id;
-    private Products nameProduct;
+    private Products name;
     private int necessaryQuantities;
-    private Products finalPrice;
     private Shops shop;
 
 
-    public Application(int id, Products nameProduct, int necessaryQuantities, Products finalPrice, Shops shop) {
+    public Application(int id, Products name, int necessaryQuantities, Shops shop) {
         this.id = id;
-        this.nameProduct = nameProduct;
-        this.necessaryQuantities = necessaryQuantities;
-        this.finalPrice = finalPrice;
+        this.name = name;
+        this.necessaryQuantities = necessaryQuantities;;
         this.shop = shop;
 
     }
 
-    public Application(int id, int name, int necessary, double price, int shop) {
+    public Application(int id, int name, int necessary, int shop) {
 
     }
 
-    public Application(int id, int name, int balance, double price) {
+    public Application(int id, int name, int balance) {
     }
 
     public int getId() {
@@ -33,12 +31,12 @@ public class Application {
         this.id = id;
     }
 
-    public Products getNameProduct() {
-        return nameProduct;
+    public Products getName() {
+        return name;
     }
 
-    public void setNameProduct(Products nameProduct) {
-        this.nameProduct = nameProduct;
+    public void setName(Products name) {
+        this.name = name;
     }
 
     public int getNecessaryQuantities() {
@@ -47,14 +45,6 @@ public class Application {
 
     public void setNecessaryQuantities(int necessaryQuantities) {
         this.necessaryQuantities = necessaryQuantities;
-    }
-
-    public Products getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(Products finalPrice) {
-        this.finalPrice = finalPrice;
     }
 
     public Shops getShop() {
@@ -71,9 +61,8 @@ public class Application {
     public String toString() {
         return "Application{" +
                 "id=" + id +
-                ", nameProduct=" + nameProduct +
+                ", nameProduct=" + name +
                 ", necessaryQuantities=" + necessaryQuantities +
-                ", finalPrice=" + finalPrice +
                 ", shop=" + shop + '}';
     }
 }

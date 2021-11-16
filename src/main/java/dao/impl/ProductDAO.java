@@ -6,27 +6,25 @@ import entity.*;
 
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDAO implements DAO<Products> {
 
-    private static ProductDAO instancePr = new ProductDAO();
+    private static ProductDAO instance = new ProductDAO();
 
     public static ProductDAO getInstance() {
-        return instancePr;
+        return instance;
     }
 
-    private ProductDAO(){}
+    public ProductDAO(){}
 
-    private static final String SQL_PRODUCT_BY_DELETE = "DELETE FROM Products WHERE  id = ? OR nameProduct = ? OR count = ? " +
-            "OR price = ? OR categories_id = ? OR suppliers_id = ? OR final_price = ? OR delivery = ? OR date_expiration = ? OR shop_id = ? ";
+    private static final String SQL_PRODUCT_BY_DELETE = "DELETE FROM Products WHERE  id = ? OR name = ? OR count = ? OR price = ? OR categories_id = ? OR suppliers_id = ?  OR delivery = ?  OR shop_id = ? ";
 
-    private static final String UPDATE_PRODUCT = "UPDATE Products set id = ? AND set nameProduct = ? AND set count = ?  AND set price = ? AND set categories_id = ?" +
-            " AND set suppliers_id = ? AND set final_price = ? AND set delivery = ? AND set date_expiration = ? AND set shop_id = ?";
+    private static final String UPDATE_PRODUCT = "UPDATE Products set id = ?, name = ?, count = ?, price = ?, categories_id = ?, suppliers_id = ?, delivery = ?, date_expiration = ?, shop_id = ? WHERE id = ?";
 
-    private static final String SQL_INSERT_PRODUCT = "INSERT INTO Products(nameProduct,count,price,categories_id,suppliers_id," +
-            "final_price,delivery,date_expiration,shop_id) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String SQL_INSERT_PRODUCT = "INSERT INTO Products(name,count,price,categories_id,suppliers_id,delivery,date_expiration,shop_id) VALUES (?,?,?,?,?,?,?,?)";
 
     private static final String SQL_PRODUCT_FIN_BY_ID = "SELECT * FROM Products WHERE id = ?";
 
@@ -39,15 +37,14 @@ public class ProductDAO implements DAO<Products> {
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_PRODUCT)) {
 
-            preparedStatement.setString(1, products.getNameProduct());
+            preparedStatement.setString(1, products.getName());
             preparedStatement.setInt(2, products.getCount());
             preparedStatement.setDouble(3, products.getPrice());
-            preparedStatement.setInt(4, products.getCategories().getId());
-            preparedStatement.setInt(5, products.getSuppliers().getId());
-            preparedStatement.setDouble(6, products.getFinalPrice().getAndPrice());
-            preparedStatement.setString(7, products.getDelivery().getLd().toString());
-            preparedStatement.setString(8, products.getDateExpiration().getReformattedString());
-            preparedStatement.setInt(9,products.getShop().getId());
+            preparedStatement.setInt(4, products.getCategories());
+            preparedStatement.setInt(5, products.getSuppliers());
+            preparedStatement.setString(6, String.valueOf(products.getLocalDate()));
+            preparedStatement.setString(7, String.valueOf(products.getDate()));
+            preparedStatement.setInt(8,products.getShop());
            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -64,15 +61,12 @@ public class ProductDAO implements DAO<Products> {
 
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_PRODUCT_BY_DELETE);
                 preparedStatement.setInt(1, products.getId());
-                preparedStatement.setString(2, products.getNameProduct());
+                preparedStatement.setString(2, products.getName());
                 preparedStatement.setInt(3, products.getCount());
                 preparedStatement.setDouble(4, products.getPrice());
-                preparedStatement.setInt(5, products.getCategories().getId());
-                preparedStatement.setInt(6, products.getSuppliers().getId());
-                preparedStatement.setDouble(7, products.getFinalPrice().getAndPrice());
-                preparedStatement.setString(8, products.getDelivery().getLd().toString());
-                preparedStatement.setString(9, products.getDateExpiration().getReformattedString());
-                preparedStatement.setInt(10,products.getShop().getId());
+                preparedStatement.setInt(5, products.getId());
+                preparedStatement.setInt(6, products.getId());
+                preparedStatement.setInt(7,products.getId());
 
                 rows = preparedStatement.executeUpdate();
 
@@ -96,12 +90,11 @@ public class ProductDAO implements DAO<Products> {
                 double price = resultSet.getDouble("price");
                 int categories = resultSet.getInt("categories_id");
                 int supplier = resultSet.getInt("suppliers_id");
-                double finalPrise = resultSet.getDouble("final_price");
-                String dateDelivery = resultSet.getString("delivery");
-                String dateExpiration = resultSet.getString("date_expiration");
+                String localDate = resultSet.getString("delivery");
+                String date = resultSet.getString("date_expiration");
                 int shop = resultSet.getInt ("shop_id");
 
-                products = new Products(id, name, count,price, categories,supplier,finalPrise,dateDelivery,dateExpiration,shop);
+                products = new Products(id,name,count,price,categories,supplier,localDate,date,shop);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -112,23 +105,24 @@ public class ProductDAO implements DAO<Products> {
 
     @Override
     public List<Products> findAll() {
-        List<Products> products = new ArrayList<>();
-        try (Connection connect = DBConnection.getConnection()) {
-            Statement statement = connect.createStatement();
+        List<Products>products = new ArrayList<>();
+        try (Connection connection = DBConnection.getConnection()){
+            Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_PRODUCT_ALL_LIST);
-            while (resultSet.next()) {
+            while (resultSet.next()){
                 int id = resultSet.getInt("id");
-                String name = resultSet.getString("nameProduct");
+                String name = resultSet.getString("name");
                 int count = resultSet.getInt("count");
                 double price = resultSet.getDouble("price");
                 int categories = resultSet.getInt("categories_id");
                 int supplier = resultSet.getInt("suppliers_id");
-                double finalPrise = resultSet.getDouble("final_price");
-                String dateDelivery = resultSet.getString("delivery");
-                String dateExpiration = resultSet.getString("date_expiration");
-                int shop = resultSet.getInt ("shop_id");
+                LocalDate localDate = LocalDate.parse(resultSet.getString("delivery"));
+                Date date = resultSet.getDate("date_expiration");
+                int shop = resultSet.getInt("shop_id");
 
-                products.add(new Products(id, name, count,price, categories,supplier,finalPrise,dateDelivery,dateExpiration,shop));
+                products.add(new Products(id,name,count,price,categories,supplier,localDate,date,shop));
+
+                System.out.println("___" + products.toString());
             }
 
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -141,17 +135,18 @@ public class ProductDAO implements DAO<Products> {
     @Override
     public boolean update(Products products) {
         try (Connection conn = DBConnection.getConnection();
-             PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
+              PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_PRODUCT, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, products.getId());
-            preparedStatement.setString(2, products.getNameProduct());
+            preparedStatement.setString(2, products.getName());
             preparedStatement.setInt(3, products.getCount());
             preparedStatement.setDouble(4, products.getPrice());
-            preparedStatement.setInt(5, products.getCategories().getId());
-            preparedStatement.setInt(6, products.getSuppliers().getId());
-            preparedStatement.setDouble(7, products.getFinalPrice().getAndPrice());
-            preparedStatement.setString(8, products.getDelivery().getLd().toString());
-            preparedStatement.setString(9, products.getDateExpiration().getReformattedString());
-            preparedStatement.setInt(10,products.getShop().getId());
+            preparedStatement.setInt(5, products.getId());
+            preparedStatement.setInt(6, products.getId());
+            preparedStatement.setString(7, String.valueOf(products.getLocalDate()));
+            preparedStatement.setString(8, String.valueOf(products.getDate()));
+            preparedStatement.setInt(9,products.getId());
+            preparedStatement.setInt(10,products.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {

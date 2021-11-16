@@ -1,4 +1,4 @@
-package servlets;
+package servise.accountant;
 
 import dao.impl.ShopDAO;
 import entity.Shops;
@@ -8,12 +8,12 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet("/AddShopServlet")
-public class AddShopServlet extends HttpServlet {
+@WebServlet("/accountant/addShop")
+public class AddShop extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       getServletContext().getRequestDispatcher("/myShops.jsp").forward(request,response);
+       getServletContext().getRequestDispatcher("/accountant/myShops.jsp").forward(request,response);
 
     }
 
@@ -26,10 +26,8 @@ public class AddShopServlet extends HttpServlet {
             Shops shops = new Shops(nameShop,address);
             shops.setNameShop(nameShop);
             shops.setAddress(address);
-            request.setAttribute("shops",shops);
-            ShopDAO shopDAO = new ShopDAO();
-            shopDAO.add(shops);
-            response.sendRedirect(request.getContextPath()+"/index.jsp");
+            ShopDAO.getInstance().add(shops);
+            response.sendRedirect(request.getContextPath()+"/accountant/addShop");  //TODO
 
 
 //            getServletContext().getRequestDispatcher("/myShops.jsp").forward(request, response);
