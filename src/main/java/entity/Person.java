@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Person {
     private int id;
     private String name;
@@ -15,7 +17,18 @@ public class Person {
         this.role = role;
     }
 
-    public Person(int id, int name, int necessary, double price, int shop) {
+
+    public Person(String name, String lastName, String telephoneNumber, Role role) {
+    }
+
+    public Person(String name, String lastName, String telephone) {
+    }
+
+    public Person() {
+
+    }
+
+    public Person(int id){
     }
 
     public int getId() {
@@ -67,5 +80,18 @@ public class Person {
                 ", telephoneNumber=" + telephoneNumber +
                 ", role=" + role +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return id == person.id && Objects.equals(name, person.name) && Objects.equals(lastName, person.lastName) && Objects.equals(telephoneNumber, person.telephoneNumber) && role == person.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, lastName, telephoneNumber, role);
     }
 }

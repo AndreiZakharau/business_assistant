@@ -19,10 +19,10 @@ public class SuppliersDAO implements DAO <Suppliers> {
         return instanceSu;
     }
 
-    private SuppliersDAO(){}
+    public SuppliersDAO(){}
 
     private static final String SQL_SUPPLIERS_BY_DELETE = "DELETE FROM Suppliers WHERE  id = ? OR name = ? OR contact_tel = ? OR email = ? ";
-    private static final String SQL_UPDATE_SUPPLIERS = "UPDATE Suppliers set id = ? AND set name = ? AND set contact_tel  = ? AND set email = ?";
+    private static final String SQL_UPDATE_SUPPLIERS = "UPDATE Suppliers set id = ?, name = ?, contact_tel  = ?, email = ? Where id = ?";
     private static final String SQL_INSERT_SUPPLIERS = "INSERT INTO Suppliers(name,contact_tel,email) VALUES (?,?,?)";
     private static final String SQL_SUPPLIERS_FIN_BY_ID = "SELECT * FROM Suppliers WHERE id = ?";
     private static final String SQL_SUPPLIERS_ALL_LIST = "SELECT * FROM Suppliers";
@@ -53,6 +53,8 @@ public class SuppliersDAO implements DAO <Suppliers> {
             ps.setString(2,suppliers.getNameSupplier());
             ps.setString(3,suppliers.getContactTel());
             ps.setString(4,suppliers.getEmail());
+            rows = ps.executeUpdate();
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -113,6 +115,7 @@ public class SuppliersDAO implements DAO <Suppliers> {
             ps.setString(2,suppliers.getNameSupplier());
             ps.setString(3,suppliers.getContactTel());
             ps.setString(4,suppliers.getEmail());
+            ps.setInt(5,suppliers.getId());
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
