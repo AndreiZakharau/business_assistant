@@ -12,7 +12,7 @@
 
          <i>
                 <c:forEach var="persons" items="${requestScope.person}">
-                <option name="persons" value="${persons.id}" > ${persons.id}  ${persons.name}  ${persons.lastName}
+                <option name="persons" value="${persons.id}" > ${persons.name}  ${persons.lastName}
                 ${persons.telephoneNumber}  ${persons.role};</option>
                 </c:forEach>
 

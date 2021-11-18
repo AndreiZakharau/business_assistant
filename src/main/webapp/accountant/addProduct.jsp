@@ -50,7 +50,7 @@
 
                 <div class="form-group row card-body" >
                     <label for="suppliers_id" class="col-xl-2 col-sm-12 col-form-label">
-                        Categories</label>
+                        Suppliers</label>
                     <select class="col-xl-7 col-sm-12"
                             name="suppliers_id" id="suppliers_id">
                         <c:forEach var="suppliers_id" items="${requestScope.suppliers}">

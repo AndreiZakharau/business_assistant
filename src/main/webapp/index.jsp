@@ -16,7 +16,7 @@
 <body>
   <nav>
   <ul class="menu">
-    <li><a href="enterServlet">Home</a></li>
+    <li><a href="enterServlet">Entrance</a></li>
     <li><a href="#!">Go shopping</a></li>
     <li><a href="#!">Contact</a></li>
     <li><a href="loginServlet">For the director</a></li>

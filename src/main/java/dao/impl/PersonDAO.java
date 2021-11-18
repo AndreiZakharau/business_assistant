@@ -27,6 +27,7 @@ public class PersonDAO implements DAO<Person> {
     private static final String SQL_PERSONS_FIN_BY_ID = "SELECT * FROM Persons WHERE id = ?";
     private static final String SQL_PERSONS_ALL_LIST = "SELECT * FROM Persons";
     private static final String SQL_PERSONS_FIN_BY_ALL_PARAMETERS = "SELECT * FROM Persons WHERE name = ? AND lastName = ? AND telephoneNumber = ?";
+    private static final String SQL_PERSONS_FIN_BY_NAME = "SELECT * FROM Persons WHERE name = ?";
 
     @Override
     public boolean delete(Person person) {
@@ -45,6 +46,7 @@ public class PersonDAO implements DAO<Person> {
         }
         return rows != 0;
     }
+
 
     @Override
     public Person finByID(int id) {
@@ -161,4 +163,33 @@ public class PersonDAO implements DAO<Person> {
         }
         return person;
     }
-}
+
+    @Override
+    public Person finByName(String name) {
+        Person person = new Person();
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_NAME);
+            preparedStatement.setString(1, name);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int indef = resultSet.getInt("id");
+                String name1 = resultSet.getString("name");
+                String lastN = resultSet.getString("lastName");
+                String telephone = resultSet.getString("telephoneNumber");
+                Role roles = Role.valueOf(resultSet.getString("role_role"));
+                person.setId(indef);
+                person.setName(name1);
+                person.setLastName(lastN);
+                person.setTelephoneNumber(telephone);
+                person.setRole(roles);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return person;
+    }
+    }

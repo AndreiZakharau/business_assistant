@@ -3,6 +3,7 @@ package servise.accountant;
 
 import dao.impl.SuppliersDAO;
 import entity.Suppliers;
+import jframes.DeleteObject;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,6 +30,7 @@ public class DeleteSupplier extends HttpServlet {
         suppliers.setId(id);
         SuppliersDAO.getInstance().delete(suppliers);
 
+        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteSupplier");
     }
 }

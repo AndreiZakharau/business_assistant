@@ -3,6 +3,7 @@ package servise.accountant;
 import dao.impl.CategoriesDAO;
 import entity.Categories;
 import entity.Products;
+import jframes.ObjectUpdate;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,9 +27,11 @@ public class UpdateCategories extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        Categories categories = new Categories(id,name);
+        double interest = Double.parseDouble(request.getParameter("interest"));
+        Categories categories = new Categories(id,name,interest);
         CategoriesDAO.getInstance().update(categories);
 
+        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+ "/accountant/updateCategories");
     }
 }

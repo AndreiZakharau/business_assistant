@@ -26,7 +26,7 @@
         <li><a class="nav-label" href="/accountant/update_all.jsp">Update</a></li>
         <li><a class="nav-label" href="/accountant/delete_all.jsp">Delete</a></li>
         <li><a class="nav-label" href="">Application</a></li>
-        <li><a class="nav-label" href="">Rate</a></li>
+        <li><a class="nav-label" href="/accountant/listWork">List info</a></li>
         <li><a class="nav-label" href="/index.jsp">Exit</a></li>
     </ul>
 </nav>

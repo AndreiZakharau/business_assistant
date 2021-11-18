@@ -32,7 +32,7 @@ public class SecurityDirector implements Filter {
         String password = (String) session.getAttribute("password");
         Director director = DirectorDAO.getInstance().finDirectorByLoginAndPassword(login,password);
 
-        if(director.getPassword() != null && director.getPassword() == null && director.getLogin().equals(login) && director.getPassword().equals(password)) {
+        if(director.getPassword() != null && director.getPassword() != null && director.getLogin().equals(login) && director.getPassword().equals(password)) {
             enter = true;
         }
         return enter;
