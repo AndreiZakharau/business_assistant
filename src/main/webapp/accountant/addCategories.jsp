@@ -21,6 +21,14 @@
                                placeholder="Enter categories" required>
                     </div>
                 </div>
+                <div class="form-group row card-body" >
+                    <label for="name" class="col-xl-2 col-sm-12 col-form-label">
+                        Interest</label>
+                    <div class="col-xl-7 col-sm-12">
+                        <input type="text" class="form-control" name="name" id="interest"
+                               placeholder="Enter interest %" required>
+                    </div>
+                </div>
 
 
                 <button type="submit" class="btn btn-primary">Save</button>

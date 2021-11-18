@@ -4,6 +4,7 @@ package servise.accountant;
 import dao.impl.ShopDAO;
 
 import entity.Shops;
+import jframes.DeleteObject;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -31,6 +32,7 @@ public class DeleteShop extends HttpServlet {
         shops.setId(id);
         ShopDAO.getInstance().delete(shops);
 
+        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteShop");
 
     }

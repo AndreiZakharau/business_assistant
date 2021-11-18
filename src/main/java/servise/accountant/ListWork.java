@@ -1,9 +1,13 @@
 package servise.accountant;
 
 import dao.impl.CategoriesDAO;
+import dao.impl.ProductDAO;
+import dao.impl.ShopDAO;
+import dao.impl.SuppliersDAO;
 import entity.Categories;
 import entity.Products;
-import jframes.ObjectUpdate;
+import entity.Shops;
+import entity.Suppliers;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,27 +15,25 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/accountant/updateCategories")
-public class UpdateCategories extends HttpServlet {
+@WebServlet( "/accountant/listWork")
+public class ListWork extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<Categories> categories = CategoriesDAO.getInstance().findAll();
         request.setAttribute("categories",categories);
-         getServletContext().getRequestDispatcher("/accountant/updateCategories.jsp").forward(request,response);
+        List<Suppliers> suppliers = SuppliersDAO.getInstance().findAll();
+        request.setAttribute("suppliers",suppliers);
+        List<Shops> shops = ShopDAO.getInstance().findAll();
+        request.setAttribute("shops",shops);
+        List<Products>products = ProductDAO.getInstance().findAll();
+        request.setAttribute("products",products);
+        getServletContext().getRequestDispatcher("/accountant/list_works.jsp").forward(request,response);
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        double interest = Double.parseDouble(request.getParameter("interest"));
-        Categories categories = new Categories(id,name,interest);
-        CategoriesDAO.getInstance().update(categories);
-
-        new ObjectUpdate();
-        response.sendRedirect(request.getContextPath()+ "/accountant/updateCategories");
     }
 }

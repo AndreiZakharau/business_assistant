@@ -20,7 +20,7 @@
                     <select class="col-xl-7 col-sm-12"
                             name="categories" id="categories">
                         <c:forEach var="categories" items="${requestScope.categories}">
-                            <option name="categories" value="${categories.id}" > ${categories.id} ${categories.category}</option>
+                            <option name="categories" value="${categories.id}" > ${categories.id} ${categories.category} ${categories.interest}</option>
                         </c:forEach>
                     </select>
                 </div>

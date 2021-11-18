@@ -8,6 +8,7 @@ import entity.Categories;
 import entity.Products;
 import entity.Shops;
 import entity.Suppliers;
+import jframes.ObjectUpdate;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -57,6 +58,7 @@ public class UpdateProduct extends HttpServlet {
         products.setShop(shops);
         ProductDAO.getInstance().update(products);
 
+        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+"/accountant/updateProduct");
     }
 }

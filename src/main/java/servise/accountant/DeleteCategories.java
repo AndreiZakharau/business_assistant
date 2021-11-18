@@ -2,6 +2,8 @@ package servise.accountant;
 
 import dao.impl.CategoriesDAO;
 import entity.Categories;
+import jframes.DeleteObject;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -26,6 +28,7 @@ public class DeleteCategories extends HttpServlet {
         Categories categories = new Categories(id);
         categories.setId(id);
         CategoriesDAO.getInstance().delete(categories);
+        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteCategories");
     }
 }

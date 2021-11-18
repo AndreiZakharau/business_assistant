@@ -13,6 +13,7 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
 
     private static ExpiredProductDAO instance = new ExpiredProductDAO();
 
+
     public static ExpiredProductDAO getInstance() {
         return instance;
     }
@@ -119,5 +120,10 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
             e.printStackTrace();
         }
         return true;
+    }
+
+    @Override
+    public ExpiredProduct finByName(String t) {
+        return null;
     }
 }
