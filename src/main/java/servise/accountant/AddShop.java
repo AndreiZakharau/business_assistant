@@ -2,6 +2,8 @@ package servise.accountant;
 
 import dao.impl.ShopDAO;
 import entity.Shops;
+import jframes.ExistObject;
+import jframes.ObjectAdded;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,12 +28,15 @@ public class AddShop extends HttpServlet {
             Shops shops = new Shops(nameShop,address);
             shops.setNameShop(nameShop);
             shops.setAddress(address);
-            ShopDAO.getInstance().add(shops);
-            response.sendRedirect(request.getContextPath()+"/accountant/addShop");  //TODO
+            Shops shop = ShopDAO.getInstance().finByName(nameShop);
+            if(shop.getNameShop() != null && shop.getNameShop().equals(nameShop)){
+                new ExistObject();
+            }else {
+                ShopDAO.getInstance().add(shops);
+                new ObjectAdded();
+            }
 
-
-//            getServletContext().getRequestDispatcher("/myShops.jsp").forward(request, response);
-
+            response.sendRedirect(request.getContextPath()+"/accountant/addShop");
 
     }
 }

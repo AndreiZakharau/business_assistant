@@ -3,6 +3,8 @@ package servise.director;
 import dao.impl.PersonDAO;
 import entity.Person;
 import entity.Role;
+import jframes.ExistObject;
+import jframes.ObjectAdded;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,8 +35,15 @@ public class AddPerson extends HttpServlet {
        person.setLastName(lastName);
        person.setTelephoneNumber(telephoneNumber);
        person.setRole(role);
-       Person personDAO = new PersonDAO().add(person);
-       resp.sendRedirect(req.getContextPath()+"/director/addPerson");  //TODO выдать, что пользователь добавлен
+       Person persons = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
+       if(persons.getName() != null && persons.getLastName() != null && persons.getTelephoneNumber() != null
+       && (persons.getName().equals(name) && persons.getLastName().equals(lastName) && persons.getTelephoneNumber().equals(telephoneNumber))){
+           new ExistObject();
+        }else{
+           PersonDAO.getInstance().add(person);
+           new ObjectAdded();
+        }
 
+       resp.sendRedirect(req.getContextPath()+"/director/addPerson");
     }
 }

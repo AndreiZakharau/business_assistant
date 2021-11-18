@@ -15,6 +15,9 @@ public class DirectorDAO implements DAO<Director> {
     DirectorDAO(){}
 
     private static final String SQL_INSERT_DIRECTOR = "INSERT INTO Director(login,password) VALUES (?,?)";
+
+
+
     private static final String SQL_DIRECTOR_LIST = "SELECT * FROM Director";
     private static final String UPDATE_DIRECTOR = "UPDATE Director SET id = ?, login = ?, password = ? where id = ?";
     private static final String SQL_DIRECTOR_BY_LOGIN_AND_PASSWORD = "SELECT * FROM Director WHERE login = ? AND password = ?";
@@ -103,5 +106,10 @@ public class DirectorDAO implements DAO<Director> {
             e.printStackTrace();
         }
         return director;
+    }
+
+    @Override
+    public Director finByName(String t) {
+        return null;
     }
 }

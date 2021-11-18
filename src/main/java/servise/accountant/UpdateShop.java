@@ -2,6 +2,7 @@ package servise.accountant;
 
 import dao.impl.ShopDAO;
 import entity.Shops;
+import jframes.ObjectUpdate;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -32,6 +33,7 @@ public class UpdateShop extends HttpServlet {
         shops.setAddress(address);
         ShopDAO.getInstance().update(shops);
 
+        new ObjectUpdate();
         response.sendRedirect( request.getContextPath() + "/accountant/updateShop");
     }
 }

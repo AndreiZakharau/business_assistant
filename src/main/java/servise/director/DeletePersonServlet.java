@@ -3,6 +3,7 @@ package servise.director;
 import dao.impl.PersonDAO;
 import entity.Person;
 import entity.Role;
+import jframes.DeleteObject;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,8 +28,8 @@ public class DeletePersonServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Person person = new Person(id);
         person.setId(id);
-
         PersonDAO.getInstance().delete(person);
+        new DeleteObject();
         response.sendRedirect(request.getContextPath()+("/director/deletePersonServlet"));
     }
 }

@@ -3,6 +3,7 @@ package dao.impl;
 import connection.DBConnection;
 import dao.DAO;
 import entity.Application;
+import entity.Products;
 import entity.Shops;
 
 
@@ -18,12 +19,14 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
         return instanceAp;
     }
 
-    private ApplicationDAO(){}
 
-    private static final String SQL_INSERT_APPLICATION ="INSERT INTO Application(product_id,necessary,shop_id) Value(?,?,?)";
-    private static final String SQL_DELETE_APPLICATION ="DELETE FROM Application WHERE id = ? OR product_id =? OR necessary = ?  OR shop_id = ?";
+    private ApplicationDAO() {
+    }
+
+    private static final String SQL_INSERT_APPLICATION = "INSERT INTO Application(product_id,necessary,shop_id) Value(?,?,?)";
+    private static final String SQL_DELETE_APPLICATION = "DELETE FROM Application WHERE id = ? OR product_id =? OR necessary = ?  OR shop_id = ?";
     private static final String SQL_APPLICATION_FIN_BY_ID = "SELECT * FROM Application WHERE id = ?";
-    private static final String SQL_APPLICATION_ALL ="SELECT * FROM Application";
+    private static final String SQL_APPLICATION_ALL = "SELECT * FROM Application";
     private static final String SQL_UPDATE_APPLICATION = "UPDATE Application SET id =?, product_id =?, necessary = ?, shop_id = ? WHERE id = ?";
 
 
@@ -53,9 +56,9 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
 
             PreparedStatement preparedStatement = connect.prepareStatement(SQL_DELETE_APPLICATION);
             preparedStatement.setInt(1, application.getId());
-            preparedStatement.setInt(2,application.getName().getId());
+            preparedStatement.setInt(2, application.getName().getId());
             preparedStatement.setInt(3, application.getNecessaryQuantities());
-            preparedStatement.setInt(4,application.getShop().getId());
+            preparedStatement.setInt(4, application.getShop().getId());
             rows = preparedStatement.executeUpdate();
 
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -73,10 +76,10 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
-               int name = resultSet.getInt("product_id");
-               int necessary = resultSet.getInt("necessary");
-               int shop = resultSet.getInt("shop_id");
-                application = new Application(id, name, necessary,shop);
+                int name = resultSet.getInt("product_id");
+                int necessary = resultSet.getInt("necessary");
+                int shop = resultSet.getInt("shop_id");
+                application = new Application(id, name, necessary, shop);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -92,11 +95,11 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_APPLICATION_ALL);
             while (resultSet.next()) {
-                 int id = resultSet.getInt("id");
+                int id = resultSet.getInt("id");
                 int name = resultSet.getInt("product_id");
                 int necessary = resultSet.getInt("necessary");
                 int shop = resultSet.getInt("shop_id");
-                applicationList.add( new Application(id, name, necessary,shop));
+                applicationList.add(new Application(id, name, necessary, shop));
             }
 
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -113,7 +116,7 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
             statement.setInt(1, application.getId());
             statement.setInt(2, application.getName().getId());
             statement.setInt(3, application.getNecessaryQuantities());
-            statement.setInt(4,application.getShop().getId());
+            statement.setInt(4, application.getShop().getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -122,4 +125,25 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
         }
         return true;
     }
+
+    @Override
+    public Application finByName(String name) {
+        Application application = new Application();
+//        try (Connection connection = DBConnection.getConnection()) {
+//            PreparedStatement preparedStatement = connection.prepareStatement(SQL_APPLICATION_FIN_BY_NAME);
+//            preparedStatement.setString(1, name);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                int id = resultSet.getInt("id");
+//                Products names = resultSet.getString("name");
+//                application.setId(id);
+//                application.setName(names);
+//
+//            }
+//        } catch (SQLException | ClassNotFoundException throwables) {
+//            throwables.printStackTrace();
+//        }
+        return application;
+    }
 }
+

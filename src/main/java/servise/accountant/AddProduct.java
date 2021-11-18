@@ -9,6 +9,8 @@ import entity.Categories;
 import entity.Products;
 import entity.Shops;
 import entity.Suppliers;
+import jframes.ExistObject;
+import jframes.ObjectAdded;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -59,8 +61,15 @@ public class AddProduct extends HttpServlet {
         products.setLocalDate(localDate);
         products.setDate(date);
         products.setShop(shops);
-        ProductDAO.getInstance().add(products);
-        response.sendRedirect(request.getContextPath()+"/accountant/addProduct");
+        Products product = ProductDAO.getInstance().finByNameSuppliersShop(name,suppliers,shops);
+        if(product.getName() != null && product.getName().equals(name)){
+            new ExistObject();
+        }else {
+            ProductDAO.getInstance().add(products);
+            new ObjectAdded();
+        }
+
+        response.sendRedirect(request.getContextPath() + "/accountant/addProduct");
 
     }
 }

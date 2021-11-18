@@ -21,11 +21,15 @@ public class SuppliersDAO implements DAO <Suppliers> {
 
     public SuppliersDAO(){}
 
+   
+
     private static final String SQL_SUPPLIERS_BY_DELETE = "DELETE FROM Suppliers WHERE  id = ? OR name = ? OR contact_tel = ? OR email = ? ";
     private static final String SQL_UPDATE_SUPPLIERS = "UPDATE Suppliers set id = ?, name = ?, contact_tel  = ?, email = ? Where id = ?";
     private static final String SQL_INSERT_SUPPLIERS = "INSERT INTO Suppliers(name,contact_tel,email) VALUES (?,?,?)";
     private static final String SQL_SUPPLIERS_FIN_BY_ID = "SELECT * FROM Suppliers WHERE id = ?";
     private static final String SQL_SUPPLIERS_ALL_LIST = "SELECT * FROM Suppliers";
+    private static final String SQL_SUPPLIERS_FIN_BY_NAME = "SELECT * FROM Suppliers WHERE name = ?";
+
 
     @Override
     public Suppliers add(Suppliers suppliers) {
@@ -125,4 +129,24 @@ public class SuppliersDAO implements DAO <Suppliers> {
 
         return true;
     }
-}
+
+    @Override
+    public Suppliers finByName(String nameSupplier) {
+        Suppliers suppliers = new Suppliers();
+        try (Connection conn = DBConnection.getConnection()) {
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL_SUPPLIERS_FIN_BY_NAME);
+            preparedStatement.setString(1, nameSupplier);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                suppliers.setId(id);
+                suppliers.setNameSupplier(name);
+            }
+
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+        return suppliers;
+        }
+    }
