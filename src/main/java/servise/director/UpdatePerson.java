@@ -3,6 +3,7 @@ package servise.director;
 import dao.impl.PersonDAO;
 import entity.Person;
 import entity.Role;
+import jframes.ObjectUpdate;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -39,6 +40,7 @@ public class UpdatePerson extends HttpServlet {
         person.setTelephoneNumber(telephoneNumber);
         person.setRole(role);
         PersonDAO.getInstance().update(person);
+        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+"/director/updatePerson");
 
     }

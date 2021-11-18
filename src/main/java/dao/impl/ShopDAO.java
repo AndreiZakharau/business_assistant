@@ -26,6 +26,7 @@ public class ShopDAO implements DAO<Shops> {
     private static final String SQL_SHOP_FIN_BY_ID ="SELECT * FROM Shops WHERE id = ?";
     private static final String SQL_SHOP_ALL_LIST ="SELECT * FROM Shops ";
     private static final String UPDATE_SHOP =" UPDATE Shops SET id = ?, nameShop = ?, address = ? where id = ?";
+    private static final String SQL_SHOP_FIN_BY_NAME = "SELECT * FROM Shops WHERE name = ?";
 
     @Override
     public Shops add(Shops shops) {
@@ -124,6 +125,26 @@ public class ShopDAO implements DAO<Shops> {
         return true;
     }
 
+    @Override
+    public Shops finByName(String nameShop) {
+        Shops shops = new Shops();
+        try(Connection connection = DBConnection.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_SHOP_FIN_BY_NAME);
+            preparedStatement.setString(1,nameShop);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                shops.setId(id);
+                shops.setNameShop(name);
+            }
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
+        return shops;
+    }
 }

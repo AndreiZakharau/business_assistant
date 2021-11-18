@@ -23,6 +23,10 @@ public class Application {  //TODO finalPrice?
     public Application(int id, int name, int balance) {
     }
 
+    public Application() {
+
+    }
+
     public int getId() {
         return id;
     }

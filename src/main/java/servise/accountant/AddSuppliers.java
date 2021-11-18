@@ -2,6 +2,8 @@ package servise.accountant;
 
 import dao.impl.SuppliersDAO;
 import entity.Suppliers;
+import jframes.ExistObject;
+import jframes.ObjectAdded;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -25,10 +27,16 @@ public class AddSuppliers extends HttpServlet {
         suppliers.setNameSupplier(name);
         suppliers.setContactTel(tel);
         suppliers.setEmail(email);
-        SuppliersDAO suppliersDAO = new SuppliersDAO();
-        suppliersDAO.add(suppliers);
+        Suppliers supplier = SuppliersDAO.getInstance().finByName(name);
+        if(supplier.getNameSupplier() != null && supplier.getNameSupplier().equals(name)){
+            new ExistObject();
+        }else {
+            SuppliersDAO suppliersDAO = new SuppliersDAO();
+            suppliersDAO.add(suppliers);
+            new ObjectAdded();
+        }
 
-        response.sendRedirect(request.getContextPath()+"/accountant/addSuppliers"); //TODO
+        response.sendRedirect(request.getContextPath()+"/accountant/addSuppliers");
 
     }
 }

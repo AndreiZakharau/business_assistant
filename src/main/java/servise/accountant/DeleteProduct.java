@@ -2,6 +2,7 @@ package servise.accountant;
 
 import dao.impl.ProductDAO;
 import entity.Products;
+import jframes.DeleteObject;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,6 +30,7 @@ public class DeleteProduct extends HttpServlet {
         products.setId(id);
         ProductDAO.getInstance().delete(products);
 
+        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteProduct");
 
 

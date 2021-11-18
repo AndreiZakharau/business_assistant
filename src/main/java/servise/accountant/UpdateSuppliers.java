@@ -2,6 +2,7 @@ package servise.accountant;
 
 import dao.impl.SuppliersDAO;
 import entity.Suppliers;
+import jframes.ObjectUpdate;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -34,6 +35,7 @@ public class UpdateSuppliers extends HttpServlet {
         suppliers.setEmail(email);
         SuppliersDAO.getInstance().update(suppliers);
 
+        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+"/accountant/updateSuppliers");
     }
 }
