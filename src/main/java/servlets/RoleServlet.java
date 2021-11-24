@@ -31,7 +31,7 @@ public class RoleServlet extends HttpServlet {
             Person person = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
 
             if(person.getRole().equals(SALESPERSON)){
-                response.sendRedirect(request.getContextPath()+"/salesperson/salesperson_menu.jsp");
+                response.sendRedirect(request.getContextPath()+"/work.jsp");
             }else if (person.getRole().equals(DIRECTOR)){
                 response.sendRedirect(request.getContextPath()+"/loginServlet");
             }else if (person.getRole().equals(ACCOUNTANT)){

@@ -19,7 +19,7 @@
                     <select class="col-xl-7 col-sm-12"
                            name="categories" id ="categories">
                         <c:forEach var="categories" items="${requestScope.categories}">
-                            <option name="categories" value="${categories.id}" > ${categories.id} ${categories.category} ${categories.interest} </option>
+                            <option name="categories" value="${categories.id}" > ${categories.id} ${categories.category} </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -39,17 +39,6 @@
                                placeholder="Enter categories" required>
                     </div>
                 </div>
-                <div class="form-group row card-body" >
-                <label for="interest" class="col-xl-2 col-sm-12 col-form-label">
-                    Interest</label>
-                <div class="col-xl-7 col-sm-12">
-                    <input type="text" class="form-control" name="interest" id="interest"
-                           placeholder="Enter interest %" required>
-                </div>
-                </div>
-
-
-
 
 
                 <button type="submit" class="btn btn-primary">Save</button>

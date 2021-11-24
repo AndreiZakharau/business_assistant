@@ -27,8 +27,7 @@ public class UpdateCategories extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        double interest = Double.parseDouble(request.getParameter("interest"));
-        Categories categories = new Categories(id,name,interest);
+        Categories categories = new Categories(id,name);
         CategoriesDAO.getInstance().update(categories);
 
         new ObjectUpdate();
