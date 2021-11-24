@@ -20,11 +20,10 @@ public class CategoriesDAO implements DAO <Categories> {
     public CategoriesDAO(){}
 
     private static final String SQL_INSERT_CATEGORIES = "INSERT INTO categories(name) VALUES (?)";
-    private static final String SQL_CATEGORIES_BY_DELETE ="DELETE FROM categories WHERE id = ? OR name = ? OR interest = ?";
+    private static final String SQL_CATEGORIES_BY_DELETE ="DELETE FROM categories WHERE id = ? OR name = ? ";
     private static final String SQL_CATEGORIES_FIN_BY_ID ="SELECT * FROM categories WHERE id = ?";
     private static final String SQL_CATEGORIES_ALL_LIST ="SELECT * FROM categories ";
-    private static final String UPDATE_CATEGORIES ="UPDATE categories SET id = ?, name = ?, interest = ? WHERE id = ?";
-    private static final String SQL_CATEGORY_FIN_BY_NAME ="SELECT * FROM categories WHERE name = ?";
+    private static final String UPDATE_CATEGORIES ="UPDATE categories SET id = ?, name = ? WHERE id = ?";
 
     @Override
     public Categories add(Categories categories) {
@@ -40,30 +39,7 @@ public class CategoriesDAO implements DAO <Categories> {
         }
         return categories;
     }
-
-
-    public Categories finByName(String category) {
-        Categories categories = new Categories();
-        try(Connection conn = DBConnection.getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL_CATEGORY_FIN_BY_NAME);
-            preparedStatement.setString(1, category);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double interest = resultSet.getDouble("interest");
-                categories.setId(id);
-                categories.setCategory(name);
-                categories.setInterest(interest);
-            }
-
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
-        return  categories;
-    }
-
-    @Override
+        @Override
     public boolean delete(Categories categories) {
             int rows = 0;
             try (Connection connect = DBConnection.getConnection()) {
@@ -71,7 +47,6 @@ public class CategoriesDAO implements DAO <Categories> {
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_CATEGORIES_BY_DELETE);
                 preparedStatement.setInt(1, categories.getId());
                 preparedStatement.setString(2, categories.getCategory());
-                preparedStatement.setDouble(3,categories.getInterest());
                 rows = preparedStatement.executeUpdate();
 
             } catch (SQLException | ClassNotFoundException throwables) {
@@ -90,8 +65,7 @@ public class CategoriesDAO implements DAO <Categories> {
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
                 String nameC= resultSet.getString("name");
-                double interest = resultSet.getDouble("interest");
-                categories = new Categories(id,nameC,interest);
+                categories = new Categories(id,nameC);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -109,8 +83,7 @@ public class CategoriesDAO implements DAO <Categories> {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String nameC = resultSet.getString("name");
-                double interest = resultSet.getDouble("interest");
-                categories.add(new Categories(id, nameC,interest));
+                categories.add(new Categories(id, nameC));
             }
 
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -126,8 +99,7 @@ public class CategoriesDAO implements DAO <Categories> {
              PreparedStatement statement = conn.prepareStatement(UPDATE_CATEGORIES, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, categories.getId());
             statement.setString(2, categories.getCategory());
-            statement.setDouble(3,categories.getInterest());
-            statement.setInt(4,categories.getId());
+            statement.setInt(3,categories.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
