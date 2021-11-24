@@ -24,7 +24,6 @@ public class CategoriesDAO implements DAO <Categories> {
     private static final String SQL_CATEGORIES_FIN_BY_ID ="SELECT * FROM categories WHERE id = ?";
     private static final String SQL_CATEGORIES_ALL_LIST ="SELECT * FROM categories ";
     private static final String UPDATE_CATEGORIES ="UPDATE categories SET id = ?, name = ? WHERE id = ?";
-    private static final String SQL_CATEGORY_FIN_BY_NAME ="SELECT * FROM categories WHERE name = ?";
 
     @Override
     public Categories add(Categories categories) {
@@ -40,28 +39,7 @@ public class CategoriesDAO implements DAO <Categories> {
         }
         return categories;
     }
-
-
-    public Categories finByName(String category) {
-        Categories categories = new Categories();
-        try(Connection conn = DBConnection.getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL_CATEGORY_FIN_BY_NAME);
-            preparedStatement.setString(1, category);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                categories.setId(id);
-                categories.setCategory(name);
-            }
-
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
-        return  categories;
-    }
-
-    @Override
+        @Override
     public boolean delete(Categories categories) {
             int rows = 0;
             try (Connection connect = DBConnection.getConnection()) {

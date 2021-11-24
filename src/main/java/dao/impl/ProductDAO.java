@@ -3,6 +3,8 @@ package dao.impl;
 import connection.DBConnection;
 import dao.DAO;
 import entity.*;
+
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,15 +20,15 @@ public class ProductDAO implements DAO<Products> {
 
     public ProductDAO(){}
 
-    private static final String SQL_PRODUCT_BY_DELETE = "DELETE FROM Products WHERE  id = ? ";
+    private static final String SQL_PRODUCT_BY_DELETE = "DELETE FROM Products WHERE  id = ? OR name = ? OR count = ? OR price = ? OR categories_id = ? OR suppliers_id = ?  OR delivery = ?  OR shop_id = ? ";
+
     private static final String UPDATE_PRODUCT = "UPDATE Products set id = ?, name = ?, count = ?, price = ?, categories_id = ?, suppliers_id = ?, delivery = ?, date_expiration = ?, shop_id = ? WHERE id = ?";
+
     private static final String SQL_INSERT_PRODUCT = "INSERT INTO Products(name,count,price,categories_id,suppliers_id,delivery,date_expiration,shop_id) VALUES (?,?,?,?,?,?,?,?)";
+
     private static final String SQL_PRODUCT_FIN_BY_ID = "SELECT * FROM Products WHERE id = ?";
+
     private static final String SQL_PRODUCT_ALL_LIST = "SELECT * FROM Products";
-    private static final String SQL_PRODUCT_FIN_BY_NAME = "SELECT * FROM Products WHERE name = ?";
-    private static final String SQL_PRODUCT_FIN_BY_NAME_SUPPLIER_SHOP = "SELECT * FROM Products WHERE name = ?,suppliers_id = ?, shop_id = ?";
-
-
 
     @Override
     public Products add(Products products) {
@@ -59,6 +61,12 @@ public class ProductDAO implements DAO<Products> {
 
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_PRODUCT_BY_DELETE);
                 preparedStatement.setInt(1, products.getId());
+                preparedStatement.setString(2, products.getName());
+                preparedStatement.setInt(3, products.getCount());
+                preparedStatement.setDouble(4, products.getPrice());
+                preparedStatement.setInt(5, products.getId());
+                preparedStatement.setInt(6, products.getId());
+                preparedStatement.setInt(7,products.getId());
 
                 rows = preparedStatement.executeUpdate();
 
@@ -95,7 +103,6 @@ public class ProductDAO implements DAO<Products> {
         return products;
     }
 
-
     @Override
     public List<Products> findAll() {
         List<Products>products = new ArrayList<>();
@@ -115,6 +122,7 @@ public class ProductDAO implements DAO<Products> {
 
                 products.add(new Products(id,name,count,price,categories,supplier,localDate,date,shop));
 
+                System.out.println("___" + products.toString());
             }
 
         } catch (SQLException | ClassNotFoundException throwables) {
@@ -132,11 +140,11 @@ public class ProductDAO implements DAO<Products> {
             preparedStatement.setString(2, products.getName());
             preparedStatement.setInt(3, products.getCount());
             preparedStatement.setDouble(4, products.getPrice());
-            preparedStatement.setInt(5, products.getCategories());
-            preparedStatement.setInt(6, products.getSuppliers());
+            preparedStatement.setInt(5, products.getId());
+            preparedStatement.setInt(6, products.getId());
             preparedStatement.setString(7, String.valueOf(products.getLocalDate()));
             preparedStatement.setString(8, String.valueOf(products.getDate()));
-            preparedStatement.setInt(9,products.getShop());
+            preparedStatement.setInt(9,products.getId());
             preparedStatement.setInt(10,products.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -146,79 +154,4 @@ public class ProductDAO implements DAO<Products> {
         }
         return true;
     }
-
-    @Override
-    public Products finByName(String name) {
-        Products products = new Products();
-        try (Connection conn = DBConnection.getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL_PRODUCT_FIN_BY_NAME);
-            preparedStatement.setString(1, name);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name1 = resultSet.getString("name");
-                int count = resultSet.getInt("count");
-                double price = resultSet.getDouble("price");
-                int categories = resultSet.getInt("categories_id");
-                int supplier = resultSet.getInt("suppliers_id");
-                LocalDate localDate = LocalDate.parse(resultSet.getString("delivery"));
-                Date date = resultSet.getDate("date_expiration");
-                int shop = resultSet.getInt("shop_id");
-                products.setId(id);
-                products.setName(name1);
-                products.setCount(count);
-                products.setPrice(price);
-                products.setCategories(categories);
-                products.setSuppliers(supplier);
-                products.setLocalDate(localDate);
-                products.setDate(date);
-                products.setShop(shop);
-
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
-
-    public Products finByNameSuppliersShop(String name,int supplier,int shop) {
-        Products products = new Products();
-        try (Connection conn = DBConnection.getConnection()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL_PRODUCT_FIN_BY_NAME_SUPPLIER_SHOP);
-            preparedStatement.setString(1, name);
-            preparedStatement.setInt(2,supplier);
-            preparedStatement.setInt(3,shop);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name1 = resultSet.getString("name");
-                int count = resultSet.getInt("count");
-                double price = resultSet.getDouble("price");
-                int categories = resultSet.getInt("categories_id");
-                int supplier1 = resultSet.getInt("suppliers_id");
-                LocalDate localDate = LocalDate.parse(resultSet.getString("delivery"));
-                Date date = resultSet.getDate("date_expiration");
-                int shop1 = resultSet.getInt("shop_id");
-                products.setId(id);
-                products.setName(name1);
-                products.setCount(count);
-                products.setPrice(price);
-                products.setCategories(categories);
-                products.setSuppliers(supplier1);
-                products.setLocalDate(localDate);
-                products.setDate(date);
-                products.setShop(shop1);
-
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return products;
-    }
-    }
+}
