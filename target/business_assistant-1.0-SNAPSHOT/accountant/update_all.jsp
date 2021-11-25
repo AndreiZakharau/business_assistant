@@ -8,7 +8,6 @@
 
     <link rel="stylesheet" href="../my_resourses/css/style_for_index.css">
 
-
 </head>
 
 <body>

@@ -59,9 +59,9 @@
                         </c:forEach>
                         <td>${product.localDate}</td>
                         <td>${product.date}</td>
-                        <td class="quantity_inner">
+                        <td class="sort-icon">
                                 <button class="bt_minus">-</button>
-                                <input type="text" size="20" class="quantity" value="1" data-max-count="${product.count}" >
+                                <input type="text" class="quantity" value="1" data-max-count="${product.count}" >
                                 <button class="bt_plus">+</button>
 
                         </td>
