@@ -70,6 +70,7 @@
     </ul>
 </div>
 
+
 <script>
     $(document).ready( function () {
         $('#bootstrap-table').bdt();

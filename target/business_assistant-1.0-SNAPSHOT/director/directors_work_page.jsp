@@ -4,7 +4,10 @@
 <head>
     <title>DIRECTOR'S WORK PAGE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
     <link rel="stylesheet" href="../my_resourses/css/style_for_index.css">
+
 
 </head>
 

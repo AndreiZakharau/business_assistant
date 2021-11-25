@@ -12,6 +12,7 @@
             <h1>My Shop</h1>
 
             <form action="/accountant/addShop" method="post">
+
                 <div class="form-group row card-body" >
                     <label for="nameShop" class="col-xl-2 col-sm-12 col-form-label">
                         Name</label>

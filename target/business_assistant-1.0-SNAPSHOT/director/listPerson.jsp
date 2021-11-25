@@ -9,6 +9,7 @@
   <h1>
 
     <ul>
+
          <i>
                 <c:forEach var="persons" items="${requestScope.person}">
                 <option name="persons" value="${persons.id}" > ${persons.name}  ${persons.lastName}

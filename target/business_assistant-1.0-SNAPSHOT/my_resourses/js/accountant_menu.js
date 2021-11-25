@@ -4,6 +4,7 @@ var nav = document.getElementById('nav');
 var header = document.getElementById('header');
 var heading = document.getElementById('heading');
 var labels = document.getElementsByClassName('nav-label');
+
 // sizing
 var windowHeight = window.innerHeight;
 var windowWidth = window.innerWidth;

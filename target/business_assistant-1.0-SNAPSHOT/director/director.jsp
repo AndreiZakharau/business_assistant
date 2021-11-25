@@ -12,6 +12,8 @@
 
       <link rel="stylesheet" href="../my_resourses/css/director_style.css">
 
+
+  
 </head>
 
 <body>

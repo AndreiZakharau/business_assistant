@@ -10,6 +10,7 @@
     <div class="card">
         <div class="card-body">
             <h1>Suppliers</h1>
+
             <form action="/accountant/addSuppliers" method="post">
 
                 <div class="form-group row card-body">
