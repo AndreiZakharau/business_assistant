@@ -7,7 +7,11 @@
     <title>Full Screen Nav</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+
     <link rel="stylesheet" href="/my_resourses/css/accontant_menu.css">
+
+
 </head>
 
 <body>

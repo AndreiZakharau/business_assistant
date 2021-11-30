@@ -2,62 +2,41 @@
 <html >
 <head>
 
-
-
   <title>Director menu</title>
-  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
-  <link rel="stylesheet prefetch" href="../my_resourses/css/5e3594c5f394b457f8b8ffbb4.css">
-
-      <link rel="stylesheet" href="../my_resourses/css/director_style.css">
+  <title>Full Screen Nav</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
 
-  
+  <link rel="stylesheet" href="/my_resourses/css/accontant_menu.css">
+
+
 </head>
 
 <body>
+<div id="nav-trigger" class="nav-trigger open">
+  <span class="line"></span>
+  <span class="line"></span>
+  <span class="line"></span>
+</div>
+
+<nav id="nav" class="out">
   <ul>
-  <li>
-    <a class="list-item" href="/director/directors_work_page.jsp" >
-      <i class='icon-reorder' ></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-th-large'></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-bar-chart'></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-tasks'></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-bell'></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-archive'></i>
-    </a>
-  </li>
-  <li>
-    <a class='list-item' href=''>
-      <i class='icon-comment'></i>
-    </a>
-  </li>
+    <li><a class="nav-label" href="/director/directors_work_page.jsp">Work</a></li>
+    <li><a class="nav-label" href="/director/listPersonServlet">Persons</a></li>
+    <li><a class="nav-label" href="">Statistic</a></li>
+    <li><a class="nav-label" href="">Application</a></li>
+    <li><a class="nav-label" href="/director/listWork.jsp">List info</a></li>
+    <li><a class="nav-label" href="/index.jsp">Exit</a></li>
+  </ul>
+</nav>
+<section id="header" class="header">
+  <h1 id="heading"></h1>
+</section>
 
 
-</ul>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script  src="/my_resourses/js/accountant_menu.js"></script>
 
-  
 </body>
 </html>

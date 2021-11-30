@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -53,7 +54,7 @@
                     <td>${product.price}</td>
                     <c:forEach var="categories" items="${requestScope.categories}">
                         <c:if test="${categories.id==product.categories}">
-                    <td><c:out value="${product.price +(product.price * categories.interest / 100)}"></c:out></td>
+                    <td><fmt:formatNumber value="${product.price +(product.price * categories.interest / 100)}" maxFractionDigits="2"/></td>
                     </c:if>
                     </c:forEach>
                     <td>${product.localDate}</td>

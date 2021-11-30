@@ -43,7 +43,7 @@
                     <select class="col-xl-7 col-sm-12"
                     name="categories_id" id="categories_id">
                         <c:forEach var="categories_id" items="${requestScope.categories}">
-                        <option name="categories_id" value="${categories_id.id}" > ${categories_id.id} ${categories_id.category} </option>
+                        <option name="categories_id" value="${categories_id.id}" > ${categories_id.id} ${categories_id.category} ${categories_id.interest}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -85,6 +85,8 @@
                         </c:forEach>
                     </select>
                 </div>
+
+
 
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>
