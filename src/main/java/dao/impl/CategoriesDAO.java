@@ -1,9 +1,8 @@
 package dao.impl;
 
-import connection.DBConnection;
+import connection.ConnectionPool;
 import dao.DAO;
 import entity.Categories;
-import entity.Shops;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -29,13 +28,13 @@ public class CategoriesDAO implements DAO <Categories> {
     @Override
     public Categories add(Categories categories) {
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_CATEGORIES)) {
 
             preparedStatement.setString(1, categories.getCategory());
             preparedStatement.executeUpdate();
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException  throwables) {
             throwables.printStackTrace();
         }
         return categories;
@@ -44,12 +43,12 @@ public class CategoriesDAO implements DAO <Categories> {
 
     public Categories finByName(String category) {
         Categories categories = new Categories();
-        try(Connection conn = DBConnection.getConnection()) {
+        try(Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_CATEGORY_FIN_BY_NAME);
             preparedStatement.setString(1, category);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 double interest = resultSet.getDouble("interest");
                 categories.setId(id);
@@ -57,7 +56,7 @@ public class CategoriesDAO implements DAO <Categories> {
                 categories.setInterest(interest);
             }
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return  categories;
@@ -66,35 +65,35 @@ public class CategoriesDAO implements DAO <Categories> {
     @Override
     public boolean delete(Categories categories) {
             int rows = 0;
-            try (Connection connect = DBConnection.getConnection()) {
+            try (Connection connect = ConnectionPool.get()) {
 
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_CATEGORIES_BY_DELETE);
-                preparedStatement.setInt(1, categories.getId());
+                preparedStatement.setLong(1, categories.getId());
                 preparedStatement.setString(2, categories.getCategory());
                 preparedStatement.setDouble(3,categories.getInterest());
                 rows = preparedStatement.executeUpdate();
 
-            } catch (SQLException | ClassNotFoundException throwables) {
+            } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
             return rows != 0;
         }
 
     @Override
-    public Categories finByID(int id) {
+    public Categories finByID(long id) {
         Categories categories = null;
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_CATEGORIES_FIN_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                id = resultSet.getInt("id");
+                id = resultSet.getLong("id");
                 String nameC= resultSet.getString("name");
                 double interest = resultSet.getDouble("interest");
                 categories = new Categories(id,nameC,interest);
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return categories;
@@ -103,17 +102,17 @@ public class CategoriesDAO implements DAO <Categories> {
     @Override
     public List<Categories> findAll() {
         List<Categories> categories = new ArrayList<>();
-        try (Connection connect = DBConnection.getConnection()) {
+        try (Connection connect = ConnectionPool.get()) {
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_CATEGORIES_ALL_LIST);
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String nameC = resultSet.getString("name");
                 double interest = resultSet.getDouble("interest");
                 categories.add(new Categories(id, nameC,interest));
             }
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
@@ -122,17 +121,15 @@ public class CategoriesDAO implements DAO <Categories> {
 
     @Override
     public boolean update(Categories categories) {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(UPDATE_CATEGORIES, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, categories.getId());
+            statement.setLong(1, categories.getId());
             statement.setString(2, categories.getCategory());
             statement.setDouble(3,categories.getInterest());
-            statement.setInt(4,categories.getId());
+            statement.setLong(4,categories.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }

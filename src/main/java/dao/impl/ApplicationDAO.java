@@ -1,10 +1,8 @@
 package dao.impl;
 
-import connection.DBConnection;
+import connection.ConnectionPool;
 import dao.DAO;
 import entity.Application;
-import entity.Products;
-import entity.Shops;
 
 
 import java.sql.*;
@@ -33,18 +31,16 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
     @Override
     public Application add(Application application) {
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_APPLICATION)) {
 
-            preparedStatement.setInt(1, application.getName().getId());
+            preparedStatement.setLong(1, application.getName().getId());
             preparedStatement.setInt(2, application.getNecessaryQuantities());
-            preparedStatement.setInt(3, application.getShop().getId());
+            preparedStatement.setLong(3, application.getShop().getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return application;
     }
@@ -52,37 +48,37 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
     @Override
     public boolean delete(Application application) {
         int rows = 0;
-        try (Connection connect = DBConnection.getConnection()) {
+        try (Connection connect = ConnectionPool.get()) {
 
             PreparedStatement preparedStatement = connect.prepareStatement(SQL_DELETE_APPLICATION);
-            preparedStatement.setInt(1, application.getId());
-            preparedStatement.setInt(2, application.getName().getId());
+            preparedStatement.setLong(1, application.getId());
+            preparedStatement.setLong(2, application.getName().getId());
             preparedStatement.setInt(3, application.getNecessaryQuantities());
-            preparedStatement.setInt(4, application.getShop().getId());
+            preparedStatement.setLong(4, application.getShop().getId());
             rows = preparedStatement.executeUpdate();
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return rows != 0;
     }
 
     @Override
-    public Application finByID(int id) {
+    public Application finByID(long id) {
         Application application = null;
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_APPLICATION_FIN_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                id = resultSet.getInt("id");
-                int name = resultSet.getInt("product_id");
+                id = resultSet.getLong("id");
+                long name = resultSet.getLong("product_id");
                 int necessary = resultSet.getInt("necessary");
-                int shop = resultSet.getInt("shop_id");
+                long shop = resultSet.getLong("shop_id");
                 application = new Application(id, name, necessary, shop);
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return application;
@@ -91,18 +87,18 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
     @Override
     public List<Application> findAll() {
         List<Application> applicationList = new ArrayList<>();
-        try (Connection connect = DBConnection.getConnection()) {
+        try (Connection connect = ConnectionPool.get()) {
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_APPLICATION_ALL);
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                int name = resultSet.getInt("product_id");
+                long id = resultSet.getLong("id");
+                long name = resultSet.getLong("product_id");
                 int necessary = resultSet.getInt("necessary");
-                int shop = resultSet.getInt("shop_id");
+                long shop = resultSet.getLong("shop_id");
                 applicationList.add(new Application(id, name, necessary, shop));
             }
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
@@ -111,17 +107,15 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
 
     @Override
     public boolean update(Application application) {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_APPLICATION, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, application.getId());
-            statement.setInt(2, application.getName().getId());
+            statement.setLong(1, application.getId());
+            statement.setLong(2, application.getName().getId());
             statement.setInt(3, application.getNecessaryQuantities());
-            statement.setInt(4, application.getShop().getId());
+            statement.setLong(4, application.getShop().getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }
@@ -129,7 +123,7 @@ public class ApplicationDAO implements DAO<Application> {  //TODO finalPrice?
     @Override
     public Application finByName(String name) {
         Application application = new Application();
-//        try (Connection connection = DBConnection.getConnection()) {
+//        try (Connection connection = ConnectionPool.get()) {
 //            PreparedStatement preparedStatement = connection.prepareStatement(SQL_APPLICATION_FIN_BY_NAME);
 //            preparedStatement.setString(1, name);
 //            ResultSet resultSet = preparedStatement.executeQuery();

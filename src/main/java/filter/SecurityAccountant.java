@@ -1,7 +1,6 @@
 package filter;
 
 
-import com.mysql.cj.AbstractQuery;
 import dao.impl.PersonDAO;
 import entity.Person;
 import entity.Role;
@@ -36,7 +35,7 @@ public class SecurityAccountant implements Filter {
          String name = (String) session.getAttribute("name");
          String lastName = (String) session.getAttribute("lastName");
         String telephoneNumber = (String) session.getAttribute("telephoneNumber");
-       Person person = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
+       Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
 
         if(person != null && person.getRole() == Role.ACCOUNTANT) {
             enter = true;

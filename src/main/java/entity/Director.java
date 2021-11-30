@@ -3,11 +3,11 @@ package entity;
 import java.util.Objects;
 
 public class Director {
-    private int id;
+    private long id;
     private String login;
     private String password;
 
-    public Director(int id, String login, String password) {
+    public Director(long id, String login, String password) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -20,11 +20,11 @@ public class Director {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,4 +56,6 @@ public class Director {
     public int hashCode() {
         return Objects.hash(id, login, password);
     }
+
+
 }

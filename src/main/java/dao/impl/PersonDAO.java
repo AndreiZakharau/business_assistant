@@ -1,10 +1,9 @@
 package dao.impl;
 
-import connection.DBConnection;
+import connection.ConnectionPool;
 import dao.DAO;
 import entity.Person;
 import entity.Role;
-import entity.Shops;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,16 +31,15 @@ public class PersonDAO implements DAO<Person> {
     @Override
     public boolean delete(Person person) {
         int rows = 0;
-        try (Connection connect = DBConnection.getConnection()) {
-
+        try (Connection connect = ConnectionPool.get()) {
             PreparedStatement preparedStatement = connect.prepareStatement(SQL_PERSON_BY_DELETE);
-            preparedStatement.setInt(1, person.getId());
+            preparedStatement.setLong(1, person.getId());
             preparedStatement.setString(2, person.getName());
             preparedStatement.setString(3, person.getLastName());
             preparedStatement.setString(4, person.getTelephoneNumber());
             rows = preparedStatement.executeUpdate();
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return rows != 0;
@@ -49,14 +47,14 @@ public class PersonDAO implements DAO<Person> {
 
 
     @Override
-    public Person finByID(int id) {
+    public Person finByID(long id) {
         Person person = null;
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                id = resultSet.getInt("id");
+                id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
@@ -64,7 +62,7 @@ public class PersonDAO implements DAO<Person> {
                 person = new Person(id, name, lastName, telephone, role);
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return person;
@@ -73,11 +71,11 @@ public class PersonDAO implements DAO<Person> {
     @Override
     public List<Person> findAll() {
         List<Person> people = new ArrayList<>();
-        try (Connection connect = DBConnection.getConnection()) {
+        try (Connection connect = ConnectionPool.get()) {
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_PERSONS_ALL_LIST);
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
@@ -86,7 +84,7 @@ public class PersonDAO implements DAO<Person> {
                 people.add(new Person(id, name, lastName, telephone, role));
             }
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
@@ -95,20 +93,18 @@ public class PersonDAO implements DAO<Person> {
 
     @Override
     public boolean update(Person person) {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_PERSON, Statement.RETURN_GENERATED_KEYS)) {
-            preparedStatement.setInt(1, person.getId());
+            preparedStatement.setLong(1, person.getId());
             preparedStatement.setString(2, person.getName());
             preparedStatement.setString(3, person.getLastName());
             preparedStatement.setString(4, person.getTelephoneNumber());
             preparedStatement.setString(5, person.getRole().name());
-            preparedStatement.setInt(6,person.getId());
+            preparedStatement.setLong(6,person.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }
@@ -117,7 +113,7 @@ public class PersonDAO implements DAO<Person> {
     public Person add(Person person) {
 
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_PERSONS)) {
 
             preparedStatement.setString(1, person.getName());
@@ -125,27 +121,24 @@ public class PersonDAO implements DAO<Person> {
             preparedStatement.setString(3, person.getTelephoneNumber());
             preparedStatement.setString(4, person.getRole().name());
             preparedStatement.executeUpdate();
-//            System.out.println("Person создан");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return person;
 
     }
 
-    public Person findByAllParameters(String name, String lastName, String tel){
+    public Person findByNamesAndPhone(String name, String lastName, String tel){
         Person person = new Person();
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_ALL_PARAMETERS);
             preparedStatement.setString(1,name);
             preparedStatement.setString(2,lastName);
             preparedStatement.setString(3,tel);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int indef = resultSet.getInt("id");
+                long indef = resultSet.getLong("id");
                 String name1 = resultSet.getString("name");
                 String lastN = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
@@ -157,8 +150,7 @@ public class PersonDAO implements DAO<Person> {
                 person.setRole(roles);
             }
 
-
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return person;
@@ -167,13 +159,13 @@ public class PersonDAO implements DAO<Person> {
     @Override
     public Person finByName(String name) {
         Person person = new Person();
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_NAME);
             preparedStatement.setString(1, name);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int indef = resultSet.getInt("id");
+                Long indef = resultSet.getLong("id");
                 String name1 = resultSet.getString("name");
                 String lastN = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
@@ -187,8 +179,6 @@ public class PersonDAO implements DAO<Person> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return person;
     }

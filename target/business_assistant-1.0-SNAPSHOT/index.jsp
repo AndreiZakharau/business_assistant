@@ -1,5 +1,6 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -7,23 +8,21 @@
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
-  
       <link rel="stylesheet" href="my_resourses/css/style_for_index.css">
 
-  
 </head>
 
 <body>
-  <nav>
-  <ul class="menu">
-    <li><a href="enterServlet">Entrance</a></li>
-    <li><a href="#!">Go shopping</a></li>
-    <li><a href="#!">Contact</a></li>
-    <li><a href="loginServlet">For the director</a></li>
 
+  <ul class="menu">
+
+    <li><a href="enterServlet"><fmt:message key="translation.index.enter"/></a></li>
+    <li><a href="page_expected.jsp"><fmt:message key="translation.index.go_shopping"/></a></li>
+    <li><a href="page_expected.jsp"><fmt:message key="translation.index.contact"/></a></li>
+    <li><a href="loginServlet"><fmt:message key="translation.index.for_director"/></a></li>
+    <%@ include file="locale.jsp"%>
   </ul>
-</nav>
-  
-  
+
 </body>
+
 </html>

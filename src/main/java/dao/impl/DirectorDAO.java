@@ -1,6 +1,6 @@
 package dao.impl;
 
-import connection.DBConnection;
+import connection.ConnectionPool;
 import dao.DAO;
 import entity.Director;
 
@@ -25,15 +25,13 @@ public class DirectorDAO implements DAO<Director> {
 
     @Override
     public Director add(Director director) {
-        try (Connection connection = DBConnection.getConnection();
+        try (Connection connection = ConnectionPool.get();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_DIRECTOR)) {
             preparedStatement.setString(1, director.getLogin());
             preparedStatement.setString(2, director.getPassword());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return director;
     }
@@ -44,56 +42,52 @@ public class DirectorDAO implements DAO<Director> {
     }
 
     @Override
-    public Director finByID(int id) {
+    public Director finByID(long id) {
         return null;
     }
 
     @Override
     public List<Director> findAll() {
         List<Director> list = new ArrayList<>();
-        try(Connection connection = DBConnection.getConnection()){
+        try(Connection connection = ConnectionPool.get()){
         PreparedStatement preparedStatement = connection.prepareStatement(SQL_DIRECTOR_LIST);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
                 list.add(new Director(id,login,password));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return list;
     }
 
     @Override
     public boolean update(Director director) {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(UPDATE_DIRECTOR, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1,director.getId());
+            statement.setLong(1,director.getId());
             statement.setString(2, director.getLogin());
             statement.setString(3, director.getPassword());
-            statement.setInt(4,director.getId());
+            statement.setLong(4,director.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }
 
     public Director finDirectorByLoginAndPassword(String login,String password) {
         Director director = new Director();
-        try(Connection connection = DBConnection.getConnection()) {
+        try(Connection connection = ConnectionPool.get()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DIRECTOR_BY_LOGIN_AND_PASSWORD);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String login1 = resultSet.getString("login");
                 String password1 = resultSet.getString("password");
                 director.setId(id);
@@ -102,8 +96,6 @@ public class DirectorDAO implements DAO<Director> {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return director;
     }

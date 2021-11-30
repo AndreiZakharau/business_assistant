@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 <link rel="stylesheet" href="https://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />
@@ -13,20 +14,20 @@
 <div class="container">
     <div class="row">
         <div class="box clearfix">
-            <h2 class="text-center">My products</h2>
+            <h2 class="text-center"><fmt:message key="translation.product"/></h2>
             <hr />
             <table class="table table-hover" id="bootstrap-table">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Category</th>
-                    <th>Supplier</th>
-                    <th>Shop</th>
-                    <th>Count</th>
-                    <th>Price</th>
-                    <th>Final price</th>
-                    <th>Delivery</th>
-                    <th>Date expiration</th>
+                    <th><fmt:message key="translation.product"/></th>
+                    <th><fmt:message key="translation.category"/></th>
+                    <th><fmt:message key="translation.supplier"/></th>
+                    <th><fmt:message key="translation.shop"/></th>
+                    <th><fmt:message key="translation.count"/></th>
+                    <th><fmt:message key="translation.price"/></th>
+                    <th><fmt:message key="translation.final_price"/></th>
+                    <th><fmt:message key="translation.delivery"/></th>
+                    <th><fmt:message key="translation.date_ex"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -53,7 +54,7 @@
                     <td>${product.price}</td>
                     <c:forEach var="categories" items="${requestScope.categories}">
                         <c:if test="${categories.id==product.categories}">
-                    <td><c:out value="${product.price +(product.price * categories.interest / 100)}"></c:out></td>
+                    <td><fmt:formatNumber value="${product.price +(product.price * categories.interest / 100)}" maxFractionDigits="2"/></td>
                     </c:if>
                     </c:forEach>
                     <td>${product.localDate}</td>
@@ -66,7 +67,7 @@
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/accountant/accountant_menu.jsp">EXIT</a>
+        <a  type="submit" class="btn btn-primary" href="/accountant/accountant_menu.jsp"><fmt:message key="translation.button.exit"/></a>
     </ul>
 </div>
 

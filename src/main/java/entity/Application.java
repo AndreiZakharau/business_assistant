@@ -1,14 +1,16 @@
 package entity;
 
+import java.util.Objects;
+
 public class Application {  //TODO finalPrice?
 
-    private int id;
+    private long id;
     private Products name;
     private int necessaryQuantities;
     private Shops shop;
 
 
-    public Application(int id, Products name, int necessaryQuantities, Shops shop) {
+    public Application(long id, Products name, int necessaryQuantities, Shops shop) {
         this.id = id;
         this.name = name;
         this.necessaryQuantities = necessaryQuantities;;
@@ -16,22 +18,22 @@ public class Application {  //TODO finalPrice?
 
     }
 
-    public Application(int id, int name, int necessary, int shop) {
+    public Application(long id, long name, int necessary, long shop) {
 
     }
 
-    public Application(int id, int name, int balance) {
+    public Application(long id, long name, long balance) {
     }
 
     public Application() {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -68,5 +70,18 @@ public class Application {  //TODO finalPrice?
                 ", nameProduct=" + name +
                 ", necessaryQuantities=" + necessaryQuantities +
                 ", shop=" + shop + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Application that = (Application) o;
+        return id == that.id && necessaryQuantities == that.necessaryQuantities && Objects.equals(name, that.name) && Objects.equals(shop, that.shop);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, necessaryQuantities, shop);
     }
 }

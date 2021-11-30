@@ -225,11 +225,12 @@ nav.in li {
 }
 
 .header {
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/53148/bg.jpg);
+    background-image: url(/my_resourses/img/IMG_7196.JPEG);
+    background-color:grey;
     background-size: cover;
     position: relative;
-    width: 100%;
-    min-height: 100%;
+    width: auto;
+    min-height: 65%;
     top: 0px;
 }
 

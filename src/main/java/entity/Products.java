@@ -5,17 +5,17 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Products {
-    private int id;
+    private long id;
     private String name;
     private int count;
     private double price;
-    private int categories;
-    private int suppliers;
+    private long categories;
+    private long suppliers;
     private LocalDate localDate;
     private Date date;
-    private int shop;
+    private long shop;
 
-    public Products(int id, String name, int count, double price, int categories, int suppliers, LocalDate localDate, Date date, int shop) {
+    public Products(long id, String name, int count, double price, long categories, long suppliers, LocalDate localDate, Date date, long shop) {
         this.id = id;
         this.name = name;
         this.count = count;
@@ -27,25 +27,23 @@ public class Products {
         this.shop = shop;
     }
 
-    public Products(int id, String name, int count, double price, int categories, int supplier, String localDate, String date, int shop) {
-    }
-
 
     public Products() {
 
     }
 
-    public Products(int id) {
+    public Products(long id, String name, int count, double price, long categories, long supplier, String localDate, String date, long shop) {
     }
 
-    public Products(String name, int count, double price, int categories, int suppliers, LocalDate localDate, java.sql.Date date, int shops) {
+    public Products(String name, int count, double price, long categories, long suppliers, LocalDate localDate, java.sql.Date date, long shops) {
     }
 
-    public int getId() {
+
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -73,19 +71,19 @@ public class Products {
         this.price = price;
     }
 
-    public int getCategories() {
+    public long getCategories() {
         return categories;
     }
 
-    public void setCategories(int categories) {
+    public void setCategories(long categories) {
         this.categories = categories;
     }
 
-    public int getSuppliers() {
+    public long getSuppliers() {
         return suppliers;
     }
 
-    public void setSuppliers(int suppliers) {
+    public void setSuppliers(long suppliers) {
         this.suppliers = suppliers;
     }
 
@@ -105,11 +103,11 @@ public class Products {
         this.date = date;
     }
 
-    public int getShop() {
+    public long getShop() {
         return shop;
     }
 
-    public void setShop(int shop) {
+    public void setShop(long shop) {
         this.shop = shop;
     }
 
