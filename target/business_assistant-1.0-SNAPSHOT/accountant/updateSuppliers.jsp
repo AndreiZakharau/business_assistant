@@ -65,7 +65,6 @@
     <ul>
         <a  type="submit" class="btn btn-primary" href="/accountant/update_all.jsp">EXIT</a>
     </ul>
-
 </div>
 </body>
 </html>

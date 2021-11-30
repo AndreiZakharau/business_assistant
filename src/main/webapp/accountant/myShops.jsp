@@ -36,7 +36,7 @@
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/accountant/add_all.jsp">EXIT</a>
+        <button  type="submit" class="btn btn-primary" href="/accountant/add_all.jsp">EXIT</button>
     </ul>
 </div>
 </body>

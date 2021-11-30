@@ -10,6 +10,7 @@
     <div class="card">
         <div class="card-body">
             <h1>Update Person</h1>
+
             <form action="/director/updatePerson" method="post">
 
                 <div class="form-group row card-body" >

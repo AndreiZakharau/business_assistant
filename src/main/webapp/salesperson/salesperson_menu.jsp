@@ -1,4 +1,4 @@
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,11 +14,13 @@
 </head>
 
 <body>
+
+
 <nav>
+
     <ul class="menu">
         <li><a href="/salesperson/salespersonWork">Work</a></li>
-        <li><a href="#!">??</a></li>
-        <li><a href="#!">??</a></li>
+        <li><a href=" ">Statistic</a></li>
         <li><a href="/index.jsp">Exit</a></li>
 
     </ul>

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -27,7 +28,6 @@
                     <th>Final price</th>
                     <th>Delivery</th>
                     <th>Date expiration</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,17 +54,11 @@
                         <td>${product.price}</td>
                         <c:forEach var="categories" items="${requestScope.categories}">
                             <c:if test="${categories.id==product.categories}">
-                                <td><c:out value="${product.price +(product.price * categories.interest / 100)}"></c:out></td>
+                                <td><fmt:formatNumber value="${product.price +(product.price * categories.interest / 100)}" maxFractionDigits="2"/></td>
                             </c:if>
                         </c:forEach>
                         <td>${product.localDate}</td>
                         <td>${product.date}</td>
-                        <td class="sort-icon">
-                                <button class="bt_minus">-</button>
-                                <input type="text" class="quantity" value="1" data-max-count="${product.count}" >
-                                <button class="bt_plus">+</button>
-
-                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -73,7 +67,7 @@
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/salesperson/salesperson_menu.jsp">EXIT</a>
+        <a  type="submit" class="btn btn-primary" href="/director/directors_work_page.jsp">EXIT</a>
     </ul>
 </div>
 
