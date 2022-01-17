@@ -1,7 +1,9 @@
 package entity;
 
+import java.util.Objects;
+
 public class ExpiredProduct {  // Переделать сущьность и dao и таблицу
-    private int id;
+    private long id;
     private Products nameProductExpired;
     private Products balance;
     private Products purchasePrice;
@@ -13,15 +15,15 @@ public class ExpiredProduct {  // Переделать сущьность и dao
         this.purchasePrice = purchasePrice;
     }
 
-    public ExpiredProduct(int id, int name, int balance, double price) {
+    public ExpiredProduct(long id, long name, int balance, double price) {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -57,5 +59,18 @@ public class ExpiredProduct {  // Переделать сущьность и dao
                 ", balance=" + balance +
                 ", purchasePrice=" + purchasePrice +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpiredProduct that = (ExpiredProduct) o;
+        return id == that.id && Objects.equals(nameProductExpired, that.nameProductExpired) && Objects.equals(balance, that.balance) && Objects.equals(purchasePrice, that.purchasePrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameProductExpired, balance, purchasePrice);
     }
 }

@@ -1,11 +1,13 @@
 package entity;
 
+import java.util.Objects;
+
 public class Shops {
-    private int id;
+    private long id;
     private String nameShop;
     private String address;
 
-    public Shops(int id, String nameShop, String address) {
+    public Shops(long id, String nameShop, String address) {
         this.id = id;
         this.nameShop = nameShop;
         this.address = address;
@@ -15,11 +17,11 @@ public class Shops {
     public Shops(String nameShop, String address) {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -46,5 +48,18 @@ public class Shops {
                 ", nameShop='" + nameShop + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shops shops = (Shops) o;
+        return id == shops.id && Objects.equals(nameShop, shops.nameShop) && Objects.equals(address, shops.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameShop, address);
     }
 }

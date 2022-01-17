@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class Order {
+public class Order {  //TODO Всё переделать что связано с Order
     private int number;
     private int id;
     private String product;
@@ -31,6 +31,13 @@ public class Order {
     }
 
     public Order(int number, String product, int quantum, LocalDate localDate, double priceFinal, double sum, String nameSalesperson, String nameShop) {
+    }
+
+    public Order() {
+
+    }
+
+    public Order(int number, double sum) {
     }
 
     public int getNumber() {

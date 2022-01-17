@@ -1,6 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Salesperson work</title>
@@ -12,16 +12,7 @@
     <script type="text/javascript" src="http://bootstraptema.ru/plugins/2015/b-v3-3-6/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://bootstraptema.ru/snippets/element/2020/bootstrap-table.js"></script>
 </head>
-<form action="/salesperson/salespersonWork" method="post">
 
-<a>
-    <button type="submit" class="ui-button" href="/salesperson/salespersonWork" >
-<c:forEach var="orders" items="${requestScope.orders}">
-    <input type="hidden" name="numberNew" value="${orders.number}">
-</c:forEach>
-        ORDER</button>
-</a>
-</form>
 <div class="wrapper">
     <div class="flex">
         <div class="row">
@@ -40,14 +31,14 @@
                     <table id="fresh-table" class="table" >
                         <thead>
 
-                            <th data-field="name" data-sortable="true">Product</th>
-                            <th data-field="categories" data-sortable="true">Category</th>
-                            <th data-field="suppliers_id" data-sortable="true">Supplier</th>
-                            <th data-field="shop" data-sortable="true">Shop</th>
-                            <th data-field="final price" data-sortable="true">Final price</th>
-                            <th data-field="delivery" data-sortable="true">Delivery</th>
-                            <th data-field="date expiration" data-sortable="true"></th>
-                            <th data-field="date" data-sortable="true">Count</th>
+                            <th data-field="name" data-sortable="true"><fmt:message key="translation.product"/></th>
+                            <th data-field="categories" data-sortable="true"><fmt:message key="translation.category"/></th>
+                            <th data-field="suppliers_id" data-sortable="true"><fmt:message key="translation.supplier"/></th>
+                            <th data-field="shop" data-sortable="true"><fmt:message key="translation.shop"/></th>
+                            <th data-field="final price" data-sortable="true"><fmt:message key="translation.final_price"/></th>
+                            <th data-field="delivery" data-sortable="true"><fmt:message key="translation.delivery"/></th>
+                            <th data-field="date expiration" data-sortable="true"><fmt:message key="translation.date_ex"/></th>
+                            <th data-field="date" data-sortable="true"><fmt:message key="translation.count"/></th>
                             <th></th>
 
                         </thead>
@@ -110,13 +101,8 @@
                                   <input type="hidden" name="idOrder" value="${orders.id}">
                                       </c:if>
 
-<%--                                  <input type="hidden" name="product" value="${product.name}">--%>
-<%--                                  <input type="hidden" name="localDate" value="${orders.localDate}">--%>
-<%--                                  <input type="hidden" name="sum" value="${orders.sum}">--%>
                                   <input type="hidden" name="quantum" value="${orders.quantum}">
                                   </c:if>
-
-
 
                                   </c:forEach>
                                   <button type="submit" class="W3">-</button>
@@ -126,12 +112,28 @@
                         </c:forEach>
 
                         </tbody>
-
-
                     </table>
                 </div>
-               <a type="submit" class="ui-button" href="/salesperson/salesperson_menu.jsp">Exit</a>
+               <a type="submit" class="button" href="/salesperson/salesperson_menu.jsp"><fmt:message key="translation.exit"/></a>
+
+                <form action="/salesperson/printOrder" method="post">
+                <a>
+                        <c:forEach var="orders" items="${requestScope.orders}">
+                            <input type="hidden" name="number" value="${orders.number}">
+                            <input type="hidden" name="idProduct" value="${orders.id}">
+                            <input type="hidden" name="product" value="${orders.product}">
+                            <input type="hidden" name="quantum" value="${orders.quantum}">
+                            <input type="hidden" name="localDate" value="${orders.localDate}">
+                            <input type="hidden" name="priceFinal" value="${orders.priceFinal}"/>
+                            <input type="hidden" name="sum" value="${orders.sum}">
+                            <input type="hidden" name="nameSalesperson" value="${orders.nameSalesperson}">
+                            <input type="hidden" name="nameShop" value="${orders.nameShop}">
+                        </c:forEach>
+                            <button type="submit" class="ui-button" href="/salesperson/printOrder"><fmt:message key="translation.button.order"/></button>
+                </a>
+            </form>
             </div>
+
         </div>
     </div>
 </div>
@@ -201,19 +203,19 @@
     });
 
 
-    function operateFormatter(value, row, index) {
-        return [
-            '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
-            '<i class="fa fa-heart"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
-            '<i class="fa fa-edit"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
-            '<i class="fa fa-remove"></i>',
-            '</a>'
-        ].join('');
-    }
+    // function operateFormatter(value, row, index) {
+    //     return [
+    //         '<a rel="tooltip" title="Like" class="table-action like" href="javascript:void(0)" title="Like">',
+    //         '<i class="fa fa-heart"></i>',
+    //         '</a>',
+    //         '<a rel="tooltip" title="Edit" class="table-action edit" href="javascript:void(0)" title="Edit">',
+    //         '<i class="fa fa-edit"></i>',
+    //         '</a>',
+    //         '<a rel="tooltip" title="Remove" class="table-action remove" href="javascript:void(0)" title="Remove">',
+    //         '<i class="fa fa-remove"></i>',
+    //         '</a>'
+    //     ].join('');
+    // }
 
 
 </script>

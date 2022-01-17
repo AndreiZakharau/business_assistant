@@ -225,11 +225,12 @@ nav.in li {
 }
 
 .header {
-    backdround: url(/my_resourses/img/IMG_7189.JPEG);
+    background-image: url(/my_resourses/img/IMG_7196.JPEG);
+    background-color:grey;
     background-size: cover;
     position: relative;
-    width: 100%;
-    min-height: 100%;
+    width: auto;
+    min-height: 65%;
     top: 0px;
 }
 

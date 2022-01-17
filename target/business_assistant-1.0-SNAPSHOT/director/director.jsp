@@ -1,5 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html >
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<html>
 <head>
 
   <title>Director menu</title>
@@ -23,12 +25,12 @@
 
 <nav id="nav" class="out">
   <ul>
-    <li><a class="nav-label" href="/director/directors_work_page.jsp">Work</a></li>
-    <li><a class="nav-label" href="/director/listPersonServlet">Persons</a></li>
-    <li><a class="nav-label" href="">Statistic</a></li>
-    <li><a class="nav-label" href="">Application</a></li>
-    <li><a class="nav-label" href="/director/listWork.jsp">List info</a></li>
-    <li><a class="nav-label" href="/index.jsp">Exit</a></li>
+    <li><a class="nav-label" href="/director/directors_work_page.jsp"><fmt:message key="translation.work"/> </a></li>
+    <li><a class="nav-label" href="/director/listPersonServlet"><fmt:message key="translation.persons"/></a></li>
+    <li><a class="nav-label" href="/director/page_expected_director.jsp"><fmt:message key="translation.statistic"/></a></li>
+    <li><a class="nav-label" href="/director/page_expected_director.jsp"><fmt:message key="translation.application"/></a></li>
+    <li><a class="nav-label" href="/director/listWork.jsp"><fmt:message key="translation.list_info"/></a></li>
+    <li><a class="nav-label" href="/index.jsp"><fmt:message key="translation.exit"/></a></li>
   </ul>
 </nav>
 <section id="header" class="header">

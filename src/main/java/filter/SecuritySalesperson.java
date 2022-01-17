@@ -31,7 +31,7 @@ public class SecuritySalesperson implements Filter {
         String name = (String) session.getAttribute("name");
         String lastName = (String) session.getAttribute("lastName");
         String telephoneNumber = (String) session.getAttribute("telephoneNumber");
-        Person person = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
+        Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
         if(person != null && person.getRole() == Role.SALESPERSON){
             enter = true;
         }

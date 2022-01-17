@@ -3,13 +3,13 @@ package entity;
 import java.util.Objects;
 
 public class Person {
-    private int id;
+    private long id;
     private String name;
     private String lastName;
     private String telephoneNumber;
     private Role role;
 
-    public Person(int id, String name, String lastName, String telephoneNumber, Role role) {
+    public Person(long id, String name, String lastName, String telephoneNumber, Role role) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -28,14 +28,14 @@ public class Person {
 
     }
 
-    public Person(int id){
+    public Person(long id) {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -72,17 +72,6 @@ public class Person {
     }
 
     @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", telephoneNumber=" + telephoneNumber +
-                ", role=" + role +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -93,5 +82,16 @@ public class Person {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, lastName, telephoneNumber, role);
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", role=" + role +
+                '}';
     }
 }

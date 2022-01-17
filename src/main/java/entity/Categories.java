@@ -3,26 +3,26 @@ package entity;
 import java.util.Objects;
 
 public class Categories {
-    private int id;
+    private long id;
     private String category;
     private double interest;
 
     public Categories(){}
 
-    public Categories(int id, String category, double interest) {
+    public Categories(long id, String category, double interest) {
         this.id = id;
         this.category = category;
         this.interest = interest;
     }
 
-    public Categories(int id) {
+    public Categories(long id) {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

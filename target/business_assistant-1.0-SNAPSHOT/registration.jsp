@@ -1,6 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<html>
 <head>
 
     <title>Entrance for work</title>
@@ -19,22 +20,22 @@
 <div class="container">
     <div class="front side">
         <div class="content">
-            <h1>ENTRANCE FOR WORK</h1>
+            <h1><fmt:message key="translation.regisration.entrance_for_work"/></h1>
             <p>
             </p>
         </div>
     </div>
     <div class="back side">
         <div class="content">
-            <h1>Contact Me</h1>
+            <h1><fmt:message key="translation.registration.contact_me"/></h1>
             <form action="enterServlet" method="post">
 
-                <label for="name">Your Name :</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name">
-                <label for="lastName">Your Last name :</label>
-                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Enter your last name">
-                <label for="telephoneNumber">Your telephone number :</label>
-                <input type="text" class="form-control" name="telephoneNumber" id="telephoneNumber"  placeholder="enter your telephone number (+375.........)">
+                <label for="name"><fmt:message key="translation.registration.name"/> :</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="<fmt:message key="translation.registration.message.name"/>"/>
+                <label for="lastName"><fmt:message key="translation.registration.surname"/> :</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="<fmt:message key="translation.registration.message.surname"/>">
+                <label for="telephoneNumber"><fmt:message key="translation.registration.phone"/> :</label>
+                <input type="text" class="form-control" name="telephoneNumber" id="telephoneNumber"  placeholder="<fmt:message key="translation.registration.message.phone"/>">
                 <input type="submit" value="Enter" href="enterServlet">
             </form>
         </div>

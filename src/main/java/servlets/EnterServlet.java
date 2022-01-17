@@ -2,7 +2,6 @@ package servlets;
 
 import dao.impl.PersonDAO;
 import entity.Person;
-import entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -29,13 +28,13 @@ public class EnterServlet extends HttpServlet {
        String name =request.getParameter("name");
        String lastName =request.getParameter("lastName");
        String telephoneNumber =request.getParameter("telephoneNumber");
-       Person person = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
+       Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
            if(person.getName().equals(name)){
-           if(person.getLastName().equals(lastName)){
-           }else {
+              if(person.getLastName().equals(lastName)){
+               }else {
                response.sendRedirect(request.getContextPath() + "/error.jsp");
-           }
-               if (person.getTelephoneNumber().equals(telephoneNumber)){
+               }
+                  if (person.getTelephoneNumber().equals(telephoneNumber)){
                    HttpSession session = request.getSession();
                    session.setAttribute("name",name);
                    session.setAttribute("lastName",lastName);
@@ -43,8 +42,8 @@ public class EnterServlet extends HttpServlet {
                    getServletContext().getRequestDispatcher("/roleServlet").forward(request,response);
                    }else {
                    response.sendRedirect(request.getContextPath() + "/error.jsp");
-               }
-       }else{
+                  }
+           }else{
            response.sendRedirect(request.getContextPath()+"/error.jsp");
        }
 

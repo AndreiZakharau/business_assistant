@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Update shop</title>
@@ -9,12 +10,12 @@
 <div class="container ">
     <div class="card">
         <div class="card-body">
-            <h1>Update shop</h1>
+            <h1><fmt:message key="translation.update_shop"/></h1>
 
             <form action="/accountant/updateShop" method="post">
                 <div class="form-group row card-body" >
                     <label for="shop_id" class="col-xl-2 col-sm-12 col-form-label">
-                        Shops</label>
+                        <fmt:message key="translation.shop"/></label>
                     <select class="col-xl-7 col-sm-12"
                             name="shop_id" id="shop_id">
                         <c:forEach var="shop" items="${requestScope.shops}">
@@ -25,37 +26,37 @@
 
                 <div class="form-group row card-body" >
                     <label for="id" class="col-xl-2 col-sm-12 col-form-label">
-                        Id</label>
+                        <fmt:message key="translation.id"/></label>
                     <div class="col-xl-7 col-sm-12">
                         <input type="text" class="form-control" name="id" id="id"
-                               placeholder="Enter name" required>
+                               placeholder="<fmt:message key="translation.ed"/>" required>
                     </div>
                 </div>
 
                 <div class="form-group row card-body" >
                     <label for="nameShop" class="col-xl-2 col-sm-12 col-form-label">
-                        Name</label>
+                        <fmt:message key="translation.name"/></label>
                     <div class="col-xl-7 col-sm-12">
                         <input type="text" class="form-control" name="nameShop" id="nameShop"
-                               placeholder="Enter name" required>
+                               placeholder="<fmt:message key="translation.message.name"/>" required>
                     </div>
                 </div>
 
                 <div class="form-group row card-body">
                     <label for="address" class="col-2 col-form-label">
-                        Address</label>
+                        <fmt:message key="translation.address"/></label>
                     <div class="col-7">
                         <input type="text" class="form-control" name="address" id="address"
-                               placeholder="Enter address" required>
+                               placeholder="<fmt:message key="translation.message.address"/>" required>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary"><fmt:message key="translation.button.save"/></button>
             </form>
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/accountant/update_all.jsp">EXIT</a>
+        <a  type="submit" class="btn btn-primary" href="/accountant/update_all.jsp"><fmt:message key="translation.exit"/></a>
     </ul>
 </div>
 </body>

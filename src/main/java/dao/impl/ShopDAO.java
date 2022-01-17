@@ -1,6 +1,6 @@
 package dao.impl;
 
-import connection.DBConnection;
+import connection.ConnectionPool;
 import dao.DAO;
 import entity.Shops;
 
@@ -31,7 +31,7 @@ public class ShopDAO implements DAO<Shops> {
     @Override
     public Shops add(Shops shops) {
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_SHOP)) {
 
             preparedStatement.setString(1, shops.getNameShop());
@@ -43,36 +43,34 @@ public class ShopDAO implements DAO<Shops> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return shops;
     }
         @Override
     public boolean delete(Shops shops) {
             int rows = 0;
-            try (Connection connect = DBConnection.getConnection()) {
+            try (Connection connect = ConnectionPool.get()) {
 
                 PreparedStatement preparedStatement = connect.prepareStatement(SQL_SHOP_BY_DELETE);
-                preparedStatement.setInt(1, shops.getId());
+                preparedStatement.setLong(1, shops.getId());
                 preparedStatement.setString(2, shops.getNameShop());
                 preparedStatement.setString(3, shops.getAddress());
 
 
                 rows = preparedStatement.executeUpdate();
 
-            } catch (SQLException | ClassNotFoundException throwables) {
+            } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
             return rows != 0;
     }
 
     @Override
-    public Shops finByID(int id) {
+    public Shops finByID(long id) {
         Shops shops = null;
-        try (Connection conn = DBConnection.getConnection()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_SHOP_FIN_BY_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 id = resultSet.getInt("id");
@@ -81,7 +79,7 @@ public class ShopDAO implements DAO<Shops> {
                 shops = new Shops(id,name,address );
             }
 
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return shops;
@@ -90,18 +88,18 @@ public class ShopDAO implements DAO<Shops> {
     @Override
     public List<Shops> findAll() {
         List<Shops> shops = new ArrayList<>();
-        try (Connection connect = DBConnection.getConnection()) {
+        try (Connection connect = ConnectionPool.get()) {
             Statement statement = connect.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SHOP_ALL_LIST);
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String nameShop = resultSet.getString("nameShop");
                 String address = resultSet.getString("address");
 
                 shops.add(new Shops(id, nameShop, address));
             }
 
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
@@ -110,17 +108,15 @@ public class ShopDAO implements DAO<Shops> {
 
     @Override
     public boolean update(Shops shops) {
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(UPDATE_SHOP, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setInt(1, shops.getId());
+            statement.setLong(1, shops.getId());
             statement.setString(2, shops.getNameShop());
             statement.setString(3, shops.getAddress());
-            statement.setInt(4,shops.getId());
+            statement.setLong(4,shops.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }
@@ -128,12 +124,12 @@ public class ShopDAO implements DAO<Shops> {
     @Override
     public Shops finByName(String nameShop) {
         Shops shops = new Shops();
-        try(Connection connection = DBConnection.getConnection()){
+        try(Connection connection = ConnectionPool.get()){
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SHOP_FIN_BY_NAME);
             preparedStatement.setString(1,nameShop);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                long id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 shops.setId(id);
                 shops.setNameShop(name);
@@ -141,10 +137,7 @@ public class ShopDAO implements DAO<Shops> {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
         return shops;
     }
 }

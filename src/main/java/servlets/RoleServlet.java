@@ -1,15 +1,13 @@
 package servlets;
 
-import com.mysql.cj.Session;
-import com.mysql.cj.xdevapi.SessionFactory;
 import dao.impl.PersonDAO;
 import entity.Person;
-import entity.Role;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.Random;
 
 import static entity.Role.*;
 
@@ -28,8 +26,7 @@ public class RoleServlet extends HttpServlet {
             String name =request.getParameter("name");
             String lastName =request.getParameter("lastName");
             String telephoneNumber =request.getParameter("telephoneNumber");
-            Person person = PersonDAO.getInstance().findByAllParameters(name,lastName,telephoneNumber);
-
+            Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
             if(person.getRole().equals(SALESPERSON)){
 
                 response.sendRedirect(request.getContextPath()+"/salesperson/salesperson_menu.jsp");

@@ -1,12 +1,14 @@
 package entity;
 
+import java.util.Objects;
+
 public class Suppliers {
-    private int id;
+    private long id;
     private String nameSupplier;
     private String contactTel;
     private String email;
 
-    public Suppliers(int id, String nameSupplier, String contactTel, String email) {
+    public Suppliers(long id, String nameSupplier, String contactTel, String email) {
         this.id = id;
         this.nameSupplier = nameSupplier;
         this.contactTel = contactTel;
@@ -19,11 +21,11 @@ public class Suppliers {
     public Suppliers(int id) {
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,5 +61,18 @@ public class Suppliers {
                 ", contactTel='" + contactTel + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Suppliers suppliers = (Suppliers) o;
+        return id == suppliers.id && Objects.equals(nameSupplier, suppliers.nameSupplier) && Objects.equals(contactTel, suppliers.contactTel) && Objects.equals(email, suppliers.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameSupplier, contactTel, email);
     }
 }
