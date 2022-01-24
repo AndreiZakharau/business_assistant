@@ -2,8 +2,10 @@ package servlets.accountant;
 
 
 import dao.impl.SuppliersDAO;
+import dto.suppliersDto.SuppliersDto;
 import entity.Suppliers;
 import jframes.DeleteObject;
+import service.SupplierService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +17,7 @@ import java.util.List;
 public class DeleteSupplier extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Suppliers> suppliersList = SuppliersDAO.getInstance().findAll();
+        List<SuppliersDto> suppliersList = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliersList);
 
         getServletContext().getRequestDispatcher("/accountant/deleteSupplier.jsp").forward(request,response);
@@ -25,12 +27,10 @@ public class DeleteSupplier extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Suppliers suppliers = new Suppliers();
-        suppliers.setId(id);
-        SuppliersDAO.getInstance().delete(suppliers);
-
-        new DeleteObject();
+        SuppliersDto suppliersDto = SuppliersDto.builder()
+                .id(Long.parseLong(request.getParameter("id")))
+                .build();
+        SupplierService.getInstance().deleteSupplier(suppliersDto);
         response.sendRedirect(request.getContextPath()+"/accountant/deleteSupplier");
     }
 }

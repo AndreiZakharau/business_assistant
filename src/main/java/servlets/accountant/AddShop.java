@@ -1,9 +1,8 @@
 package servlets.accountant;
 
-import dao.impl.ShopDAO;
-import entity.Shops;
-import jframes.ExistObject;
-import jframes.ObjectAdded;
+import dto.shopDto.CreateShopDto;
+import dto.shopDto.ShopDto;
+import service.ShopService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,21 +21,13 @@ public class AddShop extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        CreateShopDto createShopDto = CreateShopDto.builder()
+                .nameShop(request.getParameter("nameShop"))
+                .address(request.getParameter("address")).build();
 
-            String nameShop = request.getParameter("nameShop");
-            String address = request.getParameter("address");
-            Shops shops = new Shops(nameShop,address);
-            shops.setNameShop(nameShop);
-            shops.setAddress(address);
-            Shops shop = ShopDAO.getInstance().finByName(nameShop);
-            if(shop.getNameShop() != null && shop.getNameShop().equals(nameShop)){
-                new ExistObject();
-            }else {
-                ShopDAO.getInstance().add(shops);
-                new ObjectAdded();
-            }
+        ShopService.getInstance().addShop(createShopDto);
 
-            response.sendRedirect(request.getContextPath()+"/accountant/addShop");
+        response.sendRedirect(request.getContextPath()+"/accountant/addShop");
 
     }
 }

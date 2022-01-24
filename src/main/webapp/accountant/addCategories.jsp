@@ -26,7 +26,7 @@
                     <label for="name" class="col-xl-2 col-sm-12 col-form-label">
                         <fmt:message key="translation.interest"/></label>
                     <div class="col-xl-7 col-sm-12">
-                        <input type="text" class="form-control" name="name" id="interest"
+                        <input type="text" class="form-control" name="interest" id="interest"
                                placeholder="<fmt:message key="translation.message.%"/>" required>
                     </div>
                 </div>

@@ -1,8 +1,10 @@
 package servlets.accountant;
 
 import dao.impl.CategoriesDAO;
+import dto.categoriesDto.CategoriesDto;
 import entity.Categories;
 import jframes.ObjectUpdate;
+import service.CategoriesService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +17,7 @@ public class UpdateCategories extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Categories> categories = CategoriesDAO.getInstance().findAll();
+        List<CategoriesDto> categories = CategoriesService.getInstance().getAllCategories();
         request.setAttribute("categories",categories);
          getServletContext().getRequestDispatcher("/accountant/updateCategories.jsp").forward(request,response);
 
@@ -24,13 +26,12 @@ public class UpdateCategories extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        double interest = Double.parseDouble(request.getParameter("interest"));
-        Categories categories = new Categories(id,name,interest);
-        CategoriesDAO.getInstance().update(categories);
+        CategoriesDto categoriesDto = CategoriesDto.builder().id(Long.parseLong(request.getParameter("id")))
+                .category(request.getParameter("name"))
+                .interest(Double.parseDouble(request.getParameter("interest")))
+                        .build();
+        CategoriesService.getInstance().updateCategory(categoriesDto);
 
-        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+ "/accountant/updateCategories");
     }
 }

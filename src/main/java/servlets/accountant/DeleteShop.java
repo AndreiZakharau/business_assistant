@@ -3,8 +3,9 @@ package servlets.accountant;
 
 import dao.impl.ShopDAO;
 
+import dto.shopDto.ShopDto;
 import entity.Shops;
-import jframes.DeleteObject;
+import service.ShopService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,10 +15,11 @@ import java.util.List;
 
 @WebServlet( "/accountant/deleteShop")
 public class DeleteShop extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Shops> shopsList = ShopDAO.getInstance().findAll();
+        List<ShopDto> shopsList = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shopsList);
 
         getServletContext().getRequestDispatcher("/accountant/deleteShop.jsp").forward(request,response);
@@ -27,12 +29,9 @@ public class DeleteShop extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Shops shops = new Shops();
-        shops.setId(id);
-        ShopDAO.getInstance().delete(shops);
+        ShopDto shopDto = ShopDto.builder().id(Long.parseLong(request.getParameter("id"))).build();
+         ShopService.getInstance().deleteShop(shopDto);
 
-        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteShop");
 
     }

@@ -18,7 +18,7 @@ public class CategoriesDAO implements DAO <Categories> {
 
     public CategoriesDAO(){}
 
-    private static final String SQL_INSERT_CATEGORIES = "INSERT INTO categories(name) VALUES (?)";
+    private static final String SQL_INSERT_CATEGORIES = "INSERT INTO categories(name,interest) VALUES (?,?)";
     private static final String SQL_CATEGORIES_BY_DELETE ="DELETE FROM categories WHERE id = ? OR name = ? OR interest = ?";
     private static final String SQL_CATEGORIES_FIN_BY_ID ="SELECT * FROM categories WHERE id = ?";
     private static final String SQL_CATEGORIES_ALL_LIST ="SELECT * FROM categories ";
@@ -32,6 +32,7 @@ public class CategoriesDAO implements DAO <Categories> {
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_CATEGORIES)) {
 
             preparedStatement.setString(1, categories.getCategory());
+            preparedStatement.setDouble(2,categories.getInterest());
             preparedStatement.executeUpdate();
 
         } catch (SQLException  throwables) {

@@ -11,7 +11,7 @@ import java.util.List;
 public class ShopDAO implements DAO<Shops> {
 
 
-    public static ShopDAO instance = new ShopDAO();
+    private static ShopDAO instance = new ShopDAO();
 
     public static ShopDAO getInstance() {
         return instance;
@@ -38,8 +38,6 @@ public class ShopDAO implements DAO<Shops> {
             preparedStatement.setString(2, shops.getAddress());
 
             preparedStatement.executeUpdate();
-            System.out.println("Магазин создан");
-
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -5,12 +5,20 @@ import dao.impl.CategoriesDAO;
 import dao.impl.ProductDAO;
 import dao.impl.ShopDAO;
 import dao.impl.SuppliersDAO;
+import dto.categoriesDto.CategoriesDto;
+import dto.productDto.CreateProductDto;
+import dto.shopDto.ShopDto;
+import dto.suppliersDto.SuppliersDto;
 import entity.Categories;
 import entity.Products;
 import entity.Shops;
 import entity.Suppliers;
 import jframes.ExistObject;
 import jframes.ObjectAdded;
+import service.CategoriesService;
+import service.ProductService;
+import service.ShopService;
+import service.SupplierService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,11 +38,11 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Categories> categories = CategoriesDAO.getInstance().findAll();
+        List<CategoriesDto> categories = CategoriesService.getInstance().getAllCategories();
         request.setAttribute("categories",categories);
-        List<Suppliers> suppliers = SuppliersDAO.getInstance().findAll();
+        List<SuppliersDto> suppliers = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliers);
-        List<Shops> shops = ShopDAO.getInstance().findAll();
+        List<ShopDto> shops = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shops);
 
         getServletContext().getRequestDispatcher("/accountant/addProduct.jsp").forward(request,response);
@@ -43,31 +51,17 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        ProductService.getInstance().addProduct(CreateProductDto.builder()
+                        .name(request.getParameter("name"))
+                        .count(request.getParameter("count"))
+                        .price(request.getParameter("price"))
+                        .categories(request.getParameter("categories_id"))
+                        .suppliers(request.getParameter("suppliers_id"))
+                        .localDate(request.getParameter("delivery"))
+                        .date(Date.valueOf(request.getParameter("date_expiration")))
+                        .shop(request.getParameter("shop_id"))
+                .build());
 
-        String name = request.getParameter("name");
-        int count = Integer.parseInt(request.getParameter("count"));
-        double price = Double.parseDouble(request.getParameter("price"));
-        long categories = Long.parseLong(request.getParameter("categories_id"));
-        long suppliers = Long.parseLong(request.getParameter("suppliers_id"));
-        LocalDate localDate = LocalDate.parse(request.getParameter("delivery"));
-        Date date = Date.valueOf(request.getParameter("date_expiration"));
-        long shops = Long.parseLong(request.getParameter("shop_id"));
-        Products products = new Products(name,count,price,categories,suppliers,localDate,date,shops);
-        products.setName(name);
-        products.setCount(count);
-        products.setPrice(price);
-        products.setCategories(categories);
-        products.setSuppliers(suppliers);
-        products.setLocalDate(localDate);
-        products.setDate(date);
-        products.setShop(shops);
-        Products product = ProductDAO.getInstance().finByNameSuppliersShop(name,suppliers,shops);
-        if(product.getName() != null && product.getName().equals(name)){
-            new ExistObject();
-        }else {
-            ProductDAO.getInstance().add(products);
-            new ObjectAdded();
-        }
 
         response.sendRedirect(request.getContextPath() + "/accountant/addProduct");
 

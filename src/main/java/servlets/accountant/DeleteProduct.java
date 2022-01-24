@@ -1,9 +1,7 @@
 package servlets.accountant;
 
-import dao.impl.ProductDAO;
-import entity.Products;
-import jframes.DeleteObject;
-
+import dto.productDto.ProductDto;
+import service.ProductService;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -15,7 +13,7 @@ public class DeleteProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Products> productsList = ProductDAO.getInstance().findAll();
+        List<ProductDto> productsList = ProductService.getInstance().getAllProducts();
         request.setAttribute("products",productsList);
 
         getServletContext().getRequestDispatcher("/accountant/deleteProduct.jsp").forward(request,response);
@@ -25,12 +23,9 @@ public class DeleteProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Products products = new Products();
-        products.setId(id);
-        ProductDAO.getInstance().delete(products);
+        ProductService.getInstance().deleteProduct(ProductDto.builder()
+                .id(Long.parseLong(request.getParameter("id"))).build());
 
-        new DeleteObject();
         response.sendRedirect(request.getContextPath()+"/accountant/deleteProduct");
 
 

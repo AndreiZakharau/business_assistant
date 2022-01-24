@@ -1,15 +1,14 @@
 package servlets.accountant;
 
-import dao.impl.CategoriesDAO;
-import dao.impl.ProductDAO;
-import dao.impl.ShopDAO;
-import dao.impl.SuppliersDAO;
-import entity.Categories;
-import entity.Products;
-import entity.Shops;
-import entity.Suppliers;
-import jframes.ObjectUpdate;
 
+import dto.categoriesDto.CategoriesDto;
+import dto.productDto.ProductDto;
+import dto.shopDto.ShopDto;
+import dto.suppliersDto.SuppliersDto;
+import service.CategoriesService;
+import service.ProductService;
+import service.ShopService;
+import service.SupplierService;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -23,13 +22,13 @@ public class UpdateProduct extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Categories> categories = CategoriesDAO.getInstance().findAll();
+        List<CategoriesDto> categories = CategoriesService.getInstance().getAllCategories();
         request.setAttribute("categories",categories);
-        List<Suppliers> suppliers = SuppliersDAO.getInstance().findAll();
+        List<SuppliersDto> suppliers = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliers);
-        List<Shops> shops = ShopDAO.getInstance().findAll();
+        List<ShopDto> shops = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shops);
-        List<Products>products = ProductDAO.getInstance().findAll();
+        List<ProductDto>products = ProductService.getInstance().getAllProducts();
         request.setAttribute("products",products);
         getServletContext().getRequestDispatcher("/accountant/updateProduct.jsp").forward(request,response);
 
@@ -38,27 +37,19 @@ public class UpdateProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        int count = Integer.parseInt(request.getParameter("count"));
-        double price = Double.parseDouble(request.getParameter("price"));
-        long categories = Long.parseLong(request.getParameter("categories_id"));
-        long suppliers = Long.parseLong(request.getParameter("suppliers_id"));
-        LocalDate localDate = LocalDate.parse(request.getParameter("delivery"));
-        java.sql.Date date = Date.valueOf(request.getParameter("date_expiration"));
-        long shops = Long.parseLong(request.getParameter("shop_id"));
-        Products products = new Products(id,name,count,price,categories,suppliers,localDate,date,shops);
-        products.setName(name);
-        products.setCount(count);
-        products.setPrice(price);
-        products.setCategories(categories);
-        products.setSuppliers(suppliers);
-        products.setLocalDate(localDate);
-        products.setDate(date);
-        products.setShop(shops);
-        ProductDAO.getInstance().update(products);
+        ProductDto productDto = ProductDto.builder().id(Long.parseLong(request.getParameter("id")))
+                .name(request.getParameter("name"))
+                .categories(Long.parseLong(request.getParameter("categories_id")))
+                .count(Integer.parseInt(request.getParameter("count")))
+                .price( Double.parseDouble(request.getParameter("price")))
+                .localDate(LocalDate.parse(request.getParameter("delivery")))
+                .date(Date.valueOf(request.getParameter("date_expiration")))
+                .suppliers( Long.parseLong(request.getParameter("suppliers_id")))
+                .shop(Long.parseLong(request.getParameter("shop_id")))
+                .build();
 
-        new ObjectUpdate();
+        ProductService.getInstance().updateProduct(productDto);
+
         response.sendRedirect(request.getContextPath()+"/accountant/updateProduct");
     }
 }

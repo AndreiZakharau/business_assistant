@@ -1,8 +1,10 @@
 package servlets.accountant;
 
 import dao.impl.SuppliersDAO;
+import dto.suppliersDto.SuppliersDto;
 import entity.Suppliers;
 import jframes.ObjectUpdate;
+import service.SupplierService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -14,7 +16,7 @@ import java.util.List;
 public class UpdateSuppliers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Suppliers> suppliers = SuppliersDAO.getInstance().findAll();
+        List<SuppliersDto> suppliers = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliers);
 
         getServletContext().getRequestDispatcher("/accountant/updateSuppliers.jsp").forward(request,response);
@@ -24,18 +26,14 @@ public class UpdateSuppliers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String phone = request.getParameter("contact_tel");
-        String email = request.getParameter("email");
-        Suppliers suppliers = new Suppliers(id,name,phone,email);
-        suppliers.setId(id);
-        suppliers.setNameSupplier(name);
-        suppliers.setContactTel(phone);
-        suppliers.setEmail(email);
-        SuppliersDAO.getInstance().update(suppliers);
+        SuppliersDto suppliersDto = SuppliersDto.builder()
+                .id( Long.parseLong(request.getParameter("id")))
+                .nameSupplier(request.getParameter("name"))
+                .contactTel(request.getParameter("contact_tel"))
+                .email(request.getParameter("email"))
+                .build();
+        SupplierService.getInstance().updateSupplier(suppliersDto);
 
-        new ObjectUpdate();
         response.sendRedirect(request.getContextPath()+"/accountant/updateSuppliers");
     }
 }
