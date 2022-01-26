@@ -1,7 +1,11 @@
 package servlets;
 
 import dao.impl.PersonDAO;
+import dto.personDto.CreatePersonDto;
+import dto.personDto.PersonDto;
+import dto.personDto.PersonNamePhoneDto;
 import entity.Person;
+import service.PersonService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,7 +19,7 @@ public class EnterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Person> personList = PersonDAO.getInstance().findAll();
+        List<PersonDto> personList = PersonService.getInstance().getAllPerson();
         request.setAttribute("persons",personList);
         getServletContext().getRequestDispatcher("/registration.jsp").forward(request,response);
 
@@ -24,29 +28,18 @@ public class EnterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+       Person person = PersonService.getInstance().enterPerson(PersonNamePhoneDto.builder()
+                        .name(request.getParameter("name"))
+                        .lastName(request.getParameter("lastName"))
+                        .telephoneNumber(request.getParameter("telephoneNumber"))
+                .build());
 
-       String name =request.getParameter("name");
-       String lastName =request.getParameter("lastName");
-       String telephoneNumber =request.getParameter("telephoneNumber");
-       Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
-           if(person.getName().equals(name)){
-              if(person.getLastName().equals(lastName)){
-               }else {
-               response.sendRedirect(request.getContextPath() + "/error.jsp");
-               }
-                  if (person.getTelephoneNumber().equals(telephoneNumber)){
-                   HttpSession session = request.getSession();
-                   session.setAttribute("name",name);
-                   session.setAttribute("lastName",lastName);
-                   session.setAttribute("telephoneNumber",telephoneNumber);
-                   getServletContext().getRequestDispatcher("/roleServlet").forward(request,response);
-                   }else {
-                   response.sendRedirect(request.getContextPath() + "/error.jsp");
-                  }
-           }else{
-           response.sendRedirect(request.getContextPath()+"/error.jsp");
-       }
-
+        HttpSession session = request.getSession();
+        session.setAttribute( "name",person.getName());
+        session.setAttribute("lastName",person.getLastName());
+        session.setAttribute("telephoneNumber", person.getTelephoneNumber());
+        session.setAttribute("id_shop",person.getShop());
+        getServletContext().getRequestDispatcher("/roleServlet").forward(request,response);
 
     }
 }

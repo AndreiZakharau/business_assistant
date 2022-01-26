@@ -8,27 +8,18 @@ public class Person {
     private String lastName;
     private String telephoneNumber;
     private Role role;
+    private long shop;
 
-    public Person(long id, String name, String lastName, String telephoneNumber, Role role) {
+    public Person() {
+    }
+
+    public Person(long id, String name, String lastName, String telephoneNumber, Role role, long shop) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.telephoneNumber = telephoneNumber;
         this.role = role;
-    }
-
-
-    public Person(String name, String lastName, String telephoneNumber, Role role) {
-    }
-
-    public Person(String name, String lastName, String telephone) {
-    }
-
-    public Person() {
-
-    }
-
-    public Person(long id) {
+        this.shop = shop;
     }
 
     public long getId() {
@@ -71,17 +62,25 @@ public class Person {
         this.role = role;
     }
 
+    public long getShop() {
+        return shop;
+    }
+
+    public void setShop(long shop) {
+        this.shop = shop;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id == person.id && Objects.equals(name, person.name) && Objects.equals(lastName, person.lastName) && Objects.equals(telephoneNumber, person.telephoneNumber) && role == person.role;
+        return id == person.id && shop == person.shop && Objects.equals(name, person.name) && Objects.equals(lastName, person.lastName) && Objects.equals(telephoneNumber, person.telephoneNumber) && role == person.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, telephoneNumber, role);
+        return Objects.hash(id, name, lastName, telephoneNumber, role, shop);
     }
 
     @Override
@@ -92,6 +91,7 @@ public class Person {
                 ", lastName='" + lastName + '\'' +
                 ", telephoneNumber='" + telephoneNumber + '\'' +
                 ", role=" + role +
+                ", shop=" + shop +
                 '}';
     }
 }

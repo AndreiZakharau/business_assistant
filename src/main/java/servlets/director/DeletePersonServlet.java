@@ -1,9 +1,7 @@
 package servlets.director;
 
-import dao.impl.PersonDAO;
-import entity.Person;
-import jframes.DeleteObject;
-
+import dto.personDto.PersonDto;
+import service.PersonService;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -15,7 +13,7 @@ public class DeletePersonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Person> person = PersonDAO.getInstance().findAll();
+        List<PersonDto> person = PersonService.getInstance().getAllPerson();
         request.setAttribute("person", person);
 
         getServletContext().getRequestDispatcher("/director/deletePerson.jsp").forward(request,response);
@@ -24,11 +22,10 @@ public class DeletePersonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        long id = Long.parseLong(request.getParameter("id"));
-        Person person = new Person(id);
-        person.setId(id);
-        PersonDAO.getInstance().delete(person);
-        new DeleteObject();
+        PersonService.getInstance().deletePerson(PersonDto.builder()
+                        .id(Long.parseLong(request.getParameter("id")))
+                .build());
+
         response.sendRedirect(request.getContextPath()+("/director/deletePersonServlet"));
     }
 }

@@ -19,7 +19,7 @@
                         <fmt:message key="translation.name"/></label>
                     <div class="col-xl-7 col-sm-12">
                         <input type="text" class="form-control" name="nameShop" id="nameShop"
-                               placeholder="<fmt:message key="translation.message.name"/>" required>
+                               placeholder="<fmt:message key="translation.message.enter_shop_name"/>" required>
                     </div>
                 </div>
 

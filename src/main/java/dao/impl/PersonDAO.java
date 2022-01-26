@@ -4,7 +4,6 @@ import connection.ConnectionPool;
 import dao.DAO;
 import entity.Person;
 import entity.Role;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +20,11 @@ public class PersonDAO implements DAO<Person> {
 
 
     private static final String SQL_PERSON_BY_DELETE = "DELETE FROM Persons WHERE  id = ? OR name = ? OR lastName = ? OR telephoneNumber = ? ";
-    private static final String UPDATE_PERSON = "UPDATE Persons set id = ?, name = ?, lastName  = ?, telephoneNumber = ?, role_role = ? WHERE id = ?";
-    private static final String SQL_INSERT_PERSONS = "INSERT INTO Persons(name,lastName,telephoneNumber,role_role) VALUES (?,?,?,?)";
+    private static final String UPDATE_PERSON = "UPDATE Persons set id = ?, name = ?, lastName  = ?, telephoneNumber = ?, role_role = ?, id_shop = ? WHERE id = ?";
+    private static final String SQL_INSERT_PERSONS = "INSERT INTO Persons(name,lastName,telephoneNumber,role_role,id_shop) VALUES (?,?,?,?,?)";
     private static final String SQL_PERSONS_FIN_BY_ID = "SELECT * FROM Persons WHERE id = ?";
     private static final String SQL_PERSONS_ALL_LIST = "SELECT * FROM Persons";
-    private static final String SQL_PERSONS_FIN_BY_ALL_PARAMETERS = "SELECT * FROM Persons WHERE name = ? AND lastName = ? AND telephoneNumber = ?";
+    private static final String SQL_PERSONS_FIN_BY_NAME_AND_PHONE = "SELECT * FROM Persons WHERE name = ? AND lastName = ? AND telephoneNumber = ?";
     private static final String SQL_PERSONS_FIN_BY_NAME = "SELECT * FROM Persons WHERE name = ?";
 
     @Override
@@ -59,7 +58,8 @@ public class PersonDAO implements DAO<Person> {
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
                 Role role = Role.valueOf(resultSet.getString("role_role"));
-                person = new Person(id, name, lastName, telephone, role);
+                long shop = resultSet.getLong("id_shop");
+                person = new Person(id, name, lastName, telephone, role, shop);
             }
 
         } catch (SQLException e) {
@@ -80,8 +80,9 @@ public class PersonDAO implements DAO<Person> {
                 String lastName = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
                 Role role = Role.valueOf(resultSet.getString("role_role"));
+                long shop = resultSet.getLong("id_shop");
 
-                people.add(new Person(id, name, lastName, telephone, role));
+                people.add(new Person(id, name, lastName, telephone, role, shop));
             }
 
         } catch (SQLException throwables) {
@@ -100,7 +101,8 @@ public class PersonDAO implements DAO<Person> {
             preparedStatement.setString(3, person.getLastName());
             preparedStatement.setString(4, person.getTelephoneNumber());
             preparedStatement.setString(5, person.getRole().name());
-            preparedStatement.setLong(6,person.getId());
+            preparedStatement.setLong(6, person.getShop());
+            preparedStatement.setLong(7,person.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -120,6 +122,7 @@ public class PersonDAO implements DAO<Person> {
             preparedStatement.setString(2, person.getLastName());
             preparedStatement.setString(3, person.getTelephoneNumber());
             preparedStatement.setString(4, person.getRole().name());
+            preparedStatement.setLong(5, person.getShop());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -132,7 +135,7 @@ public class PersonDAO implements DAO<Person> {
     public Person findByNamesAndPhone(String name, String lastName, String tel){
         Person person = new Person();
         try (Connection conn = ConnectionPool.get()) {
-            PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_ALL_PARAMETERS);
+            PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_NAME_AND_PHONE);
             preparedStatement.setString(1,name);
             preparedStatement.setString(2,lastName);
             preparedStatement.setString(3,tel);
@@ -143,11 +146,8 @@ public class PersonDAO implements DAO<Person> {
                 String lastN = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
                 Role roles = Role.valueOf(resultSet.getString("role_role"));
-                person.setId(indef);
-                person.setName(name1);
-                person.setLastName(lastN);
-                person.setTelephoneNumber(telephone);
-                person.setRole(roles);
+                long shop = resultSet.getLong("id_shop");
+                person = new Person(indef,name1,lastN,telephone,roles,shop);
             }
 
         } catch (SQLException e) {
@@ -165,16 +165,13 @@ public class PersonDAO implements DAO<Person> {
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Long indef = resultSet.getLong("id");
+                long indef = resultSet.getLong("id");
                 String name1 = resultSet.getString("name");
                 String lastN = resultSet.getString("lastName");
                 String telephone = resultSet.getString("telephoneNumber");
                 Role roles = Role.valueOf(resultSet.getString("role_role"));
-                person.setId(indef);
-                person.setName(name1);
-                person.setLastName(lastN);
-                person.setTelephoneNumber(telephone);
-                person.setRole(roles);
+                long shop = resultSet.getLong("id_shop");
+                person = new Person(indef,name1,lastN,telephone,roles,shop);
             }
 
         } catch (SQLException throwables) {
@@ -182,4 +179,4 @@ public class PersonDAO implements DAO<Person> {
         }
         return person;
     }
-    }
+}

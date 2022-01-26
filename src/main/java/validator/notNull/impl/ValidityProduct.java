@@ -1,6 +1,5 @@
 package validator.notNull.impl;
 
-import dao.impl.CategoriesDAO;
 import dao.impl.ProductDAO;
 import entity.Products;
 import validator.notNull.Validator;

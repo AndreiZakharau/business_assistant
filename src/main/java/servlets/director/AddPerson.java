@@ -1,11 +1,10 @@
 package servlets.director;
 
-import dao.impl.PersonDAO;
-import entity.Person;
+import dto.personDto.CreatePersonDto;
+import dto.shopDto.ShopDto;
 import entity.Role;
-import jframes.ExistObject;
-import jframes.ObjectAdded;
-
+import service.PersonService;
+import service.ShopService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +17,9 @@ import java.util.List;
 public class AddPerson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON);
+        List<ShopDto> listShops = ShopService.getInstance().getAllShop();
+        req.setAttribute("id_shop", listShops);
+        List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON); //TODO service
         req.setAttribute("role_role",roles);
         getServletContext().getRequestDispatcher("/director/addPerson.jsp").forward(req,resp);
 
@@ -26,23 +27,15 @@ public class AddPerson extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       String name = req.getParameter("name");
-       String lastName = req.getParameter("lastName");
-       String telephoneNumber = req.getParameter("telephoneNumber");
-       Role role = Role.valueOf(req.getParameter("role"));
-       Person person = new Person(name,lastName,telephoneNumber,role);
-       person.setName(name);
-       person.setLastName(lastName);
-       person.setTelephoneNumber(telephoneNumber);
-       person.setRole(role);
-       Person persons = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
-       if(persons.getName() != null && persons.getLastName() != null && persons.getTelephoneNumber() != null
-       && (persons.getName().equals(name) && persons.getLastName().equals(lastName) && persons.getTelephoneNumber().equals(telephoneNumber))){
-           new ExistObject();
-        }else{
-           PersonDAO.getInstance().add(person);
-           new ObjectAdded();
-        }
+
+        PersonService.getInstance().addPerson(CreatePersonDto.builder()
+                .name(req.getParameter("name"))
+                .lastName(req.getParameter("lastName"))
+                .telephoneNumber(req.getParameter("telephoneNumber"))
+                .role(req.getParameter("role"))
+                .shop(req.getParameter("shop"))
+                .build());
+
 
        resp.sendRedirect(req.getContextPath()+"/director/addPerson");
     }

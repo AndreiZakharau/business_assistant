@@ -51,6 +51,15 @@
                         </c:forEach>
                     </select>
                 </div>
+                <div class="form-group row card-body">
+                    <label for="role_role" class="col-2 col-form-label">
+                        <fmt:message key="translation.shop"/></label>
+                    <select class="col-7" name="shop" id="id_shop">
+                        <c:forEach var="shop" items="${requestScope.id_shop}">
+                            <option name="shop" value="${shop.nameShop}" > ${shop.nameShop} </option>
+                        </c:forEach>
+                    </select>
+                </div>
 
                 <button type="submit" class="btn btn-primary"><fmt:message key="translation.button.save"/></button>
             </form>

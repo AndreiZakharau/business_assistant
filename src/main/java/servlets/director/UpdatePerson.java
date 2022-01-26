@@ -1,9 +1,13 @@
 package servlets.director;
 
 import dao.impl.PersonDAO;
+import dto.personDto.PersonDto;
+import dto.shopDto.ShopDto;
 import entity.Person;
 import entity.Role;
 import jframes.ObjectUpdate;
+import service.PersonService;
+import service.ShopService;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -16,31 +20,27 @@ public class UpdatePerson extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Person> person = PersonDAO.getInstance().findAll();
+        List<PersonDto> person = PersonService.getInstance().getAllPerson();
         request.setAttribute("person",person);
-
+        List<ShopDto> shops = ShopService.getInstance().getAllShop();
+        request.setAttribute("id_shop",shops);
         List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON);
         request.setAttribute("role_role",roles);
         getServletContext().getRequestDispatcher("/director/updatePerson.jsp").forward(request,response);
-
 
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Long.parseLong(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String lastName = request.getParameter("lastName");
-        String telephoneNumber = request.getParameter("telephoneNumber");
-        Role role = Role.valueOf(request.getParameter("role"));
-        Person person = new Person(name,lastName,telephoneNumber,role);
-        person.setId(id);
-        person.setName(name);
-        person.setLastName(lastName);
-        person.setTelephoneNumber(telephoneNumber);
-        person.setRole(role);
-        PersonDAO.getInstance().update(person);
-        new ObjectUpdate();
+        PersonService.getInstance().updatePerson(PersonDto.builder()
+                        .id( Long.parseLong(request.getParameter("id")))
+                        .name(request.getParameter("name"))
+                        .lastName(request.getParameter("lastName"))
+                        .telephoneNumber(request.getParameter("telephoneNumber"))
+                        .role(Role.valueOf(request.getParameter("role")))
+                        .shop(Long.parseLong(request.getParameter("id_shop")))
+                .build());
+
         response.sendRedirect(request.getContextPath()+"/director/updatePerson");
 
     }

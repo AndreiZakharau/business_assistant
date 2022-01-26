@@ -7,10 +7,8 @@ import entity.Products;
 import lombok.NoArgsConstructor;
 import mapper.impl.ProductMapper;
 import validator.notNull.impl.ValidityProduct;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
