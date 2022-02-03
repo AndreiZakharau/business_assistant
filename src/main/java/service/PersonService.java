@@ -60,9 +60,10 @@ public class PersonService {
     public Person enterPerson(PersonNamePhoneDto personNamePhoneDto){
         Person person = PersonMapper.getInstance().mapPersonNameAndPhone(personNamePhoneDto);
         if (validityPerson.isValidPhone(person)) {
-            person = personDAO.findByNamesAndPhone(person.getName(), person.getLastName(), person.getTelephoneNumber());
+            person = personDAO.finByName(person.getName());
+        }else {
 
         }
-        return person;
+         return person;
     }
 }

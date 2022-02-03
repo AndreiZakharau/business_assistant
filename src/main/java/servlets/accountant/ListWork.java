@@ -2,13 +2,13 @@ package servlets.accountant;
 
 
 import dto.categoriesDto.CategoriesDto;
+import dto.expiredProductDto.ExpiredDto;
 import dto.productDto.ProductDto;
 import dto.shopDto.ShopDto;
 import dto.suppliersDto.SuppliersDto;
-import service.CategoriesService;
-import service.ProductService;
-import service.ShopService;
-import service.SupplierService;
+import entity.ExpiredProduct;
+import service.*;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -28,6 +28,8 @@ public class ListWork extends HttpServlet {
         request.setAttribute("shops",shops);
         List<ProductDto>products = ProductService.getInstance().getAllProducts();
         request.setAttribute("products",products);
+        List<ExpiredDto> expiredProductList = ExpiredService.getInstance().getAllExpiredProduct();
+        request.setAttribute("expiredProduct",expiredProductList);
         getServletContext().getRequestDispatcher("/accountant/list_works.jsp").forward(request,response);
 
     }

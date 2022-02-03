@@ -38,7 +38,7 @@ public class UpdatePerson extends HttpServlet {
                         .lastName(request.getParameter("lastName"))
                         .telephoneNumber(request.getParameter("telephoneNumber"))
                         .role(Role.valueOf(request.getParameter("role")))
-                        .shop(Long.parseLong(request.getParameter("id_shop")))
+                        .shop(Long.parseLong(request.getParameter("shop")))
                 .build());
 
         response.sendRedirect(request.getContextPath()+"/director/updatePerson");

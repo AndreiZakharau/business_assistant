@@ -1,18 +1,14 @@
 package servlets;
 
-import dao.impl.PersonDAO;
-import dto.personDto.CreatePersonDto;
 import dto.personDto.PersonDto;
 import dto.personDto.PersonNamePhoneDto;
 import entity.Person;
 import service.PersonService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
-
 
 @WebServlet("/enterServlet")
 public class EnterServlet extends HttpServlet {

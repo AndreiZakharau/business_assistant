@@ -5,6 +5,7 @@ import dao.DAO;
 import entity.ExpiredProduct;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,11 +19,11 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
     }
 
     private ExpiredProductDAO(){}
-    private static final String SQL_INSERT_OVERDUE ="INSERT INTO Expiredproduct(name_overdue,balance,price) Value(?,?,?)";
+    private static final String SQL_INSERT_OVERDUE ="INSERT INTO Expiredproduct(name_overdue,balance,price,date) Value(?,?,?,?)";
     private static final String SQL_DELETE_OVERDUE ="DELETE FROM Expiredproduct WHERE id = ? OR name_overdue =? OR balance = ? OR price = ?";
     private static final String SQL_OVERDUE_FIN_BY_ID = "SELECT * FROM Expiredproduct WHERE id = ?";
     private static final String SQL_OVERDUE_ALL ="SELECT * FROM Expiredproduct";
-    private static final String SQL_UPDATE_OVERDUE = "UPDATE Expiredproduct SET id =?, name_overdue =?, balance = ?, price = ? WHERE id = ?";
+    private static final String SQL_UPDATE_OVERDUE = "UPDATE Expiredproduct SET id =?, name_overdue =?, balance = ?, price = ? date = ? WHERE id = ?";
 
 
     @Override
@@ -31,9 +32,11 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
         try (Connection conn = ConnectionPool.get();
              PreparedStatement preparedStatement = conn.prepareStatement(SQL_INSERT_OVERDUE)) {
 
-            preparedStatement.setLong(1, expiredProduct.getNameProductExpired().getId());
-            preparedStatement.setInt(2, expiredProduct.getBalance().getCount());
-            preparedStatement.setDouble(3, expiredProduct.getPurchasePrice().getPrice());
+            preparedStatement.setLong(1, expiredProduct.getNameProductExpired());
+            preparedStatement.setInt(2, expiredProduct.getBalance());
+            preparedStatement.setDouble(3, expiredProduct.getPurchasePrice());
+            preparedStatement.setString(4, String.valueOf(expiredProduct.getLocalDate()));
+            preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -48,9 +51,9 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
 
             PreparedStatement preparedStatement = connect.prepareStatement(SQL_DELETE_OVERDUE);
             preparedStatement.setLong(1, expiredProduct.getId());
-            preparedStatement.setLong(2, expiredProduct.getNameProductExpired().getId());
-            preparedStatement.setInt(3, expiredProduct.getBalance().getCount());
-            preparedStatement.setDouble(4, expiredProduct.getPurchasePrice().getPrice());
+            preparedStatement.setLong(2, expiredProduct.getNameProductExpired());
+            preparedStatement.setInt(3, expiredProduct.getBalance());
+            preparedStatement.setDouble(4, expiredProduct.getPurchasePrice());
             rows = preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -71,7 +74,8 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
                 long name = resultSet.getLong("name_overdue");
                 int balance = resultSet.getInt("balance");
                 double price = resultSet.getDouble("price");
-                overdue= new ExpiredProduct(id, name, balance,price);
+                LocalDate localDate = LocalDate.parse(resultSet.getString("date"));
+                overdue= new ExpiredProduct(id, name, balance,price,localDate);
             }
 
         } catch (SQLException e) {
@@ -91,7 +95,8 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
                 long name = resultSet.getLong("name_overdue");
                 int balance = resultSet.getInt("balance");
                 double price = resultSet.getDouble("price");
-                overdueList.add( new ExpiredProduct(id, name, balance,price));
+                LocalDate localDate = LocalDate.parse(resultSet.getString("date"));
+                overdueList.add( new ExpiredProduct(id, name, balance, price, localDate));
             }
 
         } catch (SQLException throwables) {
@@ -106,9 +111,10 @@ public class ExpiredProductDAO implements DAO<ExpiredProduct> {// Передел
         try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(SQL_UPDATE_OVERDUE, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, expiredProduct.getId());
-            statement.setLong(2, expiredProduct.getNameProductExpired().getId());
-            statement.setInt(3, expiredProduct.getBalance().getCount());
-            statement.setDouble(4, expiredProduct.getPurchasePrice().getPrice());
+            statement.setLong(2, expiredProduct.getNameProductExpired());
+            statement.setInt(3, expiredProduct.getBalance());
+            statement.setDouble(4, expiredProduct.getPurchasePrice());
+            statement.setString(5, String.valueOf(expiredProduct.getLocalDate()));
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

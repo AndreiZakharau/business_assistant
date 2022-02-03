@@ -1,22 +1,24 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class ExpiredProduct {  // Переделать сущьность и dao и таблицу
+public class ExpiredProduct {
     private long id;
-    private Products nameProductExpired;
-    private Products balance;
-    private Products purchasePrice;
+    private long nameProductExpired;
+    private int balance;
+    private double purchasePrice;
+    private LocalDate localDate;
 
-    public ExpiredProduct(int id, Products nameProductExpired, Products balance, Products purchasePrice) {
+    public ExpiredProduct() {
+    }
+
+    public ExpiredProduct(long id, long nameProductExpired, int balance, double purchasePrice, LocalDate localDate) {
         this.id = id;
         this.nameProductExpired = nameProductExpired;
         this.balance = balance;
         this.purchasePrice = purchasePrice;
-    }
-
-    public ExpiredProduct(long id, long name, int balance, double price) {
-
+        this.localDate = localDate;
     }
 
     public long getId() {
@@ -27,28 +29,49 @@ public class ExpiredProduct {  // Переделать сущьность и dao
         this.id = id;
     }
 
-    public Products getNameProductExpired() {
+    public long getNameProductExpired() {
         return nameProductExpired;
     }
 
-    public void setNameProductExpired(Products nameProductExpired) {
+    public void setNameProductExpired(long nameProductExpired) {
         this.nameProductExpired = nameProductExpired;
     }
 
-    public Products getBalance() {
+    public int getBalance() {
         return balance;
     }
 
-    public void setBalance(Products balance) {
+    public void setBalance(int balance) {
         this.balance = balance;
     }
 
-    public Products getPurchasePrice() {
+    public double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(Products purchasePrice) {
+    public void setPurchasePrice(double purchasePrice) {
         this.purchasePrice = purchasePrice;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ExpiredProduct that = (ExpiredProduct) o;
+        return id == that.id && balance == that.balance && Double.compare(that.purchasePrice, purchasePrice) == 0 && Objects.equals(nameProductExpired, that.nameProductExpired) && Objects.equals(localDate, that.localDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameProductExpired, balance, purchasePrice, localDate);
     }
 
     @Override
@@ -58,19 +81,7 @@ public class ExpiredProduct {  // Переделать сущьность и dao
                 ", nameProductExpired=" + nameProductExpired +
                 ", balance=" + balance +
                 ", purchasePrice=" + purchasePrice +
+                ", localDate=" + localDate +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ExpiredProduct that = (ExpiredProduct) o;
-        return id == that.id && Objects.equals(nameProductExpired, that.nameProductExpired) && Objects.equals(balance, that.balance) && Objects.equals(purchasePrice, that.purchasePrice);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameProductExpired, balance, purchasePrice);
     }
 }

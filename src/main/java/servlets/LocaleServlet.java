@@ -16,9 +16,6 @@ public class LocaleServlet extends HttpServlet {
 
         String language = req.getParameter("lang");
         req.getSession().setAttribute("lang", language);
-//        String prevPage = req.getHeader("referer");
-//        String page = prevPage != null ? prevPage : "/index.jsp";
-//        resp.sendRedirect(page + "?lang=" + language);
         getServletContext().getRequestDispatcher("/index.jsp").forward(req,resp);
     }
 }

@@ -1,9 +1,12 @@
 package dao.impl;
 
+import com.mysql.cj.AbstractQuery;
 import connection.ConnectionPool;
 import dao.DAO;
 import entity.Person;
 import entity.Role;
+
+import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +180,7 @@ public class PersonDAO implements DAO<Person> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         return person;
     }
 }

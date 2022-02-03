@@ -56,7 +56,7 @@
                         <fmt:message key="translation.shop"/></label>
                     <select class="col-7" name="shop" id="id_shop">
                         <c:forEach var="shop" items="${requestScope.id_shop}">
-                            <option name="shop" value="${shop.nameShop}" > ${shop.nameShop} </option>
+                            <option name="shop" value="${shop.id}" > ${shop.nameShop} </option>
                         </c:forEach>
                     </select>
                 </div>

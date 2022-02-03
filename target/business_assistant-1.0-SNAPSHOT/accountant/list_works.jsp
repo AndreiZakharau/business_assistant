@@ -31,8 +31,13 @@
                 </tr>
                 </thead>
                 <tbody>
+
+
+
                 <c:forEach var="product" items="${requestScope.products}">
-                <tr>
+                    <tr <c:forEach var="expiredProduct" items="${requestScope.expiredProduct}">
+                            <c:if test="${expiredProduct.nameProductExpired==product.id}">
+                        style="color: red" </c:if> </c:forEach> >
 
                     <td>${product.name}</td>
                     <c:forEach var="categories" items="${requestScope.categories}">
@@ -61,14 +66,16 @@
                     <td>${product.date}</td>
                 </tr>
                 </c:forEach>
+
                 </tbody>
             </table>
 
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/accountant/accountant_menu.jsp"><fmt:message key="translation.button.exit"/></a>
+        <a type="submit" class="button" href="/accountant/accountant_menu.jsp"><fmt:message key="translation.exit"/></a></a>
     </ul>
+
 </div>
 
 

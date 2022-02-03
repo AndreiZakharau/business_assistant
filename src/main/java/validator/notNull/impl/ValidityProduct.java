@@ -13,7 +13,7 @@ public class ValidityProduct implements Validator <Products> {
     @Override
     public boolean notNull(Products products) {
         boolean result = false;
-        while (ProductDAO.getInstance().finByID(products.getId())!=null) {
+        if (ProductDAO.getInstance().finByID(products.getId())!=null) {
             result = true;
         }
         return result;
