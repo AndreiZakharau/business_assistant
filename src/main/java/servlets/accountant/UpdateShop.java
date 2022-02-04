@@ -1,11 +1,7 @@
 package servlets.accountant;
 
-import dao.impl.ShopDAO;
 import dto.shopDto.ShopDto;
-import entity.Shops;
-import jframes.ObjectUpdate;
 import service.ShopService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

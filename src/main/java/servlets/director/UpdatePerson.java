@@ -1,14 +1,10 @@
 package servlets.director;
 
-import dao.impl.PersonDAO;
 import dto.personDto.PersonDto;
 import dto.shopDto.ShopDto;
-import entity.Person;
 import entity.Role;
-import jframes.ObjectUpdate;
 import service.PersonService;
 import service.ShopService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

@@ -1,11 +1,7 @@
 package servlets.accountant;
 
-import dao.impl.CategoriesDAO;
 import dto.categoriesDto.CategoriesDto;
-import entity.Categories;
-import jframes.DeleteObject;
 import service.CategoriesService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;

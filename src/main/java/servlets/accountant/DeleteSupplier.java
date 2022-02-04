@@ -1,12 +1,7 @@
 package servlets.accountant;
 
-
-import dao.impl.SuppliersDAO;
 import dto.suppliersDto.SuppliersDto;
-import entity.Suppliers;
-import jframes.DeleteObject;
 import service.SupplierService;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
