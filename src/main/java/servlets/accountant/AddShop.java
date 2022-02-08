@@ -14,7 +14,7 @@ public class AddShop extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       getServletContext().getRequestDispatcher("/accountant/myShops.jsp").forward(request,response);
+       getServletContext().getRequestDispatcher("/jsp/accountant/myShops.jsp").forward(request,response);
 
     }
 

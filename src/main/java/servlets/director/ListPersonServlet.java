@@ -14,7 +14,7 @@ public class ListPersonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<PersonDto> person = PersonService.getInstance().getAllPerson();
         request.setAttribute("person",person);
-        getServletContext().getRequestDispatcher("/director/listPerson.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/director/listPerson.jsp").forward(request,response);
     }
 
 }

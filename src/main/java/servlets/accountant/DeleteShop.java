@@ -22,7 +22,7 @@ public class DeleteShop extends HttpServlet {
         List<ShopDto> shopsList = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shopsList);
 
-        getServletContext().getRequestDispatcher("/accountant/deleteShop.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteShop.jsp").forward(request,response);
 
     }
 

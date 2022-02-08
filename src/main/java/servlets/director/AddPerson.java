@@ -19,9 +19,9 @@ public class AddPerson extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<ShopDto> listShops = ShopService.getInstance().getAllShop();
         req.setAttribute("id_shop", listShops);
-        List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON); //TODO service
+        List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON);
         req.setAttribute("role_role",roles);
-        getServletContext().getRequestDispatcher("/director/addPerson.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/jsp/director/addPerson.jsp").forward(req,resp);
 
     }
 

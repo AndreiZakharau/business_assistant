@@ -30,7 +30,7 @@ public class UpdateProduct extends HttpServlet {
         request.setAttribute("shops",shops);
         List<ProductDto>products = ProductService.getInstance().getAllProducts();
         request.setAttribute("products",products);
-        getServletContext().getRequestDispatcher("/accountant/updateProduct.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/updateProduct.jsp").forward(request,response);
 
     }
 

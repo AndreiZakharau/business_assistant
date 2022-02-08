@@ -15,7 +15,7 @@ public class DeleteSupplier extends HttpServlet {
         List<SuppliersDto> suppliersList = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliersList);
 
-        getServletContext().getRequestDispatcher("/accountant/deleteSupplier.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteSupplier.jsp").forward(request,response);
 
     }
 

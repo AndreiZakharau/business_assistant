@@ -16,7 +16,7 @@ public class DeleteProduct extends HttpServlet {
         List<ProductDto> productsList = ProductService.getInstance().getAllProducts();
         request.setAttribute("products",productsList);
 
-        getServletContext().getRequestDispatcher("/accountant/deleteProduct.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteProduct.jsp").forward(request,response);
 
     }
 

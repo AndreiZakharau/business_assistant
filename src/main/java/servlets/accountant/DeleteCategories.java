@@ -16,7 +16,7 @@ public class DeleteCategories extends HttpServlet {
         List<CategoriesDto> categoriesList = CategoriesService.getInstance().getAllCategories();
         request.setAttribute("categories",categoriesList);
 
-        getServletContext().getRequestDispatcher("/accountant/deleteCategories.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteCategories.jsp").forward(request,response);
 
     }
 

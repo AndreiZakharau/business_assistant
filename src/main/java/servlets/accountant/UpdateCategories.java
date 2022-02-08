@@ -15,7 +15,7 @@ public class UpdateCategories extends HttpServlet {
 
         List<CategoriesDto> categories = CategoriesService.getInstance().getAllCategories();
         request.setAttribute("categories",categories);
-         getServletContext().getRequestDispatcher("/accountant/updateCategories.jsp").forward(request,response);
+         getServletContext().getRequestDispatcher("/jsp/accountant/updateCategories.jsp").forward(request,response);
 
     }
 

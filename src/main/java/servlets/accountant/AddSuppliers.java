@@ -11,7 +11,7 @@ import java.io.IOException;
 public class AddSuppliers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     getServletContext().getRequestDispatcher("/accountant/addSuppliers.jsp").forward(request,response);
+     getServletContext().getRequestDispatcher("/jsp/accountant/addSuppliers.jsp").forward(request,response);
     }
 
     @Override

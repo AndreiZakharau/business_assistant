@@ -32,12 +32,12 @@ public class LoginServlet extends HttpServlet {
                     session.setAttribute("login", login);
                     session.setAttribute("password", password);
                 }
-                getServletContext().getRequestDispatcher("/director/director.jsp").forward(request,response);
+                getServletContext().getRequestDispatcher("/jsp/director/director.jsp").forward(request,response);
             }else {
-                System.out.println("Не верный пароль"); //TODO  ссылка на frame с сообщением
+                System.out.println("Не верный пароль"); //TODO
             }
         }else {
-            System.out.println("Не верный Login"); //TODO ссылка на frame с сообщением
+            System.out.println("Не верный Login"); //TODO
         }
 
     }

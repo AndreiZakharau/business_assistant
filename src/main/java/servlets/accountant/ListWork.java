@@ -30,7 +30,7 @@ public class ListWork extends HttpServlet {
         request.setAttribute("products",products);
         List<ExpiredDto> expiredProductList = ExpiredService.getInstance().getAllExpiredProduct();
         request.setAttribute("expiredProduct",expiredProductList);
-        getServletContext().getRequestDispatcher("/accountant/list_works.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/list_works.jsp").forward(request,response);
 
     }
 

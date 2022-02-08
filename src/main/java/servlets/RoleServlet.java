@@ -26,11 +26,11 @@ public class RoleServlet extends HttpServlet {
                 .telephoneNumber(request.getParameter("telephoneNumber"))
                 .build());
             if(person.getRole().equals(SALESPERSON)){
-                response.sendRedirect(request.getContextPath()+"/salesperson/salesperson_menu.jsp");
+                response.sendRedirect(request.getContextPath()+"/jsp/salesperson/salesperson_menu.jsp");
             }else if (person.getRole().equals(DIRECTOR)){
-                response.sendRedirect(request.getContextPath()+"/loginServlet");
+                response.sendRedirect(request.getContextPath()+"/jsp/loginServlet");
             }else if (person.getRole().equals(ACCOUNTANT)){
-                response.sendRedirect(request.getContextPath()+"/accountant/accountant_menu.jsp");
+                response.sendRedirect(request.getContextPath()+"/jsp/accountant/accountant_menu.jsp");
             }
 
         }

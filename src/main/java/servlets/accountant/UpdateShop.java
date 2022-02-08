@@ -16,7 +16,7 @@ public class UpdateShop extends HttpServlet {
         List <ShopDto> shopsList = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shopsList);
 
-        getServletContext().getRequestDispatcher("/accountant/updateShop.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/updateShop.jsp").forward(request,response);
     }
 
     @Override

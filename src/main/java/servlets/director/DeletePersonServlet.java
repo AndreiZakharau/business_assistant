@@ -16,7 +16,7 @@ public class DeletePersonServlet extends HttpServlet {
         List<PersonDto> person = PersonService.getInstance().getAllPerson();
         request.setAttribute("person", person);
 
-        getServletContext().getRequestDispatcher("/director/deletePerson.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/director/deletePerson.jsp").forward(request,response);
     }
 
     @Override

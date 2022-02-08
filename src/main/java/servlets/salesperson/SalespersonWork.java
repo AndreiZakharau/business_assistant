@@ -34,7 +34,7 @@ public class SalespersonWork extends HttpServlet {
         request.setAttribute("expiredProduct",expiredProductList);
         List<Order> orderList = OrderDAO.getInstance().findAll(); //TODO
         request.setAttribute("orders",orderList);
-        getServletContext().getRequestDispatcher("/salesperson/salesperson_work.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/salesperson/salesperson_work.jsp").forward(request,response);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class AddProduct extends HttpServlet {
         List<ShopDto> shops = ShopService.getInstance().getAllShop();
         request.setAttribute("shops",shops);
 
-        getServletContext().getRequestDispatcher("/accountant/addProduct.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/addProduct.jsp").forward(request,response);
     }
 
     @Override

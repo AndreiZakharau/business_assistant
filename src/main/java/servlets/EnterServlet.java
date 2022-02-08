@@ -17,7 +17,7 @@ public class EnterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<PersonDto> personList = PersonService.getInstance().getAllPerson();
         request.setAttribute("persons",personList);
-        getServletContext().getRequestDispatcher("/registration.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/registration.jsp").forward(request,response);
 
     }
 

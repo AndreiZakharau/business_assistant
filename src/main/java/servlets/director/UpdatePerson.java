@@ -22,7 +22,7 @@ public class UpdatePerson extends HttpServlet {
         request.setAttribute("id_shop",shops);
         List<Role> roles = List.of(Role.ACCOUNTANT,Role.DIRECTOR,Role.SALESPERSON);
         request.setAttribute("role_role",roles);
-        getServletContext().getRequestDispatcher("/director/updatePerson.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/director/updatePerson.jsp").forward(request,response);
 
     }
 

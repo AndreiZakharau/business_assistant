@@ -16,7 +16,7 @@ public class UpdateSuppliers extends HttpServlet {
         List<SuppliersDto> suppliers = SupplierService.getInstance().getAllSuppliers();
         request.setAttribute("suppliers",suppliers);
 
-        getServletContext().getRequestDispatcher("/accountant/updateSuppliers.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/updateSuppliers.jsp").forward(request,response);
 
     }
 
