@@ -13,8 +13,8 @@ import java.time.LocalDate;
 public class AddNullOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[]sumAndNumber=OrderDAO.getInstance().maxNumberAndSum();
-        int number = Integer.parseInt(sumAndNumber[0])+1;
+        String[] sumAndNumber = OrderDAO.getInstance().maxNumberAndSum();
+        int number = Integer.parseInt(sumAndNumber[0]) + 1;
 
         int idProduct = 0;
         String product = "null";
@@ -36,7 +36,7 @@ public class AddNullOrderServlet extends HttpServlet {
         order.setNameShop(nameShop);
 
         OrderDAO.getInstance().add(order);
-        response.sendRedirect(request.getContextPath()+"/salesperson/salespersonWork");
+        response.sendRedirect(request.getContextPath() + "/salesperson/salespersonWork");
     }
 
     @Override

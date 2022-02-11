@@ -18,21 +18,21 @@ public class SecurityDirector implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-        if(isDirectorEnter(httpServletRequest)){
-            filterChain.doFilter(servletRequest,servletResponse);
-        }else {
+        if (isDirectorEnter(httpServletRequest)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
             httpServletResponse.sendRedirect("/enter_director.jsp");
         }
     }
 
-    private boolean isDirectorEnter(HttpServletRequest httpServletRequest){
+    private boolean isDirectorEnter(HttpServletRequest httpServletRequest) {
         boolean enter = false;
         HttpSession session = httpServletRequest.getSession();
         String login = (String) session.getAttribute("login");
         String password = (String) session.getAttribute("password");
-        Director director = DirectorDAO.getInstance().finDirectorByLoginAndPassword(login,password);
+        Director director = DirectorDAO.getInstance().finDirectorByLoginAndPassword(login, password);
 
-        if(director.getPassword() != null && director.getPassword() != null && director.getLogin().equals(login) && director.getPassword().equals(password)) {
+        if (director.getPassword() != null && director.getPassword() != null && director.getLogin().equals(login) && director.getPassword().equals(password)) {
             enter = true;
         }
         return enter;

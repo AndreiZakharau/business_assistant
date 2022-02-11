@@ -65,8 +65,8 @@ public class ConnectionPool {
     }
 
     private static void loadDriver() {
-       try {
-           Class.forName(PropertiesUtil.get(DRIVER_SQL));
+        try {
+            Class.forName(PropertiesUtil.get(DRIVER_SQL));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

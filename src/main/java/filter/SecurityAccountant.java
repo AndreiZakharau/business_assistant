@@ -21,23 +21,23 @@ public class SecurityAccountant implements Filter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
 
-        if(isAccountantEnter(httpServletRequest)){
-            filterChain.doFilter(servletRequest,servletResponse);
-        }else {
+        if (isAccountantEnter(httpServletRequest)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
             httpServletResponse.sendRedirect("/enterServlet");
         }
     }
 
-    private boolean isAccountantEnter(HttpServletRequest httpServletRequest){
+    private boolean isAccountantEnter(HttpServletRequest httpServletRequest) {
         boolean enter = false;
         HttpSession session = httpServletRequest.getSession();
 
-         String name = (String) session.getAttribute("name");
-         String lastName = (String) session.getAttribute("lastName");
+        String name = (String) session.getAttribute("name");
+        String lastName = (String) session.getAttribute("lastName");
         String telephoneNumber = (String) session.getAttribute("telephoneNumber");
-       Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
+        Person person = PersonDAO.getInstance().findByNamesAndPhone(name, lastName, telephoneNumber);
 
-        if(person != null && person.getRole() == Role.ACCOUNTANT) {
+        if (person != null && person.getRole() == Role.ACCOUNTANT) {
             enter = true;
         }
         return enter;

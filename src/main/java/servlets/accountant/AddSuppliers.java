@@ -2,6 +2,7 @@ package servlets.accountant;
 
 import dto.suppliersDto.CreateSuppliersDto;
 import service.SupplierService;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -11,7 +12,7 @@ import java.io.IOException;
 public class AddSuppliers extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     getServletContext().getRequestDispatcher("/jsp/accountant/addSuppliers.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/addSuppliers.jsp").forward(request, response);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class AddSuppliers extends HttpServlet {
         SupplierService.getInstance().addSupplier(createSuppliersDto);
 
 
-        response.sendRedirect(request.getContextPath()+"/accountant/addSuppliers");
+        response.sendRedirect(request.getContextPath() + "/accountant/addSuppliers");
 
     }
 }

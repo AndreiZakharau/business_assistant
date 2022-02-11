@@ -13,17 +13,18 @@ public class PersonMapper implements Mapper<PersonDto, Person> {
 
     @Override
     public Person mapFrom(PersonDto object) {
-    Person person = new Person();
-    person.setId(object.getId());
-    person.setName(object.getName());
-    person.setLastName(object.getLastName());
-    person.setTelephoneNumber(object.getTelephoneNumber());
-    person.setRole(object.getRole());
-    person.setShop(object.getShop());
-    return  person;
+        Person person = new Person();
+        person.setId(object.getId());
+        person.setName(object.getName());
+        person.setLastName(object.getLastName());
+        person.setTelephoneNumber(object.getTelephoneNumber());
+        person.setRole(object.getRole());
+        person.setShop(object.getShop());
+        return person;
 
     }
-    public Person mapCreatePerson(CreatePersonDto object){
+
+    public Person mapCreatePerson(CreatePersonDto object) {
         Person person = new Person();
         person.setName(object.getName());
         person.setLastName(object.getLastName());
@@ -33,12 +34,15 @@ public class PersonMapper implements Mapper<PersonDto, Person> {
         return person;
     }
 
-    public Person mapPersonNameAndPhone(PersonNamePhoneDto object){
+    public Person mapPersonNameAndPhone(PersonNamePhoneDto object) {
         Person person = new Person();
         person.setName(object.getName());
         person.setLastName(object.getLastName());
         person.setTelephoneNumber(object.getTelephoneNumber());
         return person;
     }
-    public static PersonMapper getInstance(){return instance;}
+
+    public static PersonMapper getInstance() {
+        return instance;
+    }
 }

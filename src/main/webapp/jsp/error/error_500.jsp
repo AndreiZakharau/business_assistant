@@ -7,10 +7,11 @@
     <title>Error</title>
 </head>
 <body>
-<h1>Error 500</h1>
+<h1>Error</h1>
 <div>
     <img src="http://hoffmander.com/images/travolta-gif-repeat.gif" alt="travolta">
 </div>
-
+<p>Type: <%=pageContext.getException().getClass().toString()%></p>
+<p>Message: <%=pageContext.getException().getMessage()%></p>
 </body>
 </html>

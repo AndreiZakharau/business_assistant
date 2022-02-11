@@ -7,15 +7,21 @@ import entity.Suppliers;
 import lombok.NoArgsConstructor;
 import mapper.impl.SupplierMapper;
 import validator.notNull.impl.ValiditySupplier;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class SupplierService {
     private static SupplierService instance = new SupplierService();
-    public static SupplierService getInstance(){return instance;}
-    private final SuppliersDAO suppliersDAO =SuppliersDAO.getInstance();
+
+    public static SupplierService getInstance() {
+        return instance;
+    }
+
+    private final SuppliersDAO suppliersDAO = SuppliersDAO.getInstance();
     private final ValiditySupplier validitySupplier = ValiditySupplier.getInstance();
     private final SupplierMapper supplierMapper = SupplierMapper.getInstance();
 
@@ -28,22 +34,22 @@ public class SupplierService {
         return result;
     }
 
-    public Suppliers addSupplier(CreateSuppliersDto createSuppliersDto){
+    public Suppliers addSupplier(CreateSuppliersDto createSuppliersDto) {
 
-       Suppliers suppliers= SupplierMapper.getInstance().mapCreateSuppliers(createSuppliersDto);
-        if (validitySupplier.notCopyName(suppliers)){
+        Suppliers suppliers = SupplierMapper.getInstance().mapCreateSuppliers(createSuppliersDto);
+        if (validitySupplier.notCopyName(suppliers)) {
             SuppliersDAO.getInstance().add(suppliers);
         }
         return suppliers;
     }
 
-    public Suppliers updateSupplier(SuppliersDto suppliersDto){
+    public Suppliers updateSupplier(SuppliersDto suppliersDto) {
         Suppliers suppliers = SupplierMapper.getInstance().mapFrom(suppliersDto);
         SuppliersDAO.getInstance().update(suppliers);
         return suppliers;
     }
 
-    public List<SuppliersDto> getAllSuppliers(){
+    public List<SuppliersDto> getAllSuppliers() {
         return suppliersDAO.findAll().stream().map(suppliers -> SuppliersDto.builder()
                 .id(suppliers.getId())
                 .nameSupplier(suppliers.getNameSupplier())

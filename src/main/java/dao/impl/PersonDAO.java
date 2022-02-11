@@ -1,12 +1,11 @@
 package dao.impl;
 
-import com.mysql.cj.AbstractQuery;
+
 import connection.ConnectionPool;
 import dao.DAO;
 import entity.Person;
 import entity.Role;
 
-import javax.servlet.http.HttpSession;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,8 @@ public class PersonDAO implements DAO<Person> {
         return instance;
     }
 
-    public PersonDAO(){}
+    public PersonDAO() {
+    }
 
 
     private static final String SQL_PERSON_BY_DELETE = "DELETE FROM Persons WHERE  id = ? OR name = ? OR lastName = ? OR telephoneNumber = ? ";
@@ -105,7 +105,7 @@ public class PersonDAO implements DAO<Person> {
             preparedStatement.setString(4, person.getTelephoneNumber());
             preparedStatement.setString(5, person.getRole().name());
             preparedStatement.setLong(6, person.getShop());
-            preparedStatement.setLong(7,person.getId());
+            preparedStatement.setLong(7, person.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -135,13 +135,13 @@ public class PersonDAO implements DAO<Person> {
 
     }
 
-    public Person findByNamesAndPhone(String name, String lastName, String tel){
+    public Person findByNamesAndPhone(String name, String lastName, String tel) {
         Person person = new Person();
         try (Connection conn = ConnectionPool.get()) {
             PreparedStatement preparedStatement = conn.prepareStatement(SQL_PERSONS_FIN_BY_NAME_AND_PHONE);
-            preparedStatement.setString(1,name);
-            preparedStatement.setString(2,lastName);
-            preparedStatement.setString(3,tel);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, tel);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long indef = resultSet.getLong("id");
@@ -150,7 +150,7 @@ public class PersonDAO implements DAO<Person> {
                 String telephone = resultSet.getString("telephoneNumber");
                 Role roles = Role.valueOf(resultSet.getString("role_role"));
                 long shop = resultSet.getLong("id_shop");
-                person = new Person(indef,name1,lastN,telephone,roles,shop);
+                person = new Person(indef, name1, lastN, telephone, roles, shop);
             }
 
         } catch (SQLException e) {
@@ -174,7 +174,7 @@ public class PersonDAO implements DAO<Person> {
                 String telephone = resultSet.getString("telephoneNumber");
                 Role roles = Role.valueOf(resultSet.getString("role_role"));
                 long shop = resultSet.getLong("id_shop");
-                person = new Person(indef,name1,lastN,telephone,roles,shop);
+                person = new Person(indef, name1, lastN, telephone, roles, shop);
             }
 
         } catch (SQLException throwables) {

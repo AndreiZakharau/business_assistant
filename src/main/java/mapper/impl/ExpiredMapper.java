@@ -9,7 +9,10 @@ import java.time.LocalDate;
 
 public class ExpiredMapper implements Mapper<ExpiredDto, ExpiredProduct> {
     private static ExpiredMapper instance = new ExpiredMapper();
-    public static ExpiredMapper getInstance(){return instance;}
+
+    public static ExpiredMapper getInstance() {
+        return instance;
+    }
 
 
     @Override

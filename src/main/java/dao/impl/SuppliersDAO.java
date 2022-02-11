@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-public class SuppliersDAO implements DAO <Suppliers> {
+public class SuppliersDAO implements DAO<Suppliers> {
 
     private static SuppliersDAO instanceSu = new SuppliersDAO();
 
@@ -18,9 +17,9 @@ public class SuppliersDAO implements DAO <Suppliers> {
         return instanceSu;
     }
 
-    public SuppliersDAO(){}
+    public SuppliersDAO() {
+    }
 
-   
 
     private static final String SQL_SUPPLIERS_BY_DELETE = "DELETE FROM Suppliers WHERE  id = ? OR name = ? OR contact_tel = ? OR email = ? ";
     private static final String SQL_UPDATE_SUPPLIERS = "UPDATE Suppliers set id = ?, name = ?, contact_tel  = ?, email = ? Where id = ?";
@@ -35,9 +34,9 @@ public class SuppliersDAO implements DAO <Suppliers> {
 
         try (Connection connection = ConnectionPool.get();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_INSERT_SUPPLIERS)) {
-            preparedStatement.setString(1,suppliers.getNameSupplier());
-            preparedStatement.setString(2,suppliers.getContactTel());
-            preparedStatement.setString(3,suppliers.getEmail());
+            preparedStatement.setString(1, suppliers.getNameSupplier());
+            preparedStatement.setString(2, suppliers.getContactTel());
+            preparedStatement.setString(3, suppliers.getEmail());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -48,12 +47,12 @@ public class SuppliersDAO implements DAO <Suppliers> {
     @Override
     public boolean delete(Suppliers suppliers) {
         int rows = 0;
-        try(Connection connection = ConnectionPool.get();
-        PreparedStatement ps = connection.prepareStatement(SQL_SUPPLIERS_BY_DELETE)) {
-            ps.setLong(1,suppliers.getId());
-            ps.setString(2,suppliers.getNameSupplier());
-            ps.setString(3,suppliers.getContactTel());
-            ps.setString(4,suppliers.getEmail());
+        try (Connection connection = ConnectionPool.get();
+             PreparedStatement ps = connection.prepareStatement(SQL_SUPPLIERS_BY_DELETE)) {
+            ps.setLong(1, suppliers.getId());
+            ps.setString(2, suppliers.getNameSupplier());
+            ps.setString(3, suppliers.getContactTel());
+            ps.setString(4, suppliers.getEmail());
             rows = ps.executeUpdate();
 
         } catch (SQLException throwables) {
@@ -65,16 +64,16 @@ public class SuppliersDAO implements DAO <Suppliers> {
     @Override
     public Suppliers finByID(long id) {
         Suppliers suppliers = null;
-        try(Connection conn = ConnectionPool.get()) {
+        try (Connection conn = ConnectionPool.get()) {
             PreparedStatement ps = conn.prepareStatement(SQL_SUPPLIERS_FIN_BY_ID);
-            ps.setLong(1,suppliers.getId());
+            ps.setLong(1, suppliers.getId());
             ResultSet resultSet = ps.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 id = resultSet.getLong("id");
                 String name = resultSet.getString("name");
                 String contact = resultSet.getString("contact_tel");
                 String email = resultSet.getString("email");
-                suppliers = new Suppliers(id,name,contact,email);
+                suppliers = new Suppliers(id, name, contact, email);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -84,8 +83,8 @@ public class SuppliersDAO implements DAO <Suppliers> {
 
     @Override
     public List<Suppliers> findAll() {
-        List<Suppliers>suppliersList = new ArrayList<>();
-        try(Connection conn = ConnectionPool.get()) {
+        List<Suppliers> suppliersList = new ArrayList<>();
+        try (Connection conn = ConnectionPool.get()) {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(SQL_SUPPLIERS_ALL_LIST);
             while (resultSet.next()) {
@@ -103,13 +102,13 @@ public class SuppliersDAO implements DAO <Suppliers> {
 
     @Override
     public boolean update(Suppliers suppliers) {
-        try(Connection connection = ConnectionPool.get();
-        PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_SUPPLIERS,Statement.RETURN_GENERATED_KEYS)) {
-            ps.setLong(1,suppliers.getId());
-            ps.setString(2,suppliers.getNameSupplier());
-            ps.setString(3,suppliers.getContactTel());
-            ps.setString(4,suppliers.getEmail());
-            ps.setLong(5,suppliers.getId());
+        try (Connection connection = ConnectionPool.get();
+             PreparedStatement ps = connection.prepareStatement(SQL_UPDATE_SUPPLIERS, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setLong(1, suppliers.getId());
+            ps.setString(2, suppliers.getNameSupplier());
+            ps.setString(3, suppliers.getContactTel());
+            ps.setString(4, suppliers.getEmail());
+            ps.setLong(5, suppliers.getId());
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -135,5 +134,5 @@ public class SuppliersDAO implements DAO <Suppliers> {
             throwables.printStackTrace();
         }
         return suppliers;
-        }
     }
+}

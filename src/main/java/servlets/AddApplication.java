@@ -9,7 +9,7 @@ import java.io.IOException;
 public class AddApplication extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/jsp/addApplication.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/addApplication.jsp").forward(request, response);
     }
 
     @Override

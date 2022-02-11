@@ -13,9 +13,6 @@ public class Director {
         this.password = password;
     }
 
-    public Director(String login, String password) {
-    }
-
     public Director() {
 
     }

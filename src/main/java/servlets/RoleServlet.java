@@ -1,6 +1,5 @@
 package servlets;
 
-import dao.impl.PersonDAO;
 import dto.personDto.PersonNamePhoneDto;
 import entity.Person;
 import service.PersonService;
@@ -9,7 +8,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.Random;
+
 
 import static entity.Role.*;
 
@@ -25,14 +24,14 @@ public class RoleServlet extends HttpServlet {
                 .lastName(request.getParameter("lastName"))
                 .telephoneNumber(request.getParameter("telephoneNumber"))
                 .build());
-            if(person.getRole().equals(SALESPERSON)){
-                response.sendRedirect(request.getContextPath()+"/jsp/salesperson/salesperson_menu.jsp");
-            }else if (person.getRole().equals(DIRECTOR)){
-                response.sendRedirect(request.getContextPath()+"/jsp/loginServlet");
-            }else if (person.getRole().equals(ACCOUNTANT)){
-                response.sendRedirect(request.getContextPath()+"/jsp/accountant/accountant_menu.jsp");
-            }
-
+        if (person.getRole().equals(SALESPERSON)) {
+            response.sendRedirect(request.getContextPath() + "/jsp/salesperson/salesperson_menu.jsp");
+        } else if (person.getRole().equals(DIRECTOR)) {
+            response.sendRedirect(request.getContextPath() + "/jsp/loginServlet");
+        } else if (person.getRole().equals(ACCOUNTANT)) {
+            response.sendRedirect(request.getContextPath() + "/jsp/accountant/accountant_menu.jsp");
         }
+
+    }
 
 }

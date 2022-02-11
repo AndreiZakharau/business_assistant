@@ -2,6 +2,7 @@ package servlets.accountant;
 
 import dto.productDto.ProductDto;
 import service.ProductService;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -14,9 +15,9 @@ public class DeleteProduct extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<ProductDto> productsList = ProductService.getInstance().getAllProducts();
-        request.setAttribute("products",productsList);
+        request.setAttribute("products", productsList);
 
-        getServletContext().getRequestDispatcher("/jsp/accountant/deleteProduct.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteProduct.jsp").forward(request, response);
 
     }
 
@@ -26,7 +27,7 @@ public class DeleteProduct extends HttpServlet {
         ProductService.getInstance().deleteProduct(ProductDto.builder()
                 .id(Long.parseLong(request.getParameter("id"))).build());
 
-        response.sendRedirect(request.getContextPath()+"/accountant/deleteProduct");
+        response.sendRedirect(request.getContextPath() + "/accountant/deleteProduct");
 
 
     }

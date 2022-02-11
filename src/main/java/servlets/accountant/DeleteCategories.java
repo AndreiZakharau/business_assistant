@@ -2,6 +2,7 @@ package servlets.accountant;
 
 import dto.categoriesDto.CategoriesDto;
 import service.CategoriesService;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -14,9 +15,9 @@ public class DeleteCategories extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<CategoriesDto> categoriesList = CategoriesService.getInstance().getAllCategories();
-        request.setAttribute("categories",categoriesList);
+        request.setAttribute("categories", categoriesList);
 
-        getServletContext().getRequestDispatcher("/jsp/accountant/deleteCategories.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteCategories.jsp").forward(request, response);
 
     }
 
@@ -28,6 +29,6 @@ public class DeleteCategories extends HttpServlet {
                 .build();
         CategoriesService.getInstance().deleteCategory(categoriesDto);
 
-        response.sendRedirect(request.getContextPath()+"/accountant/deleteCategories");
+        response.sendRedirect(request.getContextPath() + "/accountant/deleteCategories");
     }
 }

@@ -7,7 +7,8 @@ public class Categories {
     private String category;
     private double interest;
 
-    public Categories(){}
+    public Categories() {
+    }
 
     public Categories(long id, String category, double interest) {
         this.id = id;

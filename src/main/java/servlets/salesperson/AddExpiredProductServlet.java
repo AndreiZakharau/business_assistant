@@ -9,7 +9,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
-@WebServlet( "/salesperson/addExpiredProductServlet")
+@WebServlet("/salesperson/addExpiredProductServlet")
 public class AddExpiredProductServlet extends HttpServlet {
 
     @Override

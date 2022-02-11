@@ -14,7 +14,7 @@ public class AddShop extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       getServletContext().getRequestDispatcher("/jsp/accountant/myShops.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/myShops.jsp").forward(request, response);
 
     }
 
@@ -27,7 +27,7 @@ public class AddShop extends HttpServlet {
 
         ShopService.getInstance().addShop(createShopDto);
 
-        response.sendRedirect(request.getContextPath()+"/accountant/addShop");
+        response.sendRedirect(request.getContextPath() + "/accountant/addShop");
 
     }
 }

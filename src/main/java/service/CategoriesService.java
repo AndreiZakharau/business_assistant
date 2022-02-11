@@ -7,8 +7,10 @@ import entity.Categories;
 import lombok.NoArgsConstructor;
 import mapper.impl.CategoriesMapper;
 import validator.notNull.impl.ValidityCategory;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
@@ -27,29 +29,30 @@ public class CategoriesService {
         return result;
     }
 
-    public Categories addCategory(CreateCategoriesDto createCategoriesDto){
+    public Categories addCategory(CreateCategoriesDto createCategoriesDto) {
 
-        Categories categories= CategoriesMapper.getInstance().mapCreateCategory(createCategoriesDto);
-        if (validityCategory.notCopyName( categories)){
+        Categories categories = CategoriesMapper.getInstance().mapCreateCategory(createCategoriesDto);
+        if (validityCategory.notCopyName(categories)) {
             CategoriesDAO.getInstance().add(categories);
         }
         return categories;
     }
 
-    public Categories updateCategory(CategoriesDto categoriesDto){
+    public Categories updateCategory(CategoriesDto categoriesDto) {
         Categories categories = CategoriesMapper.getInstance().mapFrom(categoriesDto);
         CategoriesDAO.getInstance().update(categories);
         return categories;
     }
 
-    public List<CategoriesDto> getAllCategories(){
+    public List<CategoriesDto> getAllCategories() {
         return categoriesDAO.findAll().stream().map(categories -> CategoriesDto.builder()
                 .id(categories.getId())
                 .category(categories.getCategory())
                 .interest(categories.getInterest())
                 .build()).collect(Collectors.toList());
     }
-    public static CategoriesService getInstance(){
+
+    public static CategoriesService getInstance() {
         return instance;
     }
 }

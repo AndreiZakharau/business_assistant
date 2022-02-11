@@ -13,16 +13,16 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet( "/accountant/deleteShop")
+@WebServlet("/accountant/deleteShop")
 public class DeleteShop extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         List<ShopDto> shopsList = ShopService.getInstance().getAllShop();
-        request.setAttribute("shops",shopsList);
+        request.setAttribute("shops", shopsList);
 
-        getServletContext().getRequestDispatcher("/jsp/accountant/deleteShop.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteShop.jsp").forward(request, response);
 
     }
 
@@ -30,9 +30,9 @@ public class DeleteShop extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ShopDto shopDto = ShopDto.builder().id(Long.parseLong(request.getParameter("id"))).build();
-         ShopService.getInstance().deleteShop(shopDto);
+        ShopService.getInstance().deleteShop(shopDto);
 
-        response.sendRedirect(request.getContextPath()+"/accountant/deleteShop");
+        response.sendRedirect(request.getContextPath() + "/accountant/deleteShop");
 
     }
 }

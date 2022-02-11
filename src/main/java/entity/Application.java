@@ -13,7 +13,8 @@ public class Application {  //TODO finalPrice?
     public Application(long id, Products name, int necessaryQuantities, Shops shop) {
         this.id = id;
         this.name = name;
-        this.necessaryQuantities = necessaryQuantities;;
+        this.necessaryQuantities = necessaryQuantities;
+        ;
         this.shop = shop;
 
     }
@@ -60,7 +61,6 @@ public class Application {  //TODO finalPrice?
     public void setShop(Shops shop) {
         this.shop = shop;
     }
-
 
 
     @Override

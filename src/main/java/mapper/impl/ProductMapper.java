@@ -7,7 +7,7 @@ import mapper.Mapper;
 
 import java.time.LocalDate;
 
-public class ProductMapper implements Mapper <ProductDto, Products> {
+public class ProductMapper implements Mapper<ProductDto, Products> {
     private static ProductMapper instance = new ProductMapper();
 
     @Override
@@ -24,7 +24,8 @@ public class ProductMapper implements Mapper <ProductDto, Products> {
         products.setShop(object.getShop());
         return products;
     }
-    public Products mapCreateProduct(CreateProductDto object){
+
+    public Products mapCreateProduct(CreateProductDto object) {
         Products products = new Products();
         products.setName(object.getName());
         products.setCount(Integer.parseInt(object.getCount()));
@@ -36,7 +37,8 @@ public class ProductMapper implements Mapper <ProductDto, Products> {
         products.setShop(Long.parseLong(object.getShop()));
         return products;
     }
-    public static ProductMapper getInstance(){
+
+    public static ProductMapper getInstance() {
         return instance;
     }
 }

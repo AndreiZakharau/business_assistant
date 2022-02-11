@@ -1,11 +1,16 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="/my_resourses/css/error_404.css">
 </head>
 <body>
+<h1><fmt:message key="translation.message.404"></fmt:message></h1>
+
 <div class="wrapper">
     <div class="composition">
         <div class="layer-0 shelf">

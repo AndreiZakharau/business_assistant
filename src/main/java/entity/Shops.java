@@ -14,7 +14,9 @@ public class Shops {
         this.nameShop = nameShop;
         this.address = address;
     }
-    public Shops(){}
+
+    public Shops() {
+    }
 
     public Shops(String nameShop, String address) {
     }

@@ -11,7 +11,7 @@ public class Order {  //TODO Всё переделать что связано �
     private String product;
     private int quantum;
     private LocalDate localDate;
-//    private LocalTime localTime;
+    //    private LocalTime localTime;
     private double priceFinal;
     private double sum;
     private String nameSalesperson;

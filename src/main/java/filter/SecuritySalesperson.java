@@ -18,21 +18,21 @@ public class SecuritySalesperson implements Filter {
 
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        if(isSalespersonEnter(httpServletRequest)){
-            filterChain.doFilter(servletRequest,servletResponse);
-        }else{
+        if (isSalespersonEnter(httpServletRequest)) {
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else {
             httpServletResponse.sendRedirect("/enterServlet");
         }
     }
 
-    private boolean isSalespersonEnter(HttpServletRequest httpServletRequest){
+    private boolean isSalespersonEnter(HttpServletRequest httpServletRequest) {
         boolean enter = false;
         HttpSession session = httpServletRequest.getSession();
         String name = (String) session.getAttribute("name");
         String lastName = (String) session.getAttribute("lastName");
         String telephoneNumber = (String) session.getAttribute("telephoneNumber");
-        Person person = PersonDAO.getInstance().findByNamesAndPhone(name,lastName,telephoneNumber);
-        if(person != null && person.getRole() == Role.SALESPERSON){
+        Person person = PersonDAO.getInstance().findByNamesAndPhone(name, lastName, telephoneNumber);
+        if (person != null && person.getRole() == Role.SALESPERSON) {
             enter = true;
         }
         return enter;

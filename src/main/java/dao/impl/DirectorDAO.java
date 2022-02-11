@@ -3,7 +3,6 @@ package dao.impl;
 import connection.ConnectionPool;
 import dao.DAO;
 import entity.Director;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,11 +10,15 @@ import java.util.List;
 public class DirectorDAO implements DAO<Director> {
 
     private static DirectorDAO instance = new DirectorDAO();
-    public static DirectorDAO getInstance() {return instance;}
-    DirectorDAO(){}
+
+    public static DirectorDAO getInstance() {
+        return instance;
+    }
+
+    DirectorDAO() {
+    }
 
     private static final String SQL_INSERT_DIRECTOR = "INSERT INTO Security (login,password) VALUES (?,?)";
-
 
 
     private static final String SQL_DIRECTOR_LIST = "SELECT * FROM Security";
@@ -49,14 +52,14 @@ public class DirectorDAO implements DAO<Director> {
     @Override
     public List<Director> findAll() {
         List<Director> list = new ArrayList<>();
-        try(Connection connection = ConnectionPool.get()){
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL_DIRECTOR_LIST);
+        try (Connection connection = ConnectionPool.get()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(SQL_DIRECTOR_LIST);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 long id = resultSet.getLong("id");
                 String login = resultSet.getString("login");
                 String password = resultSet.getString("password");
-                list.add(new Director(id,login,password));
+                list.add(new Director(id, login, password));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -68,10 +71,10 @@ public class DirectorDAO implements DAO<Director> {
     public boolean update(Director director) {
         try (Connection conn = ConnectionPool.get();
              PreparedStatement statement = conn.prepareStatement(UPDATE_DIRECTOR, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1,director.getId());
+            statement.setLong(1, director.getId());
             statement.setString(2, director.getLogin());
             statement.setString(3, director.getPassword());
-            statement.setLong(4,director.getId());
+            statement.setLong(4, director.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -79,9 +82,9 @@ public class DirectorDAO implements DAO<Director> {
         return true;
     }
 
-    public Director finDirectorByLoginAndPassword(String login,String password) {
+    public Director finDirectorByLoginAndPassword(String login, String password) {
         Director director = new Director();
-        try(Connection connection = ConnectionPool.get()) {
+        try (Connection connection = ConnectionPool.get()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DIRECTOR_BY_LOGIN_AND_PASSWORD);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);

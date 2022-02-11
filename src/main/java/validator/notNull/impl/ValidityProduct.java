@@ -4,16 +4,17 @@ import dao.impl.ProductDAO;
 import entity.Products;
 import validator.notNull.Validator;
 
-public class ValidityProduct implements Validator <Products> {
+public class ValidityProduct implements Validator<Products> {
     private static ValidityProduct instance = new ValidityProduct();
-    public static ValidityProduct getInstance(){
+
+    public static ValidityProduct getInstance() {
         return instance;
     }
 
     @Override
     public boolean notNull(Products products) {
         boolean result = false;
-        if (ProductDAO.getInstance().finByID(products.getId())!=null) {
+        if (ProductDAO.getInstance().finByID(products.getId()) != null) {
             result = true;
         }
         return result;
@@ -23,8 +24,9 @@ public class ValidityProduct implements Validator <Products> {
     public boolean notCopyName(Products products) {
         boolean result = false;
         Products product = ProductDAO.getInstance().finByName(products.getName());
-        if (product.getName()==null){
+        if (product.getName() == null) {
             result = true;
         }
-        return result;    }
+        return result;
+    }
 }

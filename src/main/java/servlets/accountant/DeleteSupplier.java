@@ -2,6 +2,7 @@ package servlets.accountant;
 
 import dto.suppliersDto.SuppliersDto;
 import service.SupplierService;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -13,9 +14,9 @@ public class DeleteSupplier extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<SuppliersDto> suppliersList = SupplierService.getInstance().getAllSuppliers();
-        request.setAttribute("suppliers",suppliersList);
+        request.setAttribute("suppliers", suppliersList);
 
-        getServletContext().getRequestDispatcher("/jsp/accountant/deleteSupplier.jsp").forward(request,response);
+        getServletContext().getRequestDispatcher("/jsp/accountant/deleteSupplier.jsp").forward(request, response);
 
     }
 
@@ -26,6 +27,6 @@ public class DeleteSupplier extends HttpServlet {
                 .id(Long.parseLong(request.getParameter("id")))
                 .build();
         SupplierService.getInstance().deleteSupplier(suppliersDto);
-        response.sendRedirect(request.getContextPath()+"/accountant/deleteSupplier");
+        response.sendRedirect(request.getContextPath() + "/accountant/deleteSupplier");
     }
 }

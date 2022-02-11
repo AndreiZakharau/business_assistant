@@ -35,9 +35,6 @@ public class Products {
     public Products(long id, String name, int count, double price, long categories, long supplier, String localDate, String date, long shop) {
     }
 
-    public Products(String name, int count, double price, long categories, long suppliers, LocalDate localDate, java.sql.Date date, long shops) {
-    }
-
 
     public long getId() {
         return id;

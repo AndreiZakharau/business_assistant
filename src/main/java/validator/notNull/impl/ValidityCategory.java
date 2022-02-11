@@ -7,16 +7,18 @@ import validator.notNull.Validator;
 
 import java.util.List;
 
-public class ValidityCategory implements Validator <Categories> {
+public class ValidityCategory implements Validator<Categories> {
 
     private static ValidityCategory instance = new ValidityCategory();
+
     public static ValidityCategory getInstance() {
         return instance;
     }
+
     @Override
     public boolean notNull(Categories categories) {
         boolean result = false;
-        while (CategoriesDAO.getInstance().finByID(categories.getId())!=null) {
+        while (CategoriesDAO.getInstance().finByID(categories.getId()) != null) {
             result = true;
         }
         return result;
@@ -25,10 +27,10 @@ public class ValidityCategory implements Validator <Categories> {
     @Override
     public boolean notCopyName(Categories categories) {
         boolean result = false;
-      Categories c =  CategoriesDAO.getInstance().finByName(categories.getCategory());
-      if (c.getCategory()==null) {
-          result = true;
-      }
+        Categories c = CategoriesDAO.getInstance().finByName(categories.getCategory());
+        if (c.getCategory() == null) {
+            result = true;
+        }
         return result;
     }
 }

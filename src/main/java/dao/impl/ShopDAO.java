@@ -17,15 +17,15 @@ public class ShopDAO implements DAO<Shops> {
         return instance;
     }
 
-    ShopDAO(){}
-
+    ShopDAO() {
+    }
 
 
     private static final String SQL_INSERT_SHOP = "INSERT INTO Shops(nameShop,address) VALUES (?,?)";
-    private static final String SQL_SHOP_BY_DELETE ="DELETE FROM Shops WHERE id = ? OR nameShop = ? OR address = ?";
-    private static final String SQL_SHOP_FIN_BY_ID ="SELECT * FROM Shops WHERE id = ?";
-    private static final String SQL_SHOP_ALL_LIST ="SELECT * FROM Shops ";
-    private static final String UPDATE_SHOP =" UPDATE Shops SET id = ?, nameShop = ?, address = ? where id = ?";
+    private static final String SQL_SHOP_BY_DELETE = "DELETE FROM Shops WHERE id = ? OR nameShop = ? OR address = ?";
+    private static final String SQL_SHOP_FIN_BY_ID = "SELECT * FROM Shops WHERE id = ?";
+    private static final String SQL_SHOP_ALL_LIST = "SELECT * FROM Shops ";
+    private static final String UPDATE_SHOP = " UPDATE Shops SET id = ?, nameShop = ?, address = ? where id = ?";
     private static final String SQL_SHOP_FIN_BY_NAME = "SELECT * FROM Shops WHERE name = ?";
 
     @Override
@@ -44,23 +44,24 @@ public class ShopDAO implements DAO<Shops> {
         }
         return shops;
     }
-        @Override
+
+    @Override
     public boolean delete(Shops shops) {
-            int rows = 0;
-            try (Connection connect = ConnectionPool.get()) {
+        int rows = 0;
+        try (Connection connect = ConnectionPool.get()) {
 
-                PreparedStatement preparedStatement = connect.prepareStatement(SQL_SHOP_BY_DELETE);
-                preparedStatement.setLong(1, shops.getId());
-                preparedStatement.setString(2, shops.getNameShop());
-                preparedStatement.setString(3, shops.getAddress());
+            PreparedStatement preparedStatement = connect.prepareStatement(SQL_SHOP_BY_DELETE);
+            preparedStatement.setLong(1, shops.getId());
+            preparedStatement.setString(2, shops.getNameShop());
+            preparedStatement.setString(3, shops.getAddress());
 
 
-                rows = preparedStatement.executeUpdate();
+            rows = preparedStatement.executeUpdate();
 
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            return rows != 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return rows != 0;
     }
 
     @Override
@@ -74,7 +75,7 @@ public class ShopDAO implements DAO<Shops> {
                 id = resultSet.getInt("id");
                 String name = resultSet.getString("nameShop");
                 String address = resultSet.getString("address");
-                shops = new Shops(id,name,address );
+                shops = new Shops(id, name, address);
             }
 
         } catch (SQLException e) {
@@ -111,7 +112,7 @@ public class ShopDAO implements DAO<Shops> {
             statement.setLong(1, shops.getId());
             statement.setString(2, shops.getNameShop());
             statement.setString(3, shops.getAddress());
-            statement.setLong(4,shops.getId());
+            statement.setLong(4, shops.getId());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -122,9 +123,9 @@ public class ShopDAO implements DAO<Shops> {
     @Override
     public Shops finByName(String nameShop) {
         Shops shops = new Shops();
-        try(Connection connection = ConnectionPool.get()){
+        try (Connection connection = ConnectionPool.get()) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQL_SHOP_FIN_BY_NAME);
-            preparedStatement.setString(1,nameShop);
+            preparedStatement.setString(1, nameShop);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
