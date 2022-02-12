@@ -6,6 +6,8 @@ import dto.suppliersDto.SuppliersDto;
 import entity.Suppliers;
 import lombok.NoArgsConstructor;
 import mapper.impl.SupplierMapper;
+import validator.ValidatorEmail;
+import validator.ValidatorPhone;
 import validator.notNull.impl.ValiditySupplier;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class SupplierService {
     private final SuppliersDAO suppliersDAO = SuppliersDAO.getInstance();
     private final ValiditySupplier validitySupplier = ValiditySupplier.getInstance();
     private final SupplierMapper supplierMapper = SupplierMapper.getInstance();
+    ValidatorEmail validatorEmail = new ValidatorEmail();
+    ValidatorPhone validatorPhone = new ValidatorPhone();
 
     public boolean deleteSupplier(SuppliersDto suppliersDto) {
         boolean result = false;
@@ -37,15 +41,27 @@ public class SupplierService {
     public Suppliers addSupplier(CreateSuppliersDto createSuppliersDto) {
 
         Suppliers suppliers = SupplierMapper.getInstance().mapCreateSuppliers(createSuppliersDto);
-        if (validitySupplier.notCopyName(suppliers)) {
-            SuppliersDAO.getInstance().add(suppliers);
+        if (validitySupplier.notCopyName(suppliers) && validatorPhone.isValidPhoneSupplier(suppliers)) {
+            if (suppliers.getEmail() != null && validatorEmail.isValidEmail(suppliers.getEmail())) {
+                suppliers.setEmail(suppliers.getEmail());
+            } else {
+                suppliers.setEmail(null);
+            }
+            suppliers = SuppliersDAO.getInstance().add(suppliers);
         }
         return suppliers;
     }
 
     public Suppliers updateSupplier(SuppliersDto suppliersDto) {
         Suppliers suppliers = SupplierMapper.getInstance().mapFrom(suppliersDto);
-        SuppliersDAO.getInstance().update(suppliers);
+        if (validitySupplier.notCopyName(suppliers) && validatorPhone.isValidPhoneSupplier(suppliers)) {
+            if (suppliers.getEmail() != null && validatorEmail.isValidEmail(suppliers.getEmail())) {
+                suppliers.setEmail(suppliers.getEmail());
+            } else {
+                suppliers.setEmail(null);
+            }
+            SuppliersDAO.getInstance().update(suppliers);
+        }
         return suppliers;
     }
 

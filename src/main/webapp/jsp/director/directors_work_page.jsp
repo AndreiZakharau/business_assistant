@@ -15,10 +15,10 @@
 <body>
 <nav>
     <ul class="menu">
-        <li><a href="addPerson"><fmt:message key="translation.director.addPerson"/></a></li>
-        <li><a href="updatePerson"><fmt:message key="translation.director.updatePerson"/></a></li>
-        <li><a href="deletePersonServlet"><fmt:message key="translation.director.deletePerson"/></a></li>
-        <li><a href="listPersonServlet"><fmt:message key="translation.director.listPerson"/></a></li>
+        <li><a href="/director/addPerson"><fmt:message key="translation.director.addPerson"/></a></li>
+        <li><a href="/director/updatePerson"><fmt:message key="translation.director.updatePerson"/></a></li>
+        <li><a href="/director/deletePersonServlet"><fmt:message key="translation.director.deletePerson"/></a></li>
+        <li><a href="/director/listPersonServlet"><fmt:message key="translation.director.listPerson"/></a></li>
         <li><a href="/jsp/director/director.jsp"><fmt:message key="translation.back"/></a></li>
 
     </ul>

@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <link rel="stylesheet" href="my_resourses/css/page_expected.css">
+    <link rel="stylesheet" href="../../my_resourses/css/page_expected.css">
     <title>page expected</title>
 </head>
 <body>

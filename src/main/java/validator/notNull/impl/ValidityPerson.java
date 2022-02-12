@@ -6,8 +6,6 @@ import validator.notNull.Validator;
 
 public class ValidityPerson implements Validator<Person> {
 
-    public static final String INPUT_REG_PHONE = "^[+]\\d{11,12}$";
-
     private static ValidityPerson instance = new ValidityPerson();
 
     public static ValidityPerson getInstance() {
@@ -33,15 +31,4 @@ public class ValidityPerson implements Validator<Person> {
         return result;
     }
 
-
-    public boolean isValidPhone(Person person) {
-        boolean result = false;
-        if (person.getTelephoneNumber() != null && person.getTelephoneNumber().matches(INPUT_REG_PHONE)) {
-            result = true;
-        } else {
-            // TODO my EXCEPTION and message
-        }
-        return result;
-
-    }
 }

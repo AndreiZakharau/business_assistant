@@ -14,7 +14,7 @@
 <div class="container">
     <div class="row">
         <div class="box clearfix">
-            <h2 class="text-center">My products</h2>
+            <h2 class="text-center"><fmt:message key="translation.product"/></h2>
             <hr />
             <table class="table table-hover" id="bootstrap-table">
                 <thead>
@@ -67,7 +67,7 @@
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/jsp/director/directors_work_page.jsp">EXIT</a>
+        <a  type="submit" class="btn btn-primary" href="/jsp/director/directors_work_page.jsp"><fmt:message key="translation.button.exit"/></a>
     </ul>
 </div>
 

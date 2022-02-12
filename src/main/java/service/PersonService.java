@@ -7,6 +7,7 @@ import dto.personDto.PersonNamePhoneDto;
 import entity.Person;
 import lombok.NoArgsConstructor;
 import mapper.impl.PersonMapper;
+import validator.ValidatorPhone;
 import validator.notNull.impl.ValidityPerson;
 
 import java.util.List;
@@ -25,6 +26,8 @@ public class PersonService {
         return instance;
     }
 
+    ValidatorPhone validatorPhone = new ValidatorPhone();
+
     public boolean deletePerson(PersonDto personDto) {
         boolean result = false;
         Person person = PersonMapper.getInstance().mapFrom(personDto);
@@ -35,8 +38,9 @@ public class PersonService {
     }
 
     public Person addPerson(CreatePersonDto createPersonDto) {
+
         Person person = PersonMapper.getInstance().mapCreatePerson(createPersonDto);
-        if (validityPerson.notCopyName(person) && validityPerson.isValidPhone(person)) {
+        if (validityPerson.notCopyName(person) && validatorPhone.isValidPhonePerson(person)) {
             PersonDAO.getInstance().add(person);
         }
         return person;
@@ -44,7 +48,7 @@ public class PersonService {
 
     public Person updatePerson(PersonDto personDto) {
         Person person = PersonMapper.getInstance().mapFrom(personDto);
-        if (validityPerson.isValidPhone(person)) {
+        if (validatorPhone.isValidPhonePerson(person)) {
             PersonDAO.getInstance().update(person);
         }
         return person;
@@ -63,10 +67,8 @@ public class PersonService {
 
     public Person enterPerson(PersonNamePhoneDto personNamePhoneDto) {
         Person person = PersonMapper.getInstance().mapPersonNameAndPhone(personNamePhoneDto);
-        if (validityPerson.isValidPhone(person)) {
+        if (validatorPhone.isValidPhonePerson(person)) {
             person = personDAO.finByName(person.getName());
-        } else {
-
         }
         return person;
     }

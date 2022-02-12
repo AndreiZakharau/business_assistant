@@ -45,7 +45,7 @@
         </div>
     </div>
     <ul>
-        <a  type="submit" class="btn btn-primary" href="/accountant/add_all.jsp"><fmt:message key="translation.exit"/></a>
+        <a  type="submit" class="btn btn-primary" href="/jsp/accountant/add_all.jsp"><fmt:message key="translation.exit"/></a>
     </ul>
 </div>
 </body>

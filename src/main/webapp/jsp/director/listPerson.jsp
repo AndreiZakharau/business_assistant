@@ -25,7 +25,8 @@
 </div>
 <ul>
     <h1>
-    <a  type="submit" class="active" href="/jsp/director/directors_work_page.jsp">EXIT
+    <a  type="submit" class="active" href="/jsp/director/directors_work_page.jsp">
+        <fmt:message key="translation.exit"></fmt:message>
     </a>
     </h1>
 </ul>
