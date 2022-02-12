@@ -29,7 +29,7 @@
     <li><a class="nav-label" href="/director/listPersonServlet"><fmt:message key="translation.persons"/></a></li>
     <li><a class="nav-label" href="/jsp/director/page_expected_director.jsp"><fmt:message key="translation.statistic"/></a></li>
     <li><a class="nav-label" href="/jsp/director/page_expected_director.jsp"><fmt:message key="translation.application"/></a></li>
-    <li><a class="nav-label" href="/jsp/director/listWork.jsp"><fmt:message key="translation.list_info"/></a></li>
+    <li><a class="nav-label" href="/director/listWorkServlet"><fmt:message key="translation.list_info"/></a></li>
     <li><a class="nav-label" href="/index.jsp"><fmt:message key="translation.exit"/></a></li>
   </ul>
 </nav>

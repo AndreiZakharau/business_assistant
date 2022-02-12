@@ -31,8 +31,11 @@
                 </tr>
                 </thead>
                 <tbody>
+
                 <c:forEach var="product" items="${requestScope.products}">
-                    <tr>
+                    <tr <c:forEach var="expiredProduct" items="${requestScope.expiredProduct}">
+                        <c:if test="${expiredProduct.nameProductExpired==product.id}">
+                            style="color: red" </c:if> </c:forEach>>
 
                         <td>${product.name}</td>
                         <c:forEach var="categories" items="${requestScope.categories}">
